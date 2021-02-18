@@ -16,7 +16,7 @@ export interface BaseRoom {
 }
 
 export interface Room extends BaseRoom {
-    roomID: number;
+    roomID: string;
 }
 
 export interface Rooms {

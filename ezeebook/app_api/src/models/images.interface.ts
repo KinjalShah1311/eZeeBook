@@ -1,12 +1,12 @@
 export interface BaseImage {
-    roomID: number;
+    roomID: string;
     imageName: string;
     imageType: string;
     imageSource: string;
 }
 
 export interface Image extends BaseImage {
-    imageID: number;
+    imageID: string;
 }
 
 export interface Images {

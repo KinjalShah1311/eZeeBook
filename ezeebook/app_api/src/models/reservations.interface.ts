@@ -1,6 +1,6 @@
 export interface BaseReservation {
-    uid: number;
-    roomID: number;
+    uid: string;
+    roomID: string;
     startDate: Date;
     endDate: Date;
     price: string;
@@ -10,7 +10,7 @@ export interface BaseReservation {
 }
 
 export interface Reservation extends BaseReservation {
-    reservationID: number;
+    reservationID: string;
 }
 
 export interface Reservations {

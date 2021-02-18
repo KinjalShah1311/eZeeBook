@@ -8,22 +8,22 @@ import { reviewRouter } from "./routes/reviews.router";
 
 dotenv.config();
 
-if (!process.env.PORT) {
+if (!process.env.API_PORT) {
     process.exit(1);
 }
- 
-const PORT: number = parseInt(process.env.PORT as string, 10);
- 
+
+const API_PORT: number = parseInt(process.env.API_PORT as string, 10);
+
 const app = express();
 
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
-app.use("/api/users",userRouter);
-app.use("/api/rooms",roomRouter);
-app.use("/api/rooms/:roomID/reviews",reviewRouter);
+app.use("/api/users", userRouter);
+app.use("/api/rooms", roomRouter);
+app.use("/api/rooms", reviewRouter);
 
-app.listen(PORT, () => {
-    console.log(`Listening on port ${PORT}`);
+app.listen(API_PORT, () => {
+    console.log(`Listening on port ${API_PORT}`);
 });
 

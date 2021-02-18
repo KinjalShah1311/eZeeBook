@@ -10,8 +10,9 @@
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "helmet": "^4.4.1",
     "firebase": "^8.2.7",
+    "firebase-admin": "^9.5.0",
+    "helmet": "^4.4.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.2",
@@ -22,7 +23,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev": "ts-node-dev --respawn --pretty --transpile-only app_api/src/index.ts"
+    "dev": "ts-node-dev -O \"{\\\"module\\\":\\\"commonjs\\\"}\" --respawn --pretty --transpile-only app_api/src/index.ts"
   },
   "eslintConfig": {
     "extends": [

@@ -5,8 +5,8 @@ export interface BaseReview {
 
 
 export interface Review extends BaseReview {
-    reviewID: number;
-    roomID:number;
+    reviewID: string;
+    roomID:string;
 }
 
 export interface Reviews {

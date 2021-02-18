@@ -8,9 +8,8 @@ export interface BaseUser {
 }
 
 export interface User extends BaseUser {
-    uid: number;
+    uid: string;
     createdAt: Date;
-    updatedAt: Date;
 }
 
 export interface Users {

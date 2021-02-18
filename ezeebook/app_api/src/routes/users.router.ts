@@ -1,12 +1,12 @@
 import express, {Response, Request} from 'express';
-import * as UserService from '../controllers/users.service';
-import {BaseUser, User} from '../models/users.interface';
+import UsersDataService from '../controllers/users.service';
+import {BaseUser} from '../models/users.interface';
 
 export const userRouter = express.Router();
 
 userRouter.get("/",async (req: Request, res: Response) => {
     try {
-      const users: User[] = await UserService.getAllUsers();
+      const users = await UsersDataService.getAllUsers();
   
       res.status(200).send(users);
     } catch (e) {
@@ -16,9 +16,9 @@ userRouter.get("/",async (req: Request, res: Response) => {
 
 
 userRouter.get("/:id",async (req: Request, res: Response) => {
-  const id: number = parseInt(req.params.id, 10);
+  const id= req.params.id;
   try {
-    const user: User = await UserService.getUser(id);
+    const user = await UsersDataService.getUser(id);
     if(user) {
       res.status(200).send(user);
     }
@@ -32,9 +32,12 @@ userRouter.get("/:id",async (req: Request, res: Response) => {
 
 userRouter.post("/", async (req: Request, res: Response) => {
   try {
-    const user: BaseUser = req.body;
+    const baseUser: BaseUser = req.body;
+    const createdAt = (new Date()).toString();
 
-    const newUser = await UserService.createUser(user);
+    const user = {...baseUser,createdAt} 
+
+    const newUser = await UsersDataService.createUser(user);
 
     res.status(201).json(newUser);
   } catch (e) {
@@ -43,19 +46,19 @@ userRouter.post("/", async (req: Request, res: Response) => {
 });
 
 userRouter.put("/:id", async (req: Request, res: Response) => {
-  const id: number = parseInt(req.params.id, 10);
+  const id = req.params.id;
 
   try {
-    const userUpdate: User = req.body;
+    const userUpdate: BaseUser = req.body; 
 
-    const existingUser: User = await UserService.getUser(id);
+    const existingUser = await UsersDataService.getUser(id);
 
     if (existingUser) {
-      const updatedUser = await UserService.updateUser(id, userUpdate);
+      const updatedUser = await UsersDataService.updateUser(id, userUpdate);
       return res.status(200).json(updatedUser);
     }
 
-    const newUser = await UserService.createUser(userUpdate);
+    const newUser = await UsersDataService.createUser(userUpdate);
 
     res.status(201).json(newUser);
   } catch (e) {
@@ -66,8 +69,8 @@ userRouter.put("/:id", async (req: Request, res: Response) => {
 
 userRouter.delete("/:id", async (req: Request, res: Response) => {
   try {
-    const id: number = parseInt(req.params.id, 10);
-    await UserService.removeUser(id);
+    const id = req.params.id;
+    await UsersDataService.deleteUser(id);
 
     res.sendStatus(204);
   } catch (e) {
