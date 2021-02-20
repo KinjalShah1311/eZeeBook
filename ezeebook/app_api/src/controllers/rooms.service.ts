@@ -1,4 +1,4 @@
-import {BaseRoom, Room, Rooms} from '../models/rooms.interface';
+import {BaseRoom} from '../models/rooms.interface';
 import app from '../../../src/firebase'
 
 // let rooms: Rooms = {
