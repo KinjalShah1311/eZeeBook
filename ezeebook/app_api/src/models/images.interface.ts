@@ -1,12 +1,10 @@
 export interface BaseImage {
-    roomID: string;
-    imageName: string;
-    imageType: string;
-    imageSource: string;
+    imagePath:string;
 }
 
 export interface Image extends BaseImage {
     imageID: string;
+    roomID: string;
 }
 
 export interface Images {
