@@ -101,26 +101,26 @@ imageRouter.post("/:roomID/images/", async (req: Request, res: Response) => {
   }
 });
 
-imageRouter.put("/:roomID/images/:id", async (req: Request, res: Response) => {
-  const id = req.params.id;
+// imageRouter.put("/:roomID/images/:id", async (req: Request, res: Response) => {
+//   const id = req.params.id;
 
-  try {
-    const ImageUpdate: BaseImage = req.body;
+//   try {
+//     const ImageUpdate: BaseImage = req.body;
 
-    const existingImage = await ImagesDataService.getImage(id);
+//     const existingImage = await ImagesDataService.getImage(id);
 
-    if (!existingImage) {
-        const newImage = await ImagesDataService.createImage(ImageUpdate);
-        res.status(201).json(newImage);
-    }
-    else {
-        const updatedImage = await ImagesDataService.updateImage(id, ImageUpdate);
-        return res.status(200).json(updatedImage);
-    }
-  } catch (e) {
-    res.status(500).send(e.message);
-  }
-});
+//     if (!existingImage) {
+//         const newImage = await ImagesDataService.createImage(ImageUpdate);
+//         res.status(201).json(newImage);
+//     }
+//     else {
+//         const updatedImage = await ImagesDataService.updateImage(id, ImageUpdate);
+//         return res.status(200).json(updatedImage);
+//     }
+//   } catch (e) {
+//     res.status(500).send(e.message);
+//   }
+// });
 
 
 imageRouter.delete("/:roomID/images/:id", async (req: Request, res: Response) => {

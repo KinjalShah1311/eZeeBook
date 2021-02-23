@@ -11,7 +11,7 @@ import "firebase/storage"
 //   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
 //   appId: process.env.REACT_APP_FIREBASE_APP_ID,
 // });
-//Todo: get from env files
+// //Todo: get from env files
 const app = firebase.initializeApp({
   apiKey: 'AIzaSyAxknPf-xiyxv7MqM-WR0xEAxihPl0yTRc',
   authDomain: 'ezeebook-dev.firebaseapp.com',
