@@ -21,7 +21,7 @@ import app from '../../../src/firebase'
 //     }
 // }
 
-const db = app.ref("/rooms");
+const db = app.database().ref("/rooms");
 class RoomsDataService {
     getAllRooms() {
       return db;

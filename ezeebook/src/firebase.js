@@ -1,6 +1,9 @@
 import firebase from "firebase/app"
 import "firebase/auth"
 import "firebase/database"
+import "firebase/storage"
+import * as dotenv from "dotenv";
+dotenv.config();
 
 const app = firebase.initializeApp({
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -20,6 +23,13 @@ const app = firebase.initializeApp({
 //   appId: '1:1040461298600:web:80ccde9b218783b67bfb9d',
 // });
 
-export const auth = app.auth();
-export default app.database();
+const { Storage } = require('@google-cloud/storage');
+export const storage = new Storage({
+  projectId: "ezeebook-dev",
+  keyFilename: "C:/Users/Tushar/Documents/GitHub/ezeebook-dev-7c94458bf7d6.json"
+});
+
+export const bucketName = 'gs://ezeebook-dev.appspot.com'
+export const auth = app.auth()
+export default app;
 

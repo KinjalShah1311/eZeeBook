@@ -2,7 +2,7 @@ import {BaseUser} from '../models/users.interface'
 
 import app from '../../../src/firebase'
 
-const db = app.ref("/users");
+const db = app.database().ref("/users");
 class UsersDataService {
     getAllUsers() {
       return db;

@@ -3,7 +3,7 @@ import app from '../../../src/firebase'
 
 
 
-const db = app.ref("/reviews");
+const db = app.database().ref("/reviews");
 class ReviewsDataService {
     getAllReviews() {
       return db;
