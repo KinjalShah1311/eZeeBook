@@ -23,13 +23,13 @@ const app = firebase.initializeApp({
 //   appId: '1:1040461298600:web:80ccde9b218783b67bfb9d',
 // });
 
-const { Storage } = require('@google-cloud/storage');
-export const storage = new Storage({
-  projectId: "ezeebook-dev",
-  keyFilename: "C:/Users/Tushar/Documents/GitHub/ezeebook-dev-7c94458bf7d6.json"
-});
+// const { Storage } = require('@google-cloud/storage');
+// export const storage = new Storage({
+//   projectId: "ezeebook-dev",
+//   keyFilename: ""
+// });
 
-export const bucketName = 'gs://ezeebook-dev.appspot.com'
+// export const bucketName = 'gs://ezeebook-dev.appspot.com'
 export const auth = app.auth()
 export default app;
 
