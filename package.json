@@ -18,12 +18,15 @@
     "formik": "^2.2.6",
     "helmet": "^4.4.1",
     "multer": "^1.4.2",
+    "@types/react": "latest",
+    "@types/react-dom": "latest",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.2",
     "uuid-v4": "^0.1.0",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "typescript": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
