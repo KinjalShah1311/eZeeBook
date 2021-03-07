@@ -6,6 +6,7 @@
 /.pnp
 .pnp.js
 /client/node_modules
+/ezeebook/client/node_modules
 
 # testing
 /coverage
