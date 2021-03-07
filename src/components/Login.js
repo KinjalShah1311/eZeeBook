@@ -14,20 +14,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Link, useHistory } from "react-router-dom";
 
-import { useAuth } from "../contexts/AuthContext";
+//Components
+import Footer from '../components/Footer'
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="#">
-        eZeeBook
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import { useAuth } from "../contexts/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -132,7 +122,7 @@ export default function Login() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
+              <Link to="/forgotpasspord" variant="body2">
                 Forgot password?
               </Link>
             </Grid>
@@ -145,7 +135,7 @@ export default function Login() {
         </form>
       </div>
       <Box mt={8}>
-        <Copyright />
+        <Footer />
       </Box>
     </Container>
   );

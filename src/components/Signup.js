@@ -11,22 +11,12 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
-import { Link, useHistory } from "react-router-dom";
+//Components
+import Footer from '../components/Footer'
 
+import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="#">
-        eZeeBook
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -177,7 +167,7 @@ export default function Signup() {
         </form>
       </div>
       <Box mt={5}>
-        <Copyright />
+        <Footer />
       </Box>
     </Container>
   );
