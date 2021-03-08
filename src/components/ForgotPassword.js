@@ -15,7 +15,7 @@ import Container from "@material-ui/core/Container";
 import { Link, useHistory } from "react-router-dom";
 
 //Components
-import Footer from '../components/Footer'
+import Footer from "../components/Footer";
 
 import { useAuth } from "../contexts/AuthContext";
 
@@ -39,32 +39,27 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
+export default function ForgotPassword() {
   const emailRef = useRef();
-  const passwordRef = useRef();
-  const { login } = useAuth();
-  const history = useHistory();
+  const { resetPassword } = useAuth();
 
   const classes = useStyles();
 
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     try {
+      setMessage('');
       setError("");
       setLoading(true);
-      login(emailRef.current.value, passwordRef.current.value)
-        .then((x) => {
-          history.push("/");
-        })
-        .catch((ex) => {
-          setError("Incorrect Email or Password. Please try again!");
-        });
+      await resetPassword(emailRef.current.value);
+      setMessage("Check your inbox for further instruction");
     } catch {
-      setError("Failed to log in");
+      setError("Failed to reset password");
     }
 
     setLoading(false);
@@ -78,9 +73,11 @@ export default function Login() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Password Reset
         </Typography>
         {error && <Alert severity="error">{error}</Alert>}
+        {message && <Alert severity="success">{message}</Alert>}
+
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
           <TextField
             variant="outlined"
@@ -94,22 +91,6 @@ export default function Login() {
             inputRef={emailRef}
             autoFocus
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="password"
-            label="Password"
-            type="password"
-            id="password"
-            inputRef={passwordRef}
-            autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
@@ -118,12 +99,12 @@ export default function Login() {
             className={classes.submit}
             disabled={loading}
           >
-            Sign In
+            Reset Password
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link to="/forgot-password" variant="body2">
-                Forgot password?
+              <Link to="/login" variant="body2">
+                Login
               </Link>
             </Grid>
             <Grid item>
