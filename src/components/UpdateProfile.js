@@ -3,7 +3,7 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Alert from '@material-ui/lab/Alert';
+import Alert from "@material-ui/lab/Alert";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -12,7 +12,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 
 //Components
-import Footer from '../components/Footer'
+import Footer from "../components/Footer";
 
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Signup() {
+export default function UpdateProfile() {
   // const fNameRef = useRef();
   // const lNameRef = useRef();
   const emailRef = useRef();
@@ -45,7 +45,7 @@ export default function Signup() {
   const cofirmpasswordRef = useRef();
   const history = useHistory();
 
-  const { signup, currentUser } = useAuth();
+  const { currentUser, updateEmail, updatePassword } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -57,25 +57,36 @@ export default function Signup() {
       setError("Passwords do not match");
       return;
     }
-    try {
-      setError("");
-      setLoading(true);
-      signup(emailRef.current.value, passwordRef.current.value);
-      history.push("/");
-    } catch {
-      setError("Failed to create an account");
+
+    const promises = [];
+    setLoading(true);
+    if (emailRef.current.value != currentUser.email) {
+      promises.push(updateEmail(emailRef.current.value));
     }
 
-    setLoading(false);
+    if (passwordRef.current.value) {
+      promises.push(updatePassword(passwordRef.current.value));
+    }
+
+    Promise.all(promises)
+      .then(() => {
+        history.push("/");
+      })
+      .catch(() => {
+        setError("Failed to update user profile");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>{ <LockOutlinedIcon /> }</Avatar>
+        <Avatar className={classes.avatar}>{<LockOutlinedIcon />}</Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Update Profile
         </Typography>
         {error && <Alert severity="error">{error}</Alert>}
         <form className={classes.form} noValidate onSubmit={handleSubmit}>
@@ -117,12 +128,12 @@ export default function Signup() {
                 inputRef={emailRef}
                 onClick={() => emailRef.current.focus()}
                 autoComplete="email"
+                defaultValue={currentUser.email}
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
                 fullWidth
                 name="password"
                 label="Password"
@@ -130,12 +141,12 @@ export default function Signup() {
                 id="password"
                 autoComplete="current-password"
                 inputRef={passwordRef}
+                placeholder="Leave blank to keep the same"
               />
             </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
-                required
                 fullWidth
                 name="cofirmpassword"
                 label="Confirm Password"
@@ -143,6 +154,7 @@ export default function Signup() {
                 id="cofirmpassword"
                 autoComplete="current-password"
                 inputRef={cofirmpasswordRef}
+                placeholder="Leave blank to keep the same"
               />
             </Grid>
           </Grid>
@@ -154,12 +166,12 @@ export default function Signup() {
             className={classes.submit}
             disabled={loading}
           >
-            Sign Up
+            Update
           </Button>
           <Grid container justify="flex-end">
             <Grid item>
-              <Link to="/login" variant="body2">
-                Already have an account? Sign in
+              <Link to="/" variant="body2">
+                Cancel
               </Link>
             </Grid>
           </Grid>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -19,6 +19,18 @@ import SearchIcon from "@material-ui/icons/Search";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import logo from "./../logo.svg";
+import { withStyles } from "@material-ui/core/styles";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import LogoutIcon from "@material-ui/icons/ExitToApp";
+import SendIcon from "@material-ui/icons/Send";
+import { Link } from "react-router-dom";
+
+//context
+import { useAuth, logout } from "../contexts/AuthContext";
+
+//components
 
 const drawerWidth = 240;
 
@@ -142,7 +154,41 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const StyledMenu = withStyles({
+  paper: {
+    border: "1px solid #d3d4d5",
+  },
+})((props) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: "bottom",
+      horizontal: "center",
+    }}
+    transformOrigin={{
+      vertical: "top",
+      horizontal: "center",
+    }}
+    {...props}
+  />
+));
+
+const StyledMenuItem = withStyles((theme) => ({
+  root: {
+    "&:focus": {
+      backgroundColor: theme.palette.primary.main,
+      "& .MuiListItemIcon-root, & .MuiListItemText-primary": {
+        color: theme.palette.common.white,
+      },
+    },
+  },
+}))(MenuItem);
+
 export default function Header() {
+  const [error, setError] = useState("");
+  const { currentUser, logout } = useAuth();
+  const history = useHistory();
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(true);
@@ -160,7 +206,7 @@ export default function Header() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+
   const logClicked = (id) => {
     if (id == "login") {
       history.push("/login");
@@ -170,7 +216,16 @@ export default function Header() {
     }
   };
 
-  const history = useHistory();
+  const handleLogout = async () => {
+    setError("");
+    history.push("/login");
+    try {
+      await logout();
+    } catch {
+      setError("Failed to logout");
+    }
+  };
+
   return (
     <>
       <AppBar
@@ -217,15 +272,17 @@ export default function Header() {
             <Badge color="secondary">
               <div>
                 <AccountCircleSharpIcon onClick={handleClick} />
-                <Menu
+                {/* <Menu
                   id="simple-menu"
                   anchorEl={anchorEl}
                   keepMounted
                   open={Boolean(anchorEl)}
                   onClose={handleClose}
                 >
-                  {/* <ListSubheader key="username">{`${currentUser.email}`}</ListSubheader> */}
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
+                  <ListSubheader key="username">{`${currentUser.email}`}</ListSubheader>
+                  <MenuItem onClick={handleClose}>
+                    <Link to="/update-profile">Update Profile</Link>
+                  </MenuItem>
                   <MenuItem onClick={handleClose}>My bookings</MenuItem>
                   <MenuItem onClick={() => logClicked("login")}>
                     {" "}
@@ -236,7 +293,29 @@ export default function Header() {
                     SignUp{" "}
                   </MenuItem>
                   <MenuItem onClick={handleClose}>Logout</MenuItem>
-                </Menu>
+                </Menu> */}
+                <StyledMenu
+                  id="customized-menu"
+                  anchorEl={anchorEl}
+                  keepMounted
+                  open={Boolean(anchorEl)}
+                  onClose={handleClose}
+                >
+                  <StyledMenuItem>
+                    <ListItemIcon>
+                      <AccountBoxIcon fontSize="small" />
+                    </ListItemIcon>
+                    <Link to="/update-profile">
+                      <ListItemText primary="Update Profile"></ListItemText>
+                    </Link>
+                  </StyledMenuItem>
+                  <StyledMenuItem onClick={ () => handleLogout() }>
+                    <ListItemIcon>
+                      <LogoutIcon fontSize="small" />
+                    </ListItemIcon>
+                    <ListItemText primary="Logout" />
+                  </StyledMenuItem>
+                </StyledMenu>
               </div>
             </Badge>
           </IconButton>
