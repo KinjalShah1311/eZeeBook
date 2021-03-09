@@ -26,6 +26,7 @@ import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import LogoutIcon from "@material-ui/icons/ExitToApp";
 import SendIcon from "@material-ui/icons/Send";
 import { Link } from "react-router-dom";
+import DataService from '../api/DataService';
 
 //context
 import { useAuth, logout } from "../contexts/AuthContext";
@@ -186,6 +187,15 @@ const StyledMenuItem = withStyles((theme) => ({
 }))(MenuItem);
 
 export default function Header() {
+
+function getList(){
+  DataService.retrieveAllData().then(function (response) {
+    console.log(response.data);
+  }).catch(function (error) {
+    console.error(error);
+  });
+}
+
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
   const history = useHistory();
@@ -267,6 +277,7 @@ export default function Header() {
               }}
               inputProps={{ "aria-label": "search" }}
             />
+            <button onClick={getList}>GET</button>
           </div>
           <IconButton color="inherit">
             <Badge color="secondary">
