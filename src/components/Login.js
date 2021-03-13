@@ -19,6 +19,11 @@ import Footer from '../components/Footer'
 
 import { useAuth } from "../contexts/AuthContext";
 
+// interface IUser{
+//   email: String,
+//   password: String,
+// }
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
