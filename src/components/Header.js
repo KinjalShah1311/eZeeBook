@@ -188,13 +188,13 @@ const StyledMenuItem = withStyles((theme) => ({
 
 export default function Header() {
 
-function getList(){
-  DataService.retrieveAllData().then(function (response) {
-    console.log(response.data);
-  }).catch(function (error) {
-    console.error(error);
-  });
-}
+  function getList() {
+    DataService.retrieveAllData().then(function (response) {
+      console.log(response.data);
+    }).catch(function (error) {
+      console.error(error);
+    });
+  }
 
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
@@ -276,6 +276,7 @@ function getList(){
                 input: classes.inputInput,
               }}
               inputProps={{ "aria-label": "search" }}
+
             />
             <button onClick={getList}>GET</button>
           </div>
@@ -320,7 +321,7 @@ function getList(){
                       <ListItemText primary="Update Profile"></ListItemText>
                     </Link>
                   </StyledMenuItem>
-                  <StyledMenuItem onClick={ () => handleLogout() }>
+                  <StyledMenuItem onClick={() => handleLogout()}>
                     <ListItemIcon>
                       <LogoutIcon fontSize="small" />
                     </ListItemIcon>
