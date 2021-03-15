@@ -12,6 +12,7 @@ import Paper from "@material-ui/core/Paper";
 //components
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import Banner from '../components/Banner';
 
 const drawerWidth = 240;
 
@@ -143,9 +144,11 @@ export default function Dashboard() {
     <div className={classes.root}>
       <CssBaseline />
      <Header />
+     
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
+        <Banner />
           <Grid container spacing={3}>
             {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>
@@ -161,6 +164,7 @@ export default function Dashboard() {
             </Grid>
           </Grid>
           <Box pt={4}>
+          
             <Footer />
           </Box>
         </Container>
