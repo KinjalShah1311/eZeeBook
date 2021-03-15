@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -160,7 +160,7 @@ export default function Header() {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
+
   const logClicked = (id) => {
     if (id == "login") {
       history.push("/login");
@@ -171,6 +171,8 @@ export default function Header() {
   };
 
   const history = useHistory();
+
+  const [searchTerm, setSearchTerm] = useState("");
   return (
     <>
       <AppBar
@@ -211,6 +213,9 @@ export default function Header() {
                 input: classes.inputInput,
               }}
               inputProps={{ "aria-label": "search" }}
+              onChange={(event) => {
+                setSearchTerm(event.target.value);
+              }}
             />
           </div>
           <IconButton color="inherit">
