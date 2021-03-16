@@ -212,6 +212,13 @@ function getList(){
     console.error(error);
   });
 }
+  function getList() {
+    DataService.retrieveAllData().then(function (response) {
+      console.log(response.data);
+    }).catch(function (error) {
+      console.error(error);
+    });
+  }
 
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
@@ -294,6 +301,7 @@ function getList(){
               }}
               inputProps={{ "aria-label": "search" }}
               onChange={handleChange}
+
             />
             <button onClick={getList}>GET</button>
           </div>
@@ -338,7 +346,7 @@ function getList(){
                       <ListItemText primary="Update Profile"></ListItemText>
                     </Link>
                   </StyledMenuItem>
-                  <StyledMenuItem onClick={ () => handleLogout() }>
+                  <StyledMenuItem onClick={() => handleLogout()}>
                     <ListItemIcon>
                       <LogoutIcon fontSize="small" />
                     </ListItemIcon>

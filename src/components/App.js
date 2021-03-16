@@ -8,17 +8,20 @@ import Dashboard from "./Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
+import Hotels from "./Hotels";
+
+
 
 function App() {
   return (
     <Router>
       <AuthProvider>
         <Switch>
-          <Route exact path = '/' component = {Dashboard} />
-          <PrivateRoute exact path = '/update-profile' component = {UpdateProfile} />
-          <Route path="/signup" component = {Signup} />
-          <Route path="/login" component = {Login} />
-          <Route path="/forgot-password" component = {ForgotPassword} />
+          <Route exact path='/' component={Dashboard} />
+          <PrivateRoute exact path='/update-profile' component={UpdateProfile} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/login" component={Login} />
+          <Route path="/forgot-password" component={ForgotPassword} />
         </Switch>
       </AuthProvider>
     </Router>
