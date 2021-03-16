@@ -212,13 +212,6 @@ function getList(){
     console.error(error);
   });
 }
-  function getList() {
-    DataService.retrieveAllData().then(function (response) {
-      console.log(response.data);
-    }).catch(function (error) {
-      console.error(error);
-    });
-  }
 
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
