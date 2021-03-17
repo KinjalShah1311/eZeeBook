@@ -12,6 +12,8 @@ import Paper from "@material-ui/core/Paper";
 //components
 import Footer from '../components/Footer';
 import Header from '../components/Header';
+import Banner from '../components/Banner';
+import Hotels from "./Hotels";
 
 const drawerWidth = 240;
 
@@ -137,15 +139,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
   const classes = useStyles();
-  
-  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight); 
+
+  const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
   return (
     <div className={classes.root}>
       <CssBaseline />
-     <Header />
+        
+      <Header />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
+        <Banner />
+          <Hotels />
           <Grid container spacing={3}>
             {/* Chart */}
             <Grid item xs={12} md={8} lg={9}>
@@ -161,6 +166,7 @@ export default function Dashboard() {
             </Grid>
           </Grid>
           <Box pt={4}>
+          
             <Footer />
           </Box>
         </Container>

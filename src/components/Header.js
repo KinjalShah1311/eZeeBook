@@ -188,9 +188,26 @@ const StyledMenuItem = withStyles((theme) => ({
 
 export default function Header() {
 
+  const [cityName, setCityName] = useState("new york");
+  const handleChange=(event)=>
+  {
+    if (event.target.value!=null) 
+      setCityName(event.target.value);
+  }
 function getList(){
-  DataService.retrieveAllData().then(function (response) {
+  DataService.retrieveLocation(cityName).then(function (response) {
     console.log(response.data);
+    var lat=response.data.suggestions[0].entities[0].latitude;
+    var lon=response.data.suggestions[0].entities[0].longitude;
+    DataService.retriveHotelNames(lat,lon).then(function (response) {
+    const hotels=response.data.data.body.searchResults.results;
+    console.log(hotels);
+    var hotelNames=[];
+    for (var i =0;i <hotels.length ;i++){
+      hotelNames.push(hotels[i].name);
+    }
+    console.log(hotelNames);
+  })
   }).catch(function (error) {
     console.error(error);
   });
@@ -276,6 +293,8 @@ function getList(){
                 input: classes.inputInput,
               }}
               inputProps={{ "aria-label": "search" }}
+              onChange={handleChange}
+
             />
             <button onClick={getList}>GET</button>
           </div>
@@ -320,7 +339,7 @@ function getList(){
                       <ListItemText primary="Update Profile"></ListItemText>
                     </Link>
                   </StyledMenuItem>
-                  <StyledMenuItem onClick={ () => handleLogout() }>
+                  <StyledMenuItem onClick={() => handleLogout()}>
                     <ListItemIcon>
                       <LogoutIcon fontSize="small" />
                     </ListItemIcon>
