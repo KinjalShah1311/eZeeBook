@@ -152,6 +152,8 @@ export default function AccountPage() {
     addressRef,
   } = useRef();
 
+  const { currentUser } = useAuth();
+
   const [country, setCountry] = useState("");
   const [gender, setGender] = useState("");
 

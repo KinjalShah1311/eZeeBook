@@ -62,16 +62,16 @@ const login = function Login() {
         email: emailRef.current.value,
         password: passwordRef.current.value,
       };
-      loginUser(userData, history);
-      //setError("");
-      //setLoading(true);
-      // login(emailRef.current.value, passwordRef.current.value)
-      //   .then((x) => {
-      //     history.push("/");
-      //   })
-      //   .catch((ex) => {
-      //     setError("Incorrect Email or Password. Please try again!");
-      //   });
+      //loginUser(userData, history);
+      setError("");
+      setLoading(true);
+      login(emailRef.current.value, passwordRef.current.value)
+        .then((x) => {
+          history.push("/");
+        })
+        .catch((ex) => {
+          setError("Incorrect Email or Password. Please try again!");
+        });
     } catch {
       setError("Failed to log in");
     }
