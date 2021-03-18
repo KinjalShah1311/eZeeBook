@@ -15,14 +15,13 @@ import Container from "@material-ui/core/Container";
 import { Link, useHistory } from "react-router-dom";
 
 //Components
-import Footer from '../components/Footer'
+import Footer from "../components/Footer";
 
 import { useAuth } from "../contexts/AuthContext";
 
-// interface IUser{
-//   email: String,
-//   password: String,
-// }
+//Redux stuff
+import { connect } from "react-redux";
+import { loginUser } from "../redux/actions/userActions";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -44,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Login() {
+const login = function Login() {
   const emailRef = useRef();
   const passwordRef = useRef();
   const { login } = useAuth();
@@ -59,20 +58,25 @@ export default function Login() {
     e.preventDefault();
 
     try {
-      setError("");
-      setLoading(true);
-      login(emailRef.current.value, passwordRef.current.value)
-        .then((x) => {
-          history.push("/");
-        })
-        .catch((ex) => {
-          setError("Incorrect Email or Password. Please try again!");
-        });
+      const userData = {
+        email: emailRef.current.value,
+        password: passwordRef.current.value,
+      };
+      loginUser(userData, history);
+      //setError("");
+      //setLoading(true);
+      // login(emailRef.current.value, passwordRef.current.value)
+      //   .then((x) => {
+      //     history.push("/");
+      //   })
+      //   .catch((ex) => {
+      //     setError("Incorrect Email or Password. Please try again!");
+      //   });
     } catch {
       setError("Failed to log in");
     }
 
-    setLoading(false);
+    //setLoading(false);
   }
 
   return (
@@ -144,4 +148,15 @@ export default function Login() {
       </Box>
     </Container>
   );
-}
+};
+
+const mapStateToProps = (state) => ({
+  user: state.user,
+  UI: state.UI,
+});
+
+const mapActionToProps = {
+  loginUser
+};
+
+export default connect(mapStateToProps, mapActionToProps)(login);
