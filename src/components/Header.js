@@ -18,6 +18,7 @@ import { mainListItems, secondaryListItems } from "./ListItems";
 import SearchIcon from "@material-ui/icons/Search";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
+import Grid from "@material-ui/core/Grid";
 import logo from "./../logo.svg";
 import { withStyles } from "@material-ui/core/styles";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -153,6 +154,9 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: 40,
     marginRight: "10px",
   },
+  accountCircle: {
+    height: 25,
+  }
 }));
 
 const StyledMenu = withStyles({
@@ -194,24 +198,24 @@ export default function Header() {
   //   if (event.target.value!=null) 
   //     setCityName(event.target.value);
   // }
-// function getList(){
-//   DataService.retrieveLocation(cityName).then(function (response) {
-//     console.log(response.data);
-//     var lat=response.data.suggestions[0].entities[0].latitude;
-//     var lon=response.data.suggestions[0].entities[0].longitude;
-//     DataService.retriveHotelNames(lat,lon).then(function (response) {
-//     const hotels=response.data.data.body.searchResults.results;
-//     console.log(hotels);
-//     var hotelNames=[];
-//     for (var i =0;i <hotels.length ;i++){
-//       hotelNames.push(hotels[i].name);
-//     }
-//     console.log(hotelNames);
-//   })
-//   }).catch(function (error) {
-//     console.error(error);
-//   });
-// }
+  // function getList(){
+  //   DataService.retrieveLocation(cityName).then(function (response) {
+  //     console.log(response.data);
+  //     var lat=response.data.suggestions[0].entities[0].latitude;
+  //     var lon=response.data.suggestions[0].entities[0].longitude;
+  //     DataService.retriveHotelNames(lat,lon).then(function (response) {
+  //     const hotels=response.data.data.body.searchResults.results;
+  //     console.log(hotels);
+  //     var hotelNames=[];
+  //     for (var i =0;i <hotels.length ;i++){
+  //       hotelNames.push(hotels[i].name);
+  //     }
+  //     console.log(hotelNames);
+  //   })
+  //   }).catch(function (error) {
+  //     console.error(error);
+  //   });
+  // }
 
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
@@ -243,6 +247,10 @@ export default function Header() {
     }
   };
 
+  const handleLogoClick = () => {
+    history.push("/");
+  }
+
   const handleLogout = async () => {
     setError("");
     history.push("/login");
@@ -272,21 +280,42 @@ export default function Header() {
           >
             <MenuIcon />
           </IconButton>
-          <img src={logo} alt="ezeebook logo" className={classes.logo} />
-          <Typography
-            component="h1"
-            variant="h6"
-            color="inherit"
-            noWrap
-            className={classes.title}
-          >
-            eZeeBook
-          </Typography>
-          
+          <Grid container direction="row" alignItems="center" justify="space-between">
+            <Grid item>
+              <IconButton edge="start" noWrap="true"
+                color="inherit" onClick={handleLogoClick}>
+                <img src={logo} alt="ezeebook logo" className={classes.logo} />
+                <Typography
+                  component="h1"
+                  variant="h6"
+                  color="inherit"
+                  className={classes.title}
+                >
+                  eZeeBook
+                </Typography>
+              </IconButton>
+            </Grid>
+            <Grid item>
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon />
+                </div>
+                <InputBase
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ "aria-label": "search" }}
+
+                />
+              </div>
+            </Grid>
+          </Grid>
           <IconButton color="inherit">
             <Badge color="secondary">
               <div>
-                <AccountCircleSharpIcon onClick={handleClick} />
+                <AccountCircleSharpIcon onClick={handleClick} className={classes.accountCircle} />
                 {/* <Menu
                   id="simple-menu"
                   anchorEl={anchorEl}
