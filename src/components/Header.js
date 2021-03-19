@@ -188,30 +188,30 @@ const StyledMenuItem = withStyles((theme) => ({
 
 export default function Header() {
 
-  const [cityName, setCityName] = useState("new york");
-  const handleChange=(event)=>
-  {
-    if (event.target.value!=null) 
-      setCityName(event.target.value);
-  }
-function getList(){
-  DataService.retrieveLocation(cityName).then(function (response) {
-    console.log(response.data);
-    var lat=response.data.suggestions[0].entities[0].latitude;
-    var lon=response.data.suggestions[0].entities[0].longitude;
-    DataService.retriveHotelNames(lat,lon).then(function (response) {
-    const hotels=response.data.data.body.searchResults.results;
-    console.log(hotels);
-    var hotelNames=[];
-    for (var i =0;i <hotels.length ;i++){
-      hotelNames.push(hotels[i].name);
-    }
-    console.log(hotelNames);
-  })
-  }).catch(function (error) {
-    console.error(error);
-  });
-}
+  // const [cityName, setCityName] = useState("new york");
+  // const handleChange=(event)=>
+  // {
+  //   if (event.target.value!=null) 
+  //     setCityName(event.target.value);
+  // }
+// function getList(){
+//   DataService.retrieveLocation(cityName).then(function (response) {
+//     console.log(response.data);
+//     var lat=response.data.suggestions[0].entities[0].latitude;
+//     var lon=response.data.suggestions[0].entities[0].longitude;
+//     DataService.retriveHotelNames(lat,lon).then(function (response) {
+//     const hotels=response.data.data.body.searchResults.results;
+//     console.log(hotels);
+//     var hotelNames=[];
+//     for (var i =0;i <hotels.length ;i++){
+//       hotelNames.push(hotels[i].name);
+//     }
+//     console.log(hotelNames);
+//   })
+//   }).catch(function (error) {
+//     console.error(error);
+//   });
+// }
 
   const [error, setError] = useState("");
   const { currentUser, logout } = useAuth();
@@ -282,22 +282,7 @@ function getList(){
           >
             eZeeBook
           </Typography>
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-              onChange={handleChange}
-
-            />
-            <button onClick={getList}>GET</button>
-          </div>
+          
           <IconButton color="inherit">
             <Badge color="secondary">
               <div>

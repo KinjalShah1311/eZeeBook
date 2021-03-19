@@ -50,7 +50,7 @@ export default function Hotel(room) {
       </CardActionArea>
       <CardActions className={classes.cardActions}>
         <Box className={classes.author}>
-          <Avatar src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2734&q=80" />
+          //<Avatar src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2734&q=80" />
           <Box ml={2}>
             <Typography variant="subtitle2" component="p">
               Owner
