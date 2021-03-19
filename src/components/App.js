@@ -23,6 +23,8 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/forgot-password" component={ForgotPassword} />
           <Route path="/hotel" component={HotelInfo} />
+          <Route path="/secondpage" component={Hotels} />
+
         </Switch>
       </AuthProvider>
     </Router>
