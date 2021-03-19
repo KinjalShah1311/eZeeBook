@@ -10,10 +10,10 @@ const useStyles = makeStyles({
     },
 });
 
-var hotels1=[];
+var hotels1;
 function assignValues(names){
     
-   
+     hotels1=[];
 if (names.length>0){
     for (var i=0;i<names.length;i++){
         hotels1.push({

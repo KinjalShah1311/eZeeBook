@@ -26,7 +26,7 @@ export default function Banner() {
     if (event.target.value!=null) 
       setCityName(event.target.value);
   }
-  var hotelNames=[];
+  
   function getList(){
     DataService.retrieveLocation(cityName).then(function (response) {
       console.log(response.data);
@@ -35,8 +35,9 @@ export default function Banner() {
       DataService.retriveHotelNames(lat,lon).then(function (response) {
       const hotels=response.data.data.body.searchResults.results;
       console.log(hotels);
-      
+      var hotelNames=[];
       for (var i =0;i <hotels.length ;i++){
+        
         hotelNames.push({name: hotels[i].name,img1:hotels[i].optimizedThumbUrls.srpDesktop});
       }
       console.log(hotelNames);
