@@ -3,16 +3,19 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import Alert from '@material-ui/lab/Alert';
+import Alert from "@material-ui/lab/Alert";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
+import axios from "axios";
 
 //Components
-import Footer from '../components/Footer'
+import Footer from "../components/Footer";
 
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
@@ -38,12 +41,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function Signup() {
-  // const fNameRef = useRef();
-  // const lNameRef = useRef();
   const emailRef = useRef();
   const passwordRef = useRef();
   const cofirmpasswordRef = useRef();
+  const fNameRef = useRef();
+  const lNameRef = useRef();
+  const countryRef = useRef();
+  const [country, SetCountry] = useState('');
+
   const history = useHistory();
+
 
   const { signup, currentUser } = useAuth();
   const [error, setError] = useState("");
@@ -60,8 +67,25 @@ export default function Signup() {
     try {
       setError("");
       setLoading(true);
-      signup(emailRef.current.value, passwordRef.current.value);
-      history.push("/");
+      signup(emailRef.current.value, passwordRef.current.value)
+        .then((userRes) => {
+          const signUpUser = {
+            uid: userRes.user.uid,
+            emailAddress: userRes.user.email,
+            country: country.value,
+            firstName: fNameRef.current.value,
+            lastName: lNameRef.current.value,
+          };
+          return axios
+            .post("http://localhost:7000/api/users", signUpUser)
+            .then((response) => {
+              history.push("/");
+              console.log(response);
+            })
+            .catch((err) => {
+              setError("Failed to add user details");
+            });
+        })
     } catch {
       setError("Failed to create an account");
     }
@@ -69,18 +93,24 @@ export default function Signup() {
     setLoading(false);
   }
 
+  const countries = [
+    { country: "Canada", value: "CA" },
+    { country: "USA", value: "USA" },
+    { country: "India", value: "IN" },
+  ];
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>{ <LockOutlinedIcon /> }</Avatar>
+        <Avatar className={classes.avatar}>{<LockOutlinedIcon />}</Avatar>
         <Typography component="h1" variant="h5">
           Sign up
         </Typography>
         {error && <Alert severity="error">{error}</Alert>}
-        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+        <form className={classes.form} error={error}  noValidate onSubmit={handleSubmit}>
           <Grid container spacing={2}>
-            {/* <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
                 name="firstName"
@@ -89,7 +119,7 @@ export default function Signup() {
                 fullWidth
                 id="firstName"
                 label="First Name"
-                ref={fNameRef}
+                inputRef={fNameRef}
                 autoFocus
               />
             </Grid>
@@ -101,10 +131,10 @@ export default function Signup() {
                 id="lastName"
                 label="Last Name"
                 name="lastName"
-                ref={lNameRef}
+                inputRef={lNameRef}
                 autoComplete="lname"
               />
-            </Grid> */}
+            </Grid>
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -143,6 +173,19 @@ export default function Signup() {
                 id="cofirmpassword"
                 autoComplete="current-password"
                 inputRef={cofirmpasswordRef}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Autocomplete
+                id="country"
+                onChange={(event, value) => SetCountry(value)} 
+                options={countries}
+                getOptionLabel={(option) => option.country}
+                required
+                renderInput={(params) => (
+                  <TextField {...params} label="Country" variant="outlined" />
+                )}
+                ref={countryRef}
               />
             </Grid>
           </Grid>
