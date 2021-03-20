@@ -9,6 +9,7 @@ import PrivateRoute from "./PrivateRoute";
 import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
 import HotelInfo from "./HotelInfo";
+import Hotels from './Hotels';
 
 
 
