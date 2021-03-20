@@ -17,6 +17,9 @@ import PrivateRoute from "./components/PrivateRoute";
 import ForgotPassword from "./components/ForgotPassword";
 import AccountPage from "./pages/AccountPage";
 import Layout from "./layout/Layout";
+import HotelInfo from "./HotelInfo";
+import Hotels from './Hotels';
+
 
 const theme = createMuiTheme(themeObject);
 
@@ -38,6 +41,8 @@ class App extends Component {
                   <Route path="/signup" component={Signup} />
                   <Route path="/login" component={Login} />
                   <Route path="/forgot-password" component={ForgotPassword} />
+                  <Route path="/hotel" component={HotelInfo} />
+                  <Route path="/secondpage" component={Hotels} />
                 </Switch>
               </div>
             </AuthProvider>
