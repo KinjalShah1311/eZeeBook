@@ -1,4 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -6,18 +10,19 @@ import TextField from "@material-ui/core/TextField";
 import Alert from "@material-ui/lab/Alert";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { fade, makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+import Snackbar from "@material-ui/core/Snackbar";
+import MuiAlert from "@material-ui/lab/Alert";
 
 //Components
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 
-import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+
+import axios from "axios";
 
 const drawerWidth = 240;
 
@@ -141,71 +146,98 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const schema = yup.object().shape({
+  firstName: yup.string().required(),
+  lastName: yup.string().required(),
+  emailAddress: yup.string().required(),
+  phoneNumber: yup.number().required(),
+});
+
 export default function AccountPage() {
-  const {
-    emailRef,
-    fNameRef,
-    lNameRef,
-    countryRef,
-    genderRef,
-    phoneRef,
-    addressRef,
-  } = useRef();
+  const emailRef = useRef();
+  const fNameRef = useRef();
+  const lNameRef = useRef();
+  const countryRef = useRef();
+  const phoneRef = useRef();
+  const addressRef = useRef();
 
   const { currentUser } = useAuth();
 
   const [country, setCountry] = useState("");
-  const [gender, setGender] = useState("");
+
+  const [userData, setUserData] = useState({
+    firstName: "",
+    lastName: "",
+    emailAddress: "",
+    address: "",
+    phoneNumber: "",
+    country: "",
+  });
 
   const [error, setError] = useState("");
+  const [showSuccess, setShowSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [open, setOpen] = React.useState(false);
 
   const classes = useStyles();
 
-  function handleSubmit(e) {
+  function updateProfile(e) {
     e.preventDefault();
-
+    setLoading(true);
+    const uid = currentUser.uid;
+    debugger;
+    return axios
+      .put(`http://localhost:7000/api/users/${uid}`, userData)
+      .then((response) => {
+        setLoading(false);
+        setOpen(true);
+      })
+      .catch((err) => {
+        setError("Failed to update user details");
+      });
+  }
+  function getUserData() {
     try {
       setError("");
       setLoading(true);
-      //   signup(emailRef.current.value, passwordRef.current.value).then(
-      //     (userRes) => {
-      //       const signUpUser = {
-      //         uid: userRes.user.uid,
-      //         emailAddress: userRes.user.email,
-      //         country: country.value,
-      //         firstName: fNameRef.current.value,
-      //         lastName: lNameRef.current.value,
-      //       };
-      //       return axios
-      //         .post("http://localhost:7000/api/users", signUpUser)
-      //         .then((response) => {
-      //           history.push("/");
-      //           console.log(response);
-      //         })
-      //         .catch((err) => {
-      //           setError("Failed to add user details");
-      //         });
-      //     }
-      //   );
-    } catch {
-      setError("Failed to create an account");
-    }
+      const uid = currentUser.uid;
 
-    setLoading(false);
+      setCountry("CA");
+      return axios
+        .get(`http://localhost:7000/api/users/${uid}`)
+        .then((response) => {
+          const userData = response.data;
+          debugger;
+          setUserData(userData);
+          setLoading(false);
+        })
+        .catch((err) => {
+          setError("Failed to get user details");
+        });
+    } catch {
+      setError("Failed to get an account");
+    }
   }
 
-  const countries = [
-    { country: "Canada", value: "CA" },
-    { country: "USA", value: "USA" },
-    { country: "India", value: "IN" },
-  ];
+  const handleChange = (event) => {
+    setUserData({
+      ...userData,
+      [event.target.name]: event.target.value,
+    });
+  };
 
-  const genderOptions = [
-    { gender: "Male", value: "M" },
-    { gender: "Female", value: "F" },
-    { gender: "Other", value: "O" },
-  ];
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  useEffect(() => {
+    getUserData();
+    debugger;
+  }, []);
 
   return (
     <div className={classes.root}>
@@ -214,20 +246,24 @@ export default function AccountPage() {
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
-          <div>
-            <Typography variant="h6" gutterBottom>
-              Update Profile:
-            </Typography>
-            <br />
-
-            <Grid container spacing={4}>
-              {error && <Alert severity="error">{error}</Alert>}
-              <form
-                className={classes.form}
-                error={error}
-                noValidate
-                onSubmit={handleSubmit}
-              >
+          <Typography variant="h6" gutterBottom>
+            Update Profile:
+          </Typography>
+          <br />
+          {error && <Alert severity="error">{error}</Alert>}
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
+              Profile updated successfully
+            </Alert>
+          </Snackbar>
+          <Grid container spacing={4}>
+            <form
+              className={classes.form}
+              error={error}
+              noValidate
+              onSubmit={updateProfile}
+            >
+              {!loading && (
                 <Grid
                   container
                   spacing={2}
@@ -245,6 +281,8 @@ export default function AccountPage() {
                       id="firstName"
                       label="First Name"
                       inputRef={fNameRef}
+                      value={userData.firstName}
+                      onChange={handleChange}
                       autoFocus
                     />
                   </Grid>
@@ -256,67 +294,45 @@ export default function AccountPage() {
                       label="Last Name"
                       name="lastName"
                       inputRef={lNameRef}
+                      value={userData.lastName}
                       autoComplete="lname"
+                      onChange={handleChange}
+                      autoFocus
                     />
                   </Grid>
                   <Grid item xs={9}>
                     <TextField
                       required
                       fullWidth
-                      id="email"
+                      id="emailAddress"
                       label="Email Address"
-                      name="email"
+                      name="emailAddress"
                       type="text"
                       inputRef={emailRef}
                       onClick={() => emailRef.current.focus()}
-                      autoComplete="email"
+                      value={userData.emailAddress}
+                      autoComplete="emailAddress"
+                      onChange={handleChange}
+                      autoFocus
                     />
                   </Grid>
-                  <Grid item xs={9}>
-                    <Autocomplete
-                      id="gender"
-                      onChange={(event, value) => setGender(value)}
-                      options={genderOptions}
-                      getOptionLabel={(option) => option.gender}
-                      required
-                      renderInput={(params) => (
-                        <TextField {...params} label="Gender" />
-                      )}
-                      ref={genderRef}
-                    />
-                  </Grid>
-
-                  <Grid item xs={9}>
-                    <Autocomplete
-                      id="country"
-                      onChange={(event, value) => setCountry(value)}
-                      options={countries}
-                      getOptionLabel={(option) => option.country}
-                      required
-                      renderInput={(params) => (
-                        <TextField {...params} label="Country" />
-                      )}
-                      ref={countryRef}
-                    />
-                  </Grid>
-
                   <Grid item xs={9}>
                     <TextField
-                      required
                       fullWidth
-                      id="phnumber"
+                      id="phoneNumber"
                       label="Phone Number"
-                      name="phnumber"
+                      name="phoneNumber"
                       type="text"
                       inputRef={phoneRef}
                       onClick={() => phoneRef.current.focus()}
-                      autoComplete="phnumber"
+                      defaultValue={userData.phoneNumber}
+                      onChange={handleChange}
+                      autoComplete="phoneNumber"
                     />
                   </Grid>
 
                   <Grid item xs={9}>
                     <TextField
-                      required
                       fullWidth
                       id="address"
                       label="Address"
@@ -325,6 +341,8 @@ export default function AccountPage() {
                       inputRef={addressRef}
                       onClick={() => addressRef.current.focus()}
                       autoComplete="address"
+                      defaultValue={userData.address}
+                      onChange={handleChange}
                       multiline
                     />
                   </Grid>
@@ -338,13 +356,25 @@ export default function AccountPage() {
                       className={classes.submit}
                       disabled={loading}
                     >
-                      Sign Up
+                      Update Profile
+                    </Button>
+                  </Grid>
+                  <Grid item xs={9}>
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      color="primary"
+                      className={classes.submit}
+                    >
+                      Cancel
                     </Button>
                   </Grid>
                 </Grid>
-              </form>
-            </Grid>
-          </div>
+              )}
+            </form>
+          </Grid>
+          <br />
+
           <Box pt={4}>
             <Footer />
           </Box>
