@@ -185,7 +185,6 @@ export default function AccountPage() {
     e.preventDefault();
     setLoading(true);
     const uid = currentUser.uid;
-    debugger;
     return axios
       .put(`http://localhost:7000/api/users/${uid}`, userData)
       .then((response) => {
@@ -207,7 +206,6 @@ export default function AccountPage() {
         .get(`http://localhost:7000/api/users/${uid}`)
         .then((response) => {
           const userData = response.data;
-          debugger;
           setUserData(userData);
           setLoading(false);
         })
@@ -236,7 +234,6 @@ export default function AccountPage() {
 
   useEffect(() => {
     getUserData();
-    debugger;
   }, []);
 
   return (

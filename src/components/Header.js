@@ -34,7 +34,7 @@ import { useAuth, logout } from "../contexts/AuthContext";
 
 //components
 
-const drawerWidth = 240;
+const drawerWidth = 0;//240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -365,7 +365,7 @@ export default function Header() {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Drawer
+      {/* <Drawer
         variant="permanent"
         classes={{
           paper: clsx(classes.drawerPaper, !open && classes.drawerPaperClose),
@@ -381,7 +381,7 @@ export default function Header() {
         <List>{mainListItems}</List>
         <Divider />
         <List>{secondaryListItems}</List>
-      </Drawer>
+      </Drawer> */}
     </>
   );
 }
