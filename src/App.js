@@ -17,8 +17,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import ForgotPassword from "./components/ForgotPassword";
 import AccountPage from "./pages/AccountPage";
 import Layout from "./layout/Layout";
-import HotelInfo from "./HotelInfo";
-import Hotels from './Hotels';
+import HotelInfo from "./components/HotelInfo";
+import Hotels from './components/Hotels';
 
 
 const theme = createMuiTheme(themeObject);
