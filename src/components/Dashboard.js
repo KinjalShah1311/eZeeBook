@@ -152,9 +152,10 @@ export default function Dashboard() {
 
           <Box pt={4}>
 
-            <Footer />
+            
           </Box>
         </Container>
+        <Footer />
       </main>
     </div>
   );
