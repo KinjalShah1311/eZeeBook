@@ -13,7 +13,6 @@ import Paper from "@material-ui/core/Paper";
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import Banner from '../components/Banner';
-import Hotels from "./Hotels";
 
 const drawerWidth = 240;
 
@@ -137,81 +136,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const hotels1 = [
-  {
-    roomID: 1,
-    roomType: "House",
-    rating: 4.5,
-    totalOccupancy: 10,
-    totalBathrooms: 3,
-    totalBedrooms: 5,
-    summary: "House is located near Tiantan Park, just a 10-minute walk from the National Center for the Performing Arts and Tian'anmen Square. Built in 1956 it has old school charm and many rooms still feature high, crown-molded ceilings. A 2012 renovation brought all rooms and services up to modern day scratch and guestrooms come equipped with free Wi-Fi and all the usual amenities required for a comfortable stay.",
-    address: "Address 1",
-    hasTV: true,
-    hasKitchen: true,
-    hasAirConditioner: true,
-    hasInternet: true,
-    price: 500,
-    longitude: -80.512658,
-    latitude: 43.413714,
-    roomBanner: "https://cdn.pixabay.com/photo/2017/03/22/17/39/kitchen-2165756_960_720.jpg"
-  },
-  {
-    roomID: 2,
-    roomType: "Home",
-    rating: 0,
-    totalOccupancy: 11,
-    totalBathrooms: 2,
-    totalBedrooms: 5,
-    summary: "This house has a great view. Home is is located near Tiantan Park, just a 10-minute walk from the National Center for the Performing Arts and Tian'anmen Square. Built in 1956 it has old school charm and many rooms still feature high, crown-molded ceilings. A 2012 renovation brought all rooms and services up to modern day scratch and guestrooms come equipped with free Wi-Fi and all the usual amenities required for a comfortable stay.",
-    address: "Address 2",
-    hasTV: true,
-    hasKitchen: true,
-    hasAirConditioner: true,
-    hasInternet: true,
-    price: 500,
-    longitude: -80.512658,
-    latitude: 43.413714,
-    roomBanner: "https://cdn.pixabay.com/photo/2015/10/20/18/57/furniture-998265__340.jpg"
-  },
-  {
-    roomID: 211,
-    roomType: "Home 3",
-    rating: 0,
-    totalOccupancy: 11,
-    totalBathrooms: 2,
-    totalBedrooms: 5,
-    summary: "This home3 has a great view and is located near Tiantan Park, just a 10-minute walk from the National Center for the Performing Arts and Tian'anmen Square. Built in 1956 it has old school charm and many rooms still feature high, crown-molded ceilings. A 2012 renovation brought all rooms and services up to modern day scratch and guestrooms come equipped with free Wi-Fi and all the usual amenities required for a comfortable stay.",
-    address: "Address 2",
-    hasTV: true,
-    hasKitchen: true,
-    hasAirConditioner: true,
-    hasInternet: true,
-    price: 500,
-    longitude: -80.512658,
-    latitude: 43.413714,
-    roomBanner: "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521__340.jpg"
-  },
-  {
-    roomID: 21,
-    roomType: "Home4",
-    rating: 0,
-    totalOccupancy: 11,
-    totalBathrooms: 2,
-    totalBedrooms: 5,
-    summary: "This home4 has a great view. You'll love it. It is located near Tiantan Park, just a 10-minute walk from the National Center for the Performing Arts and Tian'anmen Square. Built in 1956 it has old school charm and many rooms still feature high, crown-molded ceilings. A 2012 renovation brought all rooms and services up to modern day scratch and guestrooms come equipped with free Wi-Fi and all the usual amenities required for a comfortable stay.",
-    address: "Address 2",
-    hasTV: true,
-    hasKitchen: true,
-    hasAirConditioner: true,
-    hasInternet: true,
-    price: 500,
-    longitude: -80.512658,
-    latitude: 43.413714,
-    roomBanner: "https://cdn.pixabay.com/photo/2017/08/02/01/01/living-room-2569325_960_720.jpg"
-  }
-]
-
 export default function Dashboard() {
   const classes = useStyles();
 
@@ -225,13 +149,13 @@ export default function Dashboard() {
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
           <Banner />
-          <Hotels hotels={hotels1} />
 
           <Box pt={4}>
 
-            <Footer />
+            
           </Box>
         </Container>
+        <Footer />
       </main>
     </div>
   );

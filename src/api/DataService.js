@@ -6,6 +6,21 @@ import axios from 'axios'
 class DataService{
 
 
+
+   formatDate(date) {
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+
   retrieveLocation(name){
           console.log(name);
         const options = {
@@ -24,16 +39,18 @@ class DataService{
 
 
     }
-    retriveHotelNames(lat,lon){
+    retriveHotelNames(lat,lon,startDate,endDate,rooms){
+      console.log("start "+this.formatDate(startDate));
+      console.log("rooms "+rooms);
       const options = {
         method: 'GET',
         url: 'https://hotels-com-free.p.rapidapi.com/srle/listing/v1/brands/hotels.com',
         params: {
           lat: lat,
           lon: lon,
-          checkIn: '2021-01-27',
-          checkOut: '2021-01-28',
-          rooms: '1',
+          checkIn: this.formatDate(startDate),
+          checkOut: this.formatDate(endDate),
+          rooms: rooms,
           locale: 'en_US',
           currency: 'USD',
           pageNumber: '1'
