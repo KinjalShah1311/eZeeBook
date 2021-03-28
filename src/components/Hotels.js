@@ -18,14 +18,14 @@ function assignValues(names) {
     if (names.length > 0) {
         for (var i = 0; i < names.length; i++) {
             hotels1.push({
-                roomID: 1,
-                roomType: names[i].name,
-                rating: 4.5,
+                roomID: names[i].hotel.id,
+                roomType: names[i].hotel.name,
+                rating: names[i].hotel.guestReviews.rating,
                 totalOccupancy: 10,
                 totalBathrooms: 3,
                 totalBedrooms: 5,
-                summary: "This house has a great view",
-                address: "Address 1",
+                summary: names[i].hotel.address.streetAddress + " Near " + names[i].hotel.neighbourhood + ", " + names[i].hotel.address.locality,
+                address: names[i].hotel.address.streetAddress + ", " + names[i].hotel.address.locality,
                 hasTV: true,
                 hasKitchen: true,
                 hasAirConditioner: true,
@@ -33,7 +33,7 @@ function assignValues(names) {
                 price: 500,
                 longitude: -80.512658,
                 latitude: 43.413714,
-                roomBanner: names[i].img1
+                roomBanner: names[i].hotel.optimizedThumbUrls.srpDesktop
             });
         }
     }
@@ -50,7 +50,7 @@ function Hotels() {
 
             <Grid container spacing={24} justify="center" className={classes.root}>
                 {hotels1.map((hotel) => (
-                    <Hotel {...hotel} key={hotel.roomID} room={hotel.roomID} />
+                    <Hotel {...hotel} key={hotel.roomID} room={hotel} />
                 ))
                 }
             </Grid>

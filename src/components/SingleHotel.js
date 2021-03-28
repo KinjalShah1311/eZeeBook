@@ -57,6 +57,8 @@ const useStyles = makeStyles({
 
 export default function SingleHotel(props) {
   const classes = useStyles();
+  console.log("ROOMID=", props.room.roomID)
+
   return (
     <Card className={classes.root}>
       <CardActionArea>

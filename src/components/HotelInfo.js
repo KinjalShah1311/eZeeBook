@@ -6,13 +6,13 @@ import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
+import { useLocation } from "react-router-dom";
 
 //context
 
 //components
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import Banner from '../components/Banner';
 import SingleHotel from './SingleHotel';
 
 const drawerWidth = 240;
@@ -137,26 +137,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const room = {
-    roomID: 1,
-    roomType: "House",
-    rating: 4.5,
-    totalOccupancy: 10,
-    totalBathrooms: 3,
-    totalBedrooms: 5,
-    summary: "House is located near Tiantan Park, just a 10-minute walk from the National Center for the Performing Arts and Tian'anmen Square. Built in 1956 it has old school charm and many rooms still feature high, crown-molded ceilings. A 2012 renovation brought all rooms and services up to modern day scratch and guestrooms come equipped with free Wi-Fi and all the usual amenities required for a comfortable stay.",
-    address: "Address 1",
-    hasTV: true,
-    hasKitchen: true,
-    hasAirConditioner: true,
-    hasInternet: true,
-    price: 500,
-    longitude: -80.512658,
-    latitude: 43.413714,
-    roomBanner: "https://cdn.pixabay.com/photo/2017/03/22/17/39/kitchen-2165756_960_720.jpg"
-}
 
-export default function HotelInfo() {
+
+export default function HotelInfo(props) {
+
+    const location = useLocation();
+    const hotel = location.hotel;
     const classes = useStyles();
 
     //const fixedHeightPaper = clsx(classes.paper, classes.fixedHeight);
@@ -170,7 +156,7 @@ export default function HotelInfo() {
                 <Container maxWidth="lg" className={classes.container}>
 
 
-                    <SingleHotel room={room} />
+                    <SingleHotel room={hotel} />
                     <Box pt={4}>
                         <Footer />
                     </Box>

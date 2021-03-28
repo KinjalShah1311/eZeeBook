@@ -39,12 +39,15 @@ export default function HotelCard(props) {
     const classes = useStyles();
     const history = useHistory();
 
-    const handleClick = () => {
-        history.push("/hotel");
+    const handleClick = (hotel) => {
+        history.push({
+            pathname: '/hotel',
+            hotel: hotel,
+        });
     }
 
     return (
-        <Card className={classes.root} onClick={handleClick} >
+        <Card className={classes.root} onClick={() => handleClick(props.room)} >
             <CardActionArea>
                 <CardMedia
                     className={classes.media}
