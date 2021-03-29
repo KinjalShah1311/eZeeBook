@@ -100,19 +100,6 @@ export default function AppFooter() {
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={6} sm={4} md={2}>
-            <Typography variant="h6" marked="left" gutterBottom>
-              Legal
-            </Typography>
-            <ul className={classes.list}>
-              <li className={classes.listItem}>
-                <Link to={"/terms"}>Terms</Link>
-              </li>
-              <li className={classes.listItem}>
-                <Link to={"/privacy"}>Privacy</Link>
-              </li>
-            </ul>
-          </Grid>
           <Grid item xs={6} sm={8} md={4}>
             <Typography variant="h6" marked="left" gutterBottom>
               Language

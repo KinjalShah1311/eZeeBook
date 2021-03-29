@@ -2,7 +2,7 @@ import withRoot from "./modules/withRoot";
 // --- Post bootstrap -----
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import ProductCategories from "./modules/views/ProductCategories";
+import Categories from "./modules/views/Categories";
 import ProductSmokingHero from "./modules/views/ProductSmokingHero";
 import AppFooter from "./modules/views/AppFooter";
 import Banner from "./modules/views/Banner";
@@ -37,8 +37,8 @@ function Index() {
       <AppAppBar />
       <Banner />
       <Values />
-      {/* <ProductCategories />
-      <ProductHowItWorks />
+      <Categories />
+      {/* <ProductHowItWorks />
       <ProductCTA />
       <ProductSmokingHero /> */}
       <AppFooter />

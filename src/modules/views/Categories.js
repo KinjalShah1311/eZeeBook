@@ -83,7 +83,7 @@ const styles = (theme) => ({
   },
 });
 
-function ProductCategories(props) {
+function Categories(props) {
   const { classes } = props;
 
   const images = [
@@ -182,8 +182,8 @@ function ProductCategories(props) {
   );
 }
 
-ProductCategories.propTypes = {
+Categories.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ProductCategories);
+export default withStyles(styles)(Categories);
