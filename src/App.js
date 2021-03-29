@@ -19,36 +19,43 @@ import AccountPage from "./pages/AccountPage";
 import Layout from "./layout/Layout";
 import HotelInfo from "./components/HotelInfo";
 import Hotels from './components/Hotels';
-
+import Home from './Home';
 
 const theme = createMuiTheme(themeObject);
 
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider theme={theme}>
-        <Provider store={store}>
-          <Router>
-            <AuthProvider>
-              <div className="container">
-                <Switch>
-                  <Route exact path="/" component={Dashboard} />
-                  <PrivateRoute
-                    exact
-                    path="/update-profile"
-                    component={AccountPage}
-                  />
-                  <Route path="/signup" component={Signup} />
-                  <Route path="/login" component={Login} />
-                  <Route path="/forgot-password" component={ForgotPassword} />
-                  <Route path="/hotel" component={HotelInfo} />
-                  <Route path="/secondpage" component={Hotels} />
-                </Switch>
-              </div>
-            </AuthProvider>
-          </Router>
-        </Provider>
-      </MuiThemeProvider>
+      <>
+      <Router>
+        <AuthProvider>
+          <Home/>
+        </AuthProvider>
+      </Router>
+      </>
+      // <MuiThemeProvider theme={theme}>
+      //   <Provider store={store}>
+      //     <Router>
+      //       <AuthProvider>
+      //         <div className="container">
+      //           <Switch>
+      //             <Route exact path="/" component={Dashboard} />
+      //             <PrivateRoute
+      //               exact
+      //               path="/update-profile"
+      //               component={AccountPage}
+      //             />
+      //             <Route path="/signup" component={Signup} />
+      //             <Route path="/login" component={Login} />
+      //             <Route path="/forgot-password" component={ForgotPassword} />
+      //             <Route path="/hotel" component={HotelInfo} />
+      //             <Route path="/secondpage" component={Hotels} />
+      //           </Switch>
+      //         </div>
+      //       </AuthProvider>
+      //     </Router>
+      //   </Provider>
+      // </MuiThemeProvider>
     );
   }
 }
