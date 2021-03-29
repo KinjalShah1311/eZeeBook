@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '../components/Button';
 import Typography from '../components/Typography';
-import ProductHeroLayout from './ProductHeroLayout';
+import BannerLayout from './BannerLayout';
 import { Link } from "react-router-dom";
 
 const backgroundImage =
@@ -30,18 +30,18 @@ const styles = (theme) => ({
   },
 });
 
-function ProductHero(props) {
+function Banner(props) {
   const { classes } = props;
 
   return (
-    <ProductHeroLayout backgroundClassName={classes.background}>
+    <BannerLayout backgroundClassName={classes.background}>
       {/* Increase the network loading priority of the background image. */}
       <img style={{ display: 'none' }} src={backgroundImage} alt="increase priority" />
       <Typography color="inherit" align="center" variant="h2" marked="center">
-        Upgrade your Sundays
+        Book your stay
       </Typography>
       <Typography color="inherit" align="center" variant="h5" className={classes.h5}>
-        Enjoy secret offers up to -70% off the best luxury hotels every Sunday.
+        Vacation rentals, Hotel booking -30% off the best luxury hotels.
       </Typography>
       <Link to={"/signup"}>
       <Button
@@ -57,12 +57,12 @@ function ProductHero(props) {
       <Typography variant="body2" color="inherit" className={classes.more}>
         Discover the experience
       </Typography>
-    </ProductHeroLayout>
+    </BannerLayout>
   );
 }
 
-ProductHero.propTypes = {
+Banner.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ProductHero);
+export default withStyles(styles)(Banner);

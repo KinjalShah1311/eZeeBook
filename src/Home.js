@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import ProductCategories from "./modules/views/ProductCategories";
 import ProductSmokingHero from "./modules/views/ProductSmokingHero";
 import AppFooter from "./modules/views/AppFooter";
-import ProductHero from "./modules/views/ProductHero";
+import Banner from "./modules/views/Banner";
 import ProductValues from "./modules/views/ProductValues";
 import ProductHowItWorks from "./modules/views/ProductHowItWorks";
 import ProductCTA from "./modules/views/ProductCTA";
@@ -35,12 +35,12 @@ function Index() {
   return (
     <React.Fragment>
       <AppAppBar />
-      <ProductHero />
-      <ProductValues />
+      <Banner />
+      {/* <ProductValues />
       <ProductCategories />
       <ProductHowItWorks />
       <ProductCTA />
-      <ProductSmokingHero />
+      <ProductSmokingHero /> */}
       <AppFooter />
     </React.Fragment>
   );
