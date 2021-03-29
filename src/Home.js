@@ -3,12 +3,11 @@ import withRoot from "./modules/withRoot";
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Categories from "./modules/views/Categories";
-import ProductSmokingHero from "./modules/views/ProductSmokingHero";
+import ContactUs from "./modules/views/ContactUs";
 import AppFooter from "./modules/views/AppFooter";
 import Banner from "./modules/views/Banner";
 import Values from "./modules/views/Values";
-import ProductHowItWorks from "./modules/views/ProductHowItWorks";
-import ProductCTA from "./modules/views/ProductCTA";
+import Newsletter from "./modules/views/Newsletter";
 import AppAppBar from "./modules/views/AppAppBar";
 import Login from "./components/Login";
 import SignUp from "./components/Signup";
@@ -38,9 +37,8 @@ function Index() {
       <Banner />
       <Values />
       <Categories />
-      {/* <ProductHowItWorks />
-      <ProductCTA />
-      <ProductSmokingHero /> */}
+      <Newsletter />
+      <ContactUs />
       <AppFooter />
     </React.Fragment>
   );

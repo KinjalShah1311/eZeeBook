@@ -28,7 +28,7 @@ const styles = (theme) => ({
   },
 });
 
-function ProductSmokingHero(props) {
+function ContactUs(props) {
   const { classes } = props;
 
   return (
@@ -46,8 +46,8 @@ function ProductSmokingHero(props) {
   );
 }
 
-ProductSmokingHero.propTypes = {
+ContactUs.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ProductSmokingHero);
+export default withStyles(styles)(ContactUs);

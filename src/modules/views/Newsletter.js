@@ -58,7 +58,7 @@ const styles = (theme) => ({
   },
 });
 
-function ProductCTA(props) {
+function Newsletter(props) {
   const { classes } = props;
   const [open, setOpen] = React.useState(false);
 
@@ -110,8 +110,8 @@ function ProductCTA(props) {
   );
 }
 
-ProductCTA.propTypes = {
+Newsletter.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(ProductCTA);
+export default withStyles(styles)(Newsletter);
