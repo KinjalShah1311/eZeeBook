@@ -6,7 +6,7 @@ import ProductCategories from "./modules/views/ProductCategories";
 import ProductSmokingHero from "./modules/views/ProductSmokingHero";
 import AppFooter from "./modules/views/AppFooter";
 import Banner from "./modules/views/Banner";
-import ProductValues from "./modules/views/ProductValues";
+import Values from "./modules/views/Values";
 import ProductHowItWorks from "./modules/views/ProductHowItWorks";
 import ProductCTA from "./modules/views/ProductCTA";
 import AppAppBar from "./modules/views/AppAppBar";
@@ -36,8 +36,8 @@ function Index() {
     <React.Fragment>
       <AppAppBar />
       <Banner />
-      {/* <ProductValues />
-      <ProductCategories />
+      <Values />
+      {/* <ProductCategories />
       <ProductHowItWorks />
       <ProductCTA />
       <ProductSmokingHero /> */}
