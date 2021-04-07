@@ -14,6 +14,8 @@ import WifiIcon from "@material-ui/icons/Wifi";
 import LocalDiningIcon from "@material-ui/icons/LocalDining";
 import TvIcon from "@material-ui/icons/Tv";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
+import { Button } from "@material-ui/core";
+import {  useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -58,6 +60,13 @@ const useStyles = makeStyles({
 export default function SingleHotel(props) {
   const classes = useStyles();
   console.log("ROOMID=", props.room.roomID)
+  const history = useHistory();
+  function reservation(){
+    history.push({
+      pathname: '/checkout',
+      state: { hotel: props.room }
+    });
+  }
 
   return (
     <Card className={classes.root}>
@@ -133,6 +142,8 @@ export default function SingleHotel(props) {
         </Grid>
       </CardActionArea>
       <Box></Box>
+      <Button onClick={reservation}>Reserve</Button>
     </Card>
+    
   );
 }
