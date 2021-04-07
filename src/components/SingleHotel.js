@@ -2,11 +2,9 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
-import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Box from "@material-ui/core/Box";
-import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import StarIcon from "@material-ui/icons/Star";
 import Grid from "@material-ui/core/Grid";
@@ -14,6 +12,8 @@ import WifiIcon from "@material-ui/icons/Wifi";
 import LocalDiningIcon from "@material-ui/icons/LocalDining";
 import TvIcon from "@material-ui/icons/Tv";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
+import { Button } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   root: {
@@ -53,11 +53,22 @@ const useStyles = makeStyles({
     height: 18,
     margin: "0 2px",
   },
+  button: {
+    margin: "10px 15px",
+  },
 });
 
 export default function SingleHotel(props) {
   const classes = useStyles();
   console.log("ROOMID=", props.room.roomID)
+  const history = useHistory();
+
+  function review() {
+    history.push({
+      pathname: '/review',
+      state: { hotel: props.room }
+    });
+  }
 
   return (
     <Card className={classes.root}>
@@ -133,6 +144,14 @@ export default function SingleHotel(props) {
         </Grid>
       </CardActionArea>
       <Box></Box>
-    </Card>
+      <Button
+        onClick={review}
+        className={classes.button}
+        variant="contained"
+        color="primary">
+        Add Review
+      </Button>
+    </Card >
+
   );
 }
