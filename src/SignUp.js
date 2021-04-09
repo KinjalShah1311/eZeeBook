@@ -1,5 +1,4 @@
 import withRoot from "./modules/withRoot";
-// --- Post bootstrap -----
 import React, { useState } from "react";
 import {
   Box,
