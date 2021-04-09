@@ -114,7 +114,7 @@ export default function SingleHotel(props) {
         reviewArray.slice(reviewArray.length - 5, reviewArray.length)
       );
     });
-  }, []);
+  }, [props.room.roomID]);
 
   function reservation() {
     history.push({
