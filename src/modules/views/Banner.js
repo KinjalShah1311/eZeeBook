@@ -1,14 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-// import useMediaQuery from "@material-ui/core/useMediaQuery";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
-// import { useTheme } from "@material-ui/core/styles";
+import { useTheme } from "@material-ui/core/styles";
 
 import Button from "../components/Button";
 import Typography from "../components/Typography";
@@ -41,8 +41,8 @@ const styles = (theme) => ({
 
 function Banner(props) {
   const { classes } = props;
-  // const theme = useTheme();
-  // const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -87,8 +87,8 @@ function Banner(props) {
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
-        minWidth="500px"
-        // fullScreen={fullScreen}
+        minWidth="1000px"
+        fullScreen={fullScreen}
       >
         <DialogTitle id="form-dialog-title">Search hotel by location, Date, No. of days to stay etc..</DialogTitle>
         <DialogContent>

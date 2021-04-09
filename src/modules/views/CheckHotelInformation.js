@@ -18,37 +18,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Review(props) {
+export default function CheckHotelInformation(props) {
   const classes = useStyles();
 
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Reservation Summary
+        Hotel Review Summary
       </Typography>
       <List disablePadding>
         <ListItem className={classes.listItem} key="Hotel name">
           <ListItemText primary="Hotel Name" />
-          <Typography variant="body2">
-            {props.hotelInfo && props.hotelInfo.roomType}
-          </Typography>
-
-          {/* 5/5 Exceptional (2 reviews)
-Guests rated this property 5/5 for cleanliness
-1 Property:
-Check-in: Fri, Apr 16
-Check-out: Mon, Apr 19
-3-night stay */}
+          <Typography variant="body2">{props.hotelInfo.roomType}</Typography>
         </ListItem>
-        {/* ))} */}
         <ListItem className={classes.listItem}>
-          <ListItemText primary="Total" />
+          <ListItemText primary="Your Booking ID" />
           <Typography variant="subtitle1" className={classes.total}>
-            $34.06
+            #12637490
           </Typography>
         </ListItem>
       </List>
-      <Grid container spacing={2}></Grid>
     </React.Fragment>
   );
 }

@@ -76,7 +76,7 @@ function Hotels(props) {
         Available Hotels
       </Typography>
       <div>
-        <Grid container spacing={24} justify="center" className={classes.root}>
+        <Grid container spacing={5} justify="center" className={classes.root}>
           {hotels1.map((hotel) => (
             <Hotel {...hotel} key={hotel.roomID} room={hotel} />
           ))}

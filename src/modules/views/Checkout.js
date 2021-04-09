@@ -13,7 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -70,10 +70,17 @@ function getStepContent(step, hotelInfo) {
 export default function Checkout(props) {
   const location = useLocation();
   const classes = useStyles();
+  const history = useHistory();
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
+  };
+
+  const handleHomePage = () => {
+    history.push({
+      pathname: "/",
+    });
   };
 
   const handleBack = () => {
@@ -104,6 +111,14 @@ export default function Checkout(props) {
                 confirmation, and will send you an update when your room is
                 ready.
               </Typography>
+              <Button
+                variant="contained"
+                color="primary"
+                onClick={handleHomePage}
+                className={classes.button}
+              >
+                Go Back to HomePage
+              </Button>
             </React.Fragment>
           ) : (
             <React.Fragment>

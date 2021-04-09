@@ -19,6 +19,7 @@ import UpdateProfile from "./UpdateProfile";
 import HotelList from "./HotelList";
 import HotelDetailInfo from "./HotelDetailInfo";
 import CheckoutInfo from "./CheckoutInfo";
+import ReviewInfo from "./ReviewInfo";
 
 function App() {
   return (
@@ -39,9 +40,9 @@ function App() {
         <Route path="/hotel">
           <HotelDetailInfo />
         </Route>
-        {/* <Route path="/review">
-          <HotelDetailInfo />
-        </Route> */}
+        <Route path="/review">
+          <ReviewInfo />
+        </Route>
         <Route path="/checkout">
           <CheckoutInfo />
         </Route>
