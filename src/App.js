@@ -10,8 +10,6 @@ import store from "./redux/store";
 
 //components
 import themeObject from "./util/theme";
-import Login from "./components/Login";
-import Signup from "./components/Signup";
 import Dashboard from "./components/Dashboard";
 import PrivateRoute from "./components/PrivateRoute";
 import ForgotPassword from "./components/ForgotPassword";

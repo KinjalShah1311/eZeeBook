@@ -15,7 +15,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import axios from "axios";
 
 //Components
-import Footer from "../components/Footer";
+import Footer from "./Footer";
 
 import { Link, useHistory } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
@@ -50,7 +50,6 @@ export default function Signup() {
   const [country, SetCountry] = useState('');
 
   const history = useHistory();
-
 
   const { signup, currentUser } = useAuth();
   const [error, setError] = useState("");

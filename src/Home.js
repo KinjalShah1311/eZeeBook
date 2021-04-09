@@ -9,8 +9,8 @@ import Banner from "./modules/views/Banner";
 import Values from "./modules/views/Values";
 import Newsletter from "./modules/views/Newsletter";
 import AppAppBar from "./modules/views/AppAppBar";
-import Login from "./components/Login";
-import SignUp from "./components/Signup";
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
           <Index />
         </Route>
         <Route path="/signin">
-          <Login />
+          <SignIn />
         </Route>
         <Route path="/signup">
           <SignUp />
