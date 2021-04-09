@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     }
 });
 
-export default function HotelCard(props) {
+export default function ListReviews(props) {
     const classes = useStyles();
     const milliseconds = +props.postedOn;
     let dateObject = new Date(milliseconds);

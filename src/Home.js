@@ -18,6 +18,7 @@ import SignUp from "./SignUp";
 import UpdateProfile from "./UpdateProfile";
 import HotelList from "./HotelList";
 import HotelDetailInfo from "./HotelDetailInfo";
+import CheckoutInfo from "./CheckoutInfo";
 
 function App() {
   return (
@@ -37,6 +38,12 @@ function App() {
         </Route>
         <Route path="/hotel">
           <HotelDetailInfo />
+        </Route>
+        {/* <Route path="/review">
+          <HotelDetailInfo />
+        </Route> */}
+        <Route path="/checkout">
+          <CheckoutInfo />
         </Route>
         <PrivateRoute exact path="/update-profile" component={UpdateProfile} />
       </Switch>

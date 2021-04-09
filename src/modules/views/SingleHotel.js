@@ -16,7 +16,7 @@ import { Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
 import DataService from "../../api/DataService";
-// import ListReviews from "./ListReviews";
+import ListReviews from "./ListReviews";
 
 const useStyles = makeStyles({
   root: {
@@ -199,7 +199,7 @@ export default function SingleHotel(props) {
         </Typography>
         {userReview.map((userRvw) => (
           <>
-           {/* <ListReviews {...userRvw} /> */}
+           <ListReviews {...userRvw} />
           </>
         ))}
       </CardActionArea>
