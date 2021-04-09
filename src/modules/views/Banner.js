@@ -16,7 +16,7 @@ import BannerLayout from "./BannerLayout";
 import HotelSearch from "../components/HotelSearch";
 
 const backgroundImage =
-  "https://images.unsplash.com/photo-1534854638093-bada1813ca19?auto=format&fit=crop&w=1400&q=80";
+  "https://cdn.pixabay.com/photo/2017/12/16/22/22/bora-bora-3023437_960_720.jpg";
 
 const styles = (theme) => ({
   background: {
@@ -42,7 +42,7 @@ const styles = (theme) => ({
 function Banner(props) {
   const { classes } = props;
   const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -87,7 +87,8 @@ function Banner(props) {
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
-        fullScreen={fullScreen}
+        minWidth="500px"
+        // fullScreen={fullScreen}
       >
         <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
         <DialogContent>

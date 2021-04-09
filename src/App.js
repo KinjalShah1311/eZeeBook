@@ -6,10 +6,6 @@ import { Component } from "react";
 //components
 import themeObject from "./util/theme";
 // //todo
-// import Dashboard from "./components/Dashboard";
-// import PrivateRoute from "./components/PrivateRoute";
-// import ForgotPassword from "./components/ForgotPassword";
-// import AccountPage from "./pages/AccountPage";
 // import HotelInfo from "./components/HotelInfo";
 // import Hotels from './components/Hotels';
 // import AddReview from './components/AddReview';

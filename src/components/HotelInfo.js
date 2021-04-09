@@ -154,8 +154,6 @@ export default function HotelInfo(props) {
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
-
-
                     <SingleHotel room={hotel} />
                     <Box pt={4}>
                         <Footer />
