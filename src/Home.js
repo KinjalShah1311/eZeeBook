@@ -16,6 +16,7 @@ import PrivateRoute from "./modules/PrivateRoute";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import UpdateProfile from "./UpdateProfile";
+import HotelList from "./HotelList";
 
 function App() {
   return (
@@ -29,6 +30,9 @@ function App() {
         </Route>
         <Route path="/signup">
           <SignUp />
+        </Route>
+        <Route path="/secondpage">
+          <HotelList />
         </Route>
         <PrivateRoute exact path="/update-profile" component={UpdateProfile} />
       </Switch>

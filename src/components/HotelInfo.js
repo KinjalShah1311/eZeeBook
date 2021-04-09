@@ -12,7 +12,7 @@ import { useLocation } from "react-router-dom";
 
 //components
 import Footer from '../components/Footer';
-import Header from '../components/Header';
+import Header from './Header_old';
 import SingleHotel from './SingleHotel';
 
 const drawerWidth = 240;

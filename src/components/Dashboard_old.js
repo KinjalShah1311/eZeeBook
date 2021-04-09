@@ -10,9 +10,7 @@ import Paper from "@material-ui/core/Paper";
 //context
 
 //components
-import Footer from '../components/Footer';
-import Header from '../components/Header';
-import Banner from '../components/Banner';
+import Banner from './HotelSearch-old';
 
 const drawerWidth = 240;
 
@@ -144,7 +142,6 @@ export default function Dashboard() {
     <div className={classes.root}>
       <CssBaseline />
 
-      <Header />
       <main className={classes.content}>
         <div className={classes.appBarSpacer} />
         <Container maxWidth="lg" className={classes.container}>
@@ -155,7 +152,6 @@ export default function Dashboard() {
             
           </Box>
         </Container>
-        <Footer />
       </main>
     </div>
   );

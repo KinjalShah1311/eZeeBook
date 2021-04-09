@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Hotel from "./Hotel";
+import Hotel from "./Hotel_old";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import HotelInfo from './HotelInfo'
@@ -48,7 +48,6 @@ function Hotels() {
 
     return (
         <div>
-
             <Grid container spacing={24} justify="center" className={classes.root}>
                 {hotels1.map((hotel) => (
                     <Hotel {...hotel} key={hotel.roomID} room={hotel} />
