@@ -115,6 +115,13 @@ export default function SingleHotel(props) {
     });
   }, []);
 
+  function reservation(){
+    history.push({
+      pathname: '/checkout',
+      state: { hotel: props.room }
+    });
+  }
+
   return (
     <Card className={classes.root}>
       <CardActionArea>
@@ -203,6 +210,14 @@ export default function SingleHotel(props) {
       >
         Add Review
       </Button>
+      <Button 
+        onClick={reservation}
+        className={classes.button}
+        variant="contained"
+        color="primary">
+          Reserve
+      </Button>
     </Card>
+    
   );
 }
