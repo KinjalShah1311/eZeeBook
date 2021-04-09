@@ -17,6 +17,7 @@ function assignValues(names) {
     hotels1 = [];
     if (names.length > 0) {
         for (var i = 0; i < names.length; i++) {
+            //console.log("Price: ", names[i].hotel.ratePlan.price.exactCurrent)
             hotels1.push({
                 roomID: names[i].hotel.id,
                 roomType: names[i].hotel.name,
@@ -30,7 +31,7 @@ function assignValues(names) {
                 hasKitchen: true,
                 hasAirConditioner: true,
                 hasInternet: true,
-                price: 500,
+                price: 150,
                 longitude: -80.512658,
                 latitude: 43.413714,
                 roomBanner: names[i].hotel.optimizedThumbUrls.srpDesktop
@@ -42,7 +43,7 @@ function assignValues(names) {
 function Hotels() {
     const location = useLocation();
     const classes = useStyles();
-    console.log(location.state.name);
+    //console.log(location.state.name);
     assignValues(location.state.name);
 
     return (

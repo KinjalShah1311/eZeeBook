@@ -7,11 +7,14 @@ import { Component } from "react";
 import themeObject from "./util/theme";
 //todo
 import Dashboard from "./components/Dashboard";
+import PrivateRoute from "./components/PrivateRoute";
+import ForgotPassword from "./components/ForgotPassword";
+import AccountPage from "./pages/AccountPage";
 import HotelInfo from "./components/HotelInfo";
-import Hotels from "./components/Hotels";
+import Hotels from './components/Hotels';
+import AddReview from './components/AddReview';
 import Checkout from "./components/Checkout";
 import Home from "./Home";
-
 const theme = createMuiTheme(themeObject);
 
 class App extends Component {
