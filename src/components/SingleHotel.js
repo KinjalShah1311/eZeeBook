@@ -13,7 +13,7 @@ import LocalDiningIcon from "@material-ui/icons/LocalDining";
 import TvIcon from "@material-ui/icons/Tv";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
 import { Button } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import DataService from "../api/DataService";
 import ListReviews from "./ListReviews";
@@ -70,6 +70,7 @@ const useStyles = makeStyles({
 export default function SingleHotel(props) {
   const classes = useStyles();
   const history = useHistory();
+  const location = useLocation();
   const [imageBanner, setImageBanner] = useState("");
   const [userReview, setUserReview] = useState([]);
 
@@ -115,7 +116,7 @@ export default function SingleHotel(props) {
     });
   }, []);
 
-  function reservation(){
+  function reservation() {
     history.push({
       pathname: '/checkout',
       state: { hotel: props.room }
@@ -210,14 +211,14 @@ export default function SingleHotel(props) {
       >
         Add Review
       </Button>
-      <Button 
+      <Button
         onClick={reservation}
         className={classes.button}
         variant="contained"
         color="primary">
-          Reserve
+        Reserve
       </Button>
     </Card>
-    
+
   );
 }
