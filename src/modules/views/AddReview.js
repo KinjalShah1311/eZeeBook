@@ -12,21 +12,8 @@ import Link from "@material-ui/core/Link";
 import Typography from "@material-ui/core/Typography";
 import CheckHotelInformation from "./CheckHotelInformation";
 import SubmitHotelReview from "./SubmitHotelReview";
-import Header from "./Header";
 import { useLocation, useHistory } from "react-router-dom";
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://material-ui.com/">
-        eZeeBook
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -78,7 +65,7 @@ function getStepContent(step, hotelInfo) {
   }
 }
 
-export default function Checkout(props) {
+export default function AddReview(props) {
   const location = useLocation();
   const history = useHistory();
   // console.log('names' +.roomType);
@@ -104,7 +91,6 @@ export default function Checkout(props) {
       <CssBaseline />
       <AppBar position="absolute" color="default" className={classes.appBar}>
         <Toolbar>
-          <Header />
           <Typography variant="h6" color="inherit" noWrap>
             Company name
           </Typography>
@@ -161,7 +147,6 @@ export default function Checkout(props) {
             )}
           </React.Fragment>
         </Paper>
-        <Copyright />
       </main>
     </React.Fragment>
   );

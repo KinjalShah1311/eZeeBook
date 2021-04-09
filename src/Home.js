@@ -11,17 +11,15 @@ import Newsletter from "./modules/views/Newsletter";
 import AppAppBar from "./modules/views/AppAppBar";
 
 import PrivateRoute from "./modules/PrivateRoute";
-import Dashboard from "./components/Dashboard";
-import HotelInfo from "./components/HotelInfo";
-import Hotels from './components/Hotels';
-import AddReview from './components/AddReview';
-import Checkout from "./components/Checkout";
 
 // Pages
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import UpdateProfile from "./UpdateProfile";
 import HotelList from "./HotelList";
+import HotelDetailInfo from "./HotelDetailInfo";
+import CheckoutInfo from "./CheckoutInfo";
+import ReviewInfo from "./ReviewInfo";
 
 function App() {
   return (
@@ -30,29 +28,23 @@ function App() {
         <Route exact path="/">
           <Index />
         </Route>
-        <Route path="/search">
-          <Dashboard />
-        </Route>
-        <Route path="/hotel">
-          <HotelInfo />
-        </Route>
-        <Route path="/secondpage">
-          <Hotels />
-        </Route>
-        <Route path="/checkout">
-          <Checkout />
-        </Route>
-        <Route path="/review">
-          <AddReview />
-        </Route>
         <Route path="/signin">
           <SignIn />
         </Route>
         <Route path="/signup">
           <SignUp />
         </Route>
-        <Route path="/secondpage">
+        <Route path="/hotels-list">
           <HotelList />
+        </Route>
+        <Route path="/hotel">
+          <HotelDetailInfo />
+        </Route>
+        <Route path="/review">
+          <ReviewInfo />
+        </Route>
+        <Route path="/checkout">
+          <CheckoutInfo />
         </Route>
         <PrivateRoute exact path="/update-profile" component={UpdateProfile} />
       </Switch>

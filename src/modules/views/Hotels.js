@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "../components/Typography";
 import { useLocation } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import Hotel from "./Hotel";
+import Hotel from "./HotelCardRoom";
 
 const styles = (theme) => ({
   root: {
@@ -76,7 +76,7 @@ function Hotels(props) {
         Available Hotels
       </Typography>
       <div>
-        <Grid container spacing={24} justify="center" className={classes.root}>
+        <Grid container spacing={5} justify="center" className={classes.root}>
           {hotels1.map((hotel) => (
             <Hotel {...hotel} key={hotel.roomID} room={hotel} />
           ))}

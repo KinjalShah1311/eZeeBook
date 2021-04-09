@@ -15,7 +15,7 @@ import AcUnitIcon from "@material-ui/icons/AcUnit";
 import { Button } from "@material-ui/core";
 import { useHistory, useLocation } from "react-router-dom";
 
-import DataService from "../api/DataService";
+import DataService from "../../api/DataService";
 import ListReviews from "./ListReviews";
 
 const useStyles = makeStyles({
@@ -199,7 +199,9 @@ export default function SingleHotel(props) {
           Reviews
         </Typography>
         {userReview.map((userRvw) => (
-          <ListReviews {...userRvw} />
+          <>
+           <ListReviews {...userRvw} />
+          </>
         ))}
       </CardActionArea>
       <Box></Box>

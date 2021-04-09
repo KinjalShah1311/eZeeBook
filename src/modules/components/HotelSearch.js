@@ -91,7 +91,7 @@ function Search(props) {
             }
             console.log(hotelNames);
             history.push({
-              pathname: "/secondpage",
+              pathname: "/hotels-list",
               state: { name: hotelNames },
             });
           }

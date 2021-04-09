@@ -7,7 +7,6 @@ import { Component } from "react";
 import themeObject from "./util/theme";
 // //todo
 // import HotelInfo from "./components/HotelInfo";
-// import Hotels from './components/Hotels';
 // import AddReview from './components/AddReview';
 // import Checkout from "./components/Checkout";
 import Home from "./Home";
