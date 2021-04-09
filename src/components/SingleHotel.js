@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -14,6 +14,9 @@ import TvIcon from "@material-ui/icons/Tv";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
 import { Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
+
+import DataService from "../api/DataService";
+import ListReviews from "./ListReviews";
 
 const useStyles = makeStyles({
   root: {
@@ -45,9 +48,15 @@ const useStyles = makeStyles({
     padding: "5px",
     borderTop: "1px solid lightgrey",
   },
-  amenitiesItem: {
-    margin: "0 15px",
+  reviews: {
+    margin: "10px 15px 0px 15px",
+    padding: "5px",
+    borderTop: "1px solid lightgrey",
   },
+  amenitiesItem: {
+    margin: "5px 15px",
+  },
+
   icons: {
     color: "#0292B7",
     height: 18,
@@ -60,28 +69,64 @@ const useStyles = makeStyles({
 
 export default function SingleHotel(props) {
   const classes = useStyles();
-  console.log("ROOMID=", props.room.roomID)
   const history = useHistory();
+  const [imageBanner, setImageBanner] = useState("");
+  const [userReview, setUserReview] = useState([]);
 
   function review() {
     history.push({
-      pathname: '/review',
-      state: { hotel: props.room }
+      pathname: "/review",
+      state: { hotel: props.room },
     });
   }
+
+  useEffect(() => {
+    async function getImages() {
+      let response = await DataService.retrieveImages(props.room.roomID);
+      return response.data.hotelImages[0].baseUrl;
+    }
+
+    async function getReviews() {
+      let response = await DataService.retrieveReviews(props.room.roomID);
+      let responseArray =
+        response.data.reviewData.guestReviewGroups.guestReviews[0].reviews;
+      return responseArray.slice(
+        responseArray.length - 10,
+        responseArray.length
+      );
+    }
+    const image = getImages().then((image) => {
+      return image;
+    });
+
+    const userReviews = getReviews().then((usrReviews) => {
+      return usrReviews;
+    });
+    image.then((image) => {
+      var res = image.replace("{size}", "z");
+      setImageBanner(res);
+    });
+
+    userReviews.then((hotelUserReview) => {
+      let reviewArray = hotelUserReview;
+      setUserReview(
+        reviewArray.slice(reviewArray.length - 5, reviewArray.length)
+      );
+    });
+  }, []);
 
   return (
     <Card className={classes.root}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image={props.room.roomBanner}
+          image={imageBanner}
           title={props.room.roomType}
         />
         <CardContent>
           <Grid container justify="space-between">
             <Grid item>
-              <Typography gutterBottom variant="h4" component="h2">
+              <Typography variant="h4" component="h2">
                 {props.room.roomType}
                 <Typography
                   variant="body2"
@@ -96,13 +141,13 @@ export default function SingleHotel(props) {
               </Typography>
             </Grid>
             <Grid item className={classes.amenitiesItem}>
-              <Typography gutterBottom variant="h6" component="h4">
+              <Typography variant="h6" component="h4" m={0}>
                 ${props.room.price}
               </Typography>
             </Grid>
           </Grid>
 
-          <Typography gutterBottom variant="h6" component="h4">
+          <Typography variant="h6" component="h4">
             <StarIcon className={classes.rating} />
             {props.room.rating}
           </Typography>
@@ -120,38 +165,44 @@ export default function SingleHotel(props) {
           Amenities
         </Typography>
 
-        <Grid container justify="center ">
+        <Grid container>
           <Grid item xs={5} className={classes.amenitiesItem}>
-            <Typography gutterBottom variant="h6" component="h4">
+            <Typography variant="h6" component="h4">
               <WifiIcon className={classes.icons} /> Wifi
             </Typography>
           </Grid>
           <Grid item xs={5} className={classes.amenitiesItem}>
-            <Typography gutterBottom variant="h6" component="h4">
+            <Typography variant="h6" component="h4">
               <LocalDiningIcon className={classes.icons} /> Kitchen
             </Typography>
           </Grid>
           <Grid item xs={5} className={classes.amenitiesItem}>
-            <Typography gutterBottom variant="h6" component="h4">
+            <Typography variant="h6" component="h4">
               <TvIcon className={classes.icons} /> TV
             </Typography>
           </Grid>
           <Grid item xs={5} className={classes.amenitiesItem}>
-            <Typography gutterBottom variant="h6" component="h4">
+            <Typography variant="h6" component="h4">
               <AcUnitIcon className={classes.icons} /> Air Conditioner
             </Typography>
           </Grid>
         </Grid>
+        <Typography variant="h5" component="h4" className={classes.reviews}>
+          Reviews
+        </Typography>
+        {userReview.map((userRvw) => (
+          <ListReviews {...userRvw} />
+        ))}
       </CardActionArea>
       <Box></Box>
       <Button
         onClick={review}
         className={classes.button}
         variant="contained"
-        color="primary">
+        color="primary"
+      >
         Add Review
       </Button>
-    </Card >
-
+    </Card>
   );
 }
