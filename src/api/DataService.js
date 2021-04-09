@@ -56,7 +56,7 @@ class DataService {
         pageNumber: '1'
       },
       headers: {
-        'x-rapidapi-key': 'aa3dfad0d3msh91e468cf37f9259p167861jsn51220deec226',
+        'x-rapidapi-key': '8da85bbb97msh0128e881c45d7fep17aa01jsn5f09da9c3d05',
         'x-rapidapi-host': 'hotels-com-free.p.rapidapi.com'
       }
     };
