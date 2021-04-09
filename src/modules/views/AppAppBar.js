@@ -4,8 +4,11 @@ import clsx from "clsx";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "../components/AppBar";
 import Toolbar, { styles as toolbarStyles } from "../components/Toolbar";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Typography } from "@material-ui/core";
+import LogoutIcon from "@material-ui/icons/ExitToApp";
+
+import { useAuth } from "../../contexts/AuthContext";
 
 const styles = (theme) => ({
   title: {
@@ -36,9 +39,22 @@ const styles = (theme) => ({
     color: theme.palette.secondary.main,
   },
 });
-
+// ToDo: Check here if already logged in or not
 function AppAppBar(props) {
   const { classes } = props;
+  const { currentUser, logout } = useAuth();
+  const history = useHistory();
+  console.log("currentUser:", currentUser);
+
+  const handleLogout = async () => {
+    //setError("");
+    history.push("/signin");
+    try {
+      await logout();
+    } catch {
+      //setError("Failed to logout");
+    }
+  };
 
   return (
     <div>
@@ -55,27 +71,54 @@ function AppAppBar(props) {
               {"eZeeBook"}
             </Typography>
           </Link>
-          <div className={classes.right}>
-            <Link to={"/signin"}>
-              <Typography
-                color="inherit"
-                variant="h6"
-                underline="none"
-                className={classes.rightLink}
-              >
-                {"Sign In"}
-              </Typography>
-            </Link>
-            <Link to={"/signup"}>
-            <Typography
-              variant="h6"
-              underline="none"
-              className={clsx(classes.rightLink, classes.linkSecondary)}
-            >
-              {"Sign Up"}
-            </Typography>
-            </Link>
-          </div>
+          {currentUser && currentUser.email ? (
+            <>
+              <div className={classes.right}>
+                <Link to={"/update-profile"}>
+                  <Typography
+                    color="inherit"
+                    variant="h6"
+                    underline="none"
+                    className={classes.rightLink}
+                  >
+                    {"Update Profile"}
+                  </Typography>
+                </Link>
+                <Typography
+                  color="inherit"
+                  variant="h6"
+                  underline="none"
+                  className={classes.rightLink}
+                >
+                  <LogoutIcon fontSize="small" onClick={() => handleLogout()} />
+                </Typography>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className={classes.right}>
+                <Link to={"/signin"}>
+                  <Typography
+                    color="inherit"
+                    variant="h6"
+                    underline="none"
+                    className={classes.rightLink}
+                  >
+                    {"Sign In"}
+                  </Typography>
+                </Link>
+                <Link to={"/signup"}>
+                  <Typography
+                    variant="h6"
+                    underline="none"
+                    className={clsx(classes.rightLink, classes.linkSecondary)}
+                  >
+                    {"Sign Up"}
+                  </Typography>
+                </Link>
+              </div>
+            </>
+          )}
         </Toolbar>
       </AppBar>
       <div className={classes.placeholder} />

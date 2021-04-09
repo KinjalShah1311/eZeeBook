@@ -2,19 +2,10 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 import { Component } from "react";
-import { MuiThemeProvider } from "@material-ui/core";
-
-//Redux
-import { Provider } from "react-redux";
-import store from "./redux/store";
 
 //components
 import themeObject from "./util/theme";
 import Dashboard from "./components/Dashboard";
-import PrivateRoute from "./components/PrivateRoute";
-import ForgotPassword from "./components/ForgotPassword";
-import AccountPage from "./pages/AccountPage";
-import Layout from "./layout/Layout";
 import HotelInfo from "./components/HotelInfo";
 import Hotels from './components/Hotels';
 import Home from './Home';

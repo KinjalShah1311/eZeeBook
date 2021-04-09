@@ -1,5 +1,5 @@
 import withRoot from "./modules/withRoot";
-// --- Post bootstrap -----
+
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Categories from "./modules/views/Categories";
@@ -9,8 +9,13 @@ import Banner from "./modules/views/Banner";
 import Values from "./modules/views/Values";
 import Newsletter from "./modules/views/Newsletter";
 import AppAppBar from "./modules/views/AppAppBar";
+
+import PrivateRoute from "./modules/PrivateRoute";
+
+// Pages
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import UpdateProfile from "./UpdateProfile";
 
 function App() {
   return (
@@ -25,6 +30,7 @@ function App() {
         <Route path="/signup">
           <SignUp />
         </Route>
+        <PrivateRoute exact path="/update-profile" component={UpdateProfile} />
       </Switch>
     </Router>
   );
