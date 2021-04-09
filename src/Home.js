@@ -17,6 +17,7 @@ import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import UpdateProfile from "./UpdateProfile";
 import HotelList from "./HotelList";
+import HotelDetailInfo from "./HotelDetailInfo";
 
 function App() {
   return (
@@ -31,8 +32,11 @@ function App() {
         <Route path="/signup">
           <SignUp />
         </Route>
-        <Route path="/secondpage">
+        <Route path="/hotels-list">
           <HotelList />
+        </Route>
+        <Route path="/hotel">
+          <HotelDetailInfo />
         </Route>
         <PrivateRoute exact path="/update-profile" component={UpdateProfile} />
       </Switch>

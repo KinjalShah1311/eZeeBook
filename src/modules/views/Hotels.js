@@ -5,7 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Typography from "../components/Typography";
 import { useLocation } from "react-router-dom";
 import Grid from "@material-ui/core/Grid";
-import Hotel from "./Hotel";
+import Hotel from "./HotelCardRoom";
 
 const styles = (theme) => ({
   root: {
