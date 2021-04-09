@@ -5,10 +5,12 @@ import { Component } from "react";
 
 //components
 import themeObject from "./util/theme";
+//todo
 import Dashboard from "./components/Dashboard";
 import HotelInfo from "./components/HotelInfo";
-import Hotels from './components/Hotels';
-import Home from './Home';
+import Hotels from "./components/Hotels";
+import Checkout from "./components/Checkout";
+import Home from "./Home";
 
 const theme = createMuiTheme(themeObject);
 
@@ -16,11 +18,11 @@ class App extends Component {
   render() {
     return (
       <>
-      <Router>
-        <AuthProvider>
-          <Home/>
-        </AuthProvider>
-      </Router>
+        <Router>
+          <AuthProvider>
+            <Home />
+          </AuthProvider>
+        </Router>
       </>
       // <MuiThemeProvider theme={theme}>
       //   <Provider store={store}>
@@ -39,6 +41,7 @@ class App extends Component {
       //             <Route path="/forgot-password" component={ForgotPassword} />
       //             <Route path="/hotel" component={HotelInfo} />
       //             <Route path="/secondpage" component={Hotels} />
+      //             <Route path="/checkout" component={Checkout} />
       //           </Switch>
       //         </div>
       //       </AuthProvider>
