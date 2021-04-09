@@ -200,7 +200,7 @@ export default function SingleHotel(props) {
         </Typography>
         {userReview.map((userRvw) => (
           <>
-           <ListReviews {...userRvw} />
+            <ListReviews {...userRvw} />
           </>
         ))}
       </CardActionArea>

@@ -1,65 +1,63 @@
-.banner{
-    height: 50vh;
-    position: relative;
+.banner {
+  height: 70vh;
+  position: relative;
 }
 
-.banner__search{
-    display: flex;
-    flex-direction: column;
-    
+.banner__search {
+  display: flex;
+  flex-direction: column;
 }
 
-.banner__searchButton{
-    background-color: white ;
-    font-weight: 900 !important;
-    text-transform: inherit !important;
-    color: #ff7779 !important;
+.banner__searchButton {
+  background-color: white;
+  font-weight: 900 !important;
+  text-transform: inherit !important;
+  color: #ff7779 !important;
 }
 
 .search {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 70%;
-    height: 80%;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
-.search>h2 {
-    display:flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 559px;
-    padding: 0px;
-    background-color: white;
-    position: absolute;
-    left: 0;
-    top: 370px;
+.search > h2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 350px;
+  padding: 0px;
+  background-color: white;
+  position: absolute;
+  left: 100px;
+  top: 350px;
 }
-.search>input {
-    width: 539px;
-    padding: 20px;
-    position: absolute;
-    left: 0;
-    height: 30px;
-    top:420px;
-    border: none;
-
+.search > input {
+  width: 350px;
+  padding: 20px;
+  margin-top: 10px;
+  position: absolute;
+  left: 100px;
+  height: 30px;
+  top: 400px;
+  border: 1px solid rgb(61, 145, 255);
+  border-radius: 10px;
 }
 
 .search > button {
-    position: absolute;
-    left: 0;
-    top: 480px;
-    text-transform: inherit !important;
-    background-color: #ff7779;
-    color: white;
-    width: 579px;
+  position: absolute;
+  left: 100px;
+  top: 460px;
+  text-transform: inherit !important;
+  background-color: #ff7779;
+  color: white;
+  width: 350px;
 }
 
-.search > button:hover{
-    background-color: white;
-    color: #ff7779;
+.search > button:hover {
+  background-color: white;
+  color: #ff7779;
 }
 
-.search>input:focus{
-    outline-width: 0;
+.search > input:focus {
+  outline-width: 0;
 }

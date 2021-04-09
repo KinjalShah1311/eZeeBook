@@ -8,17 +8,18 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Box from "@material-ui/core/Box";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
+import Rating from '@material-ui/lab/Rating';
 
 import { useHistory } from "react-router";
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 500,
+    maxWidth: 400,
     margin: 10,
     minWidth: 300,
   },
   media: {
-    width: 500,
+    width: 400,
     minHeight: 300,
   },
   cardActions: {
@@ -30,7 +31,7 @@ const useStyles = makeStyles({
     display: "flex",
   },
   summaryBox: {
-    minHeight: 50,
+    minHeight: 80,
   },
   roomClicked: {
     display: "none",
@@ -59,7 +60,7 @@ export default function HotelCard(props) {
           image={props.room.roomBanner}
           title={props.room.roomType}
         />
-        <CardContent>
+        <CardContent className={classes.summaryBox}>
           <Typography
             gutterBottom
             variant="h5"
@@ -72,26 +73,12 @@ export default function HotelCard(props) {
             variant="body2"
             color="textSecondary"
             component="p"
-            className={classes.summaryBox}
           >
             {props.room.summary}
           </Typography>
+          <Rating name="read-only" value={props.room.rating} readOnly />
         </CardContent>
       </CardActionArea>
-      <CardActions className={classes.cardActions}>
-        <Box className={classes.author}>
-          <Avatar src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2734&q=80" />
-          <Box ml={2}>
-            <Typography variant="subtitle2" component="p">
-              Owner
-            </Typography>
-            <Typography variant="subtitle2" color="textSecondary" component="p">
-              May 14, 2020
-            </Typography>
-          </Box>
-        </Box>
-        <Box></Box>
-      </CardActions>
     </Card>
   );
 }

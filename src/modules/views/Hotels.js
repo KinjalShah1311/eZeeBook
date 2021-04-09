@@ -12,8 +12,15 @@ const styles = (theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    marginTop: theme.spacing(9),
-    marginBottom: theme.spacing(9),
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4),
+  },
+  hotels: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: theme.spacing(4),
+    marginBottom: theme.spacing(4),
   },
   button: {
     border: "4px solid currentColor",
@@ -39,16 +46,16 @@ function assignValues(names) {
       hotels1.push({
         roomID: names[i].hotel.id,
         roomType: names[i].hotel.name,
-        rating: names[i].hotel.guestReviews.rating,
+        rating: names[i].hotel.guestReviews?.rating ? names[i].hotel.guestReviews.rating : 0,
         totalOccupancy: 10,
         totalBathrooms: 3,
         totalBedrooms: 5,
         summary:
-          names[i].hotel.address.streetAddress +
+          (names[i].hotel.address.streetAddress ? names[i].hotel.address.streetAddress : "") +
           " Near " +
-          names[i].hotel.neighbourhood +
+          (names[i].hotel.neighbourhood ? names[i].hotel.neighbourhood : "") +
           ", " +
-          names[i].hotel.address.locality,
+          (names[i].hotel.address.locality ? names[i].hotel.address.locality : ""),
         address:
           names[i].hotel.address.streetAddress +
           ", " +
@@ -76,7 +83,7 @@ function Hotels(props) {
         Available Hotels
       </Typography>
       <div>
-        <Grid container spacing={5} justify="center" className={classes.root}>
+        <Grid container spacing={5} justify="center" className={classes.hotels}>
           {hotels1.map((hotel) => (
             <Hotel {...hotel} key={hotel.roomID} room={hotel} />
           ))}
