@@ -3,16 +3,16 @@ import withRoot from "./modules/withRoot";
 import React from "react";
 import AppFooter from "./modules/views/AppFooter";
 import AppAppBar from "./modules/views/AppAppBar";
-import Profile from "./modules/views/Profile";
+import Hotels from "./modules/views/Hotels";
 
-function UpdateProfile() {
+function HotelList() {
   return (
     <React.Fragment>
       <AppAppBar />
-      <Profile />
+      <Hotels />
       <AppFooter />
     </React.Fragment>
   );
 }
 
-export default withRoot(UpdateProfile);
+export default withRoot(HotelList);

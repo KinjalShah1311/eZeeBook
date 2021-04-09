@@ -1,19 +1,28 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '../components/Button';
-import Typography from '../components/Typography';
-import BannerLayout from './BannerLayout';
-import { Link } from "react-router-dom";
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import TextField from "@material-ui/core/TextField";
+import Dialog from "@material-ui/core/Dialog";
+import { useTheme } from '@material-ui/core/styles';
+
+import Button from "../components/Button";
+import Typography from "../components/Typography";
+import BannerLayout from "./BannerLayout";
+import HotelSearch from "../components/HotelSearch";
 
 const backgroundImage =
-  'https://images.unsplash.com/photo-1534854638093-bada1813ca19?auto=format&fit=crop&w=1400&q=80';
+  "https://cdn.pixabay.com/photo/2017/12/16/22/22/bora-bora-3023437_960_720.jpg";
 
 const styles = (theme) => ({
   background: {
     backgroundImage: `url(${backgroundImage})`,
-    backgroundColor: '#7fc7d9', // Average color of the background image.
-    backgroundPosition: 'center',
+    backgroundColor: "#7fc7d9", // Average color of the background image.
+    backgroundPosition: "center",
   },
   button: {
     minWidth: 200,
@@ -21,7 +30,7 @@ const styles = (theme) => ({
   h5: {
     marginBottom: theme.spacing(4),
     marginTop: theme.spacing(4),
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
       marginTop: theme.spacing(10),
     },
   },
@@ -32,28 +41,68 @@ const styles = (theme) => ({
 
 function Banner(props) {
   const { classes } = props;
+  const theme = useTheme();
+  const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <BannerLayout backgroundClassName={classes.background}>
       {/* Increase the network loading priority of the background image. */}
-      <img style={{ display: 'none' }} src={backgroundImage} alt="increase priority" />
+      <img
+        style={{ display: "none" }}
+        src={backgroundImage}
+        alt="increase priority"
+      />
       <Typography color="inherit" align="center" variant="h2" marked="center">
         Book your stay
       </Typography>
-      <Typography color="inherit" align="center" variant="h5" className={classes.h5}>
+      <Typography
+        color="inherit"
+        align="center"
+        variant="h5"
+        className={classes.h5}
+      >
         Vacation rentals, Hotel booking -30% off the best luxury hotels.
       </Typography>
-      <Link to={"/signup"}>
+      {/* <Link to={"/search-hotel"}> */}
       <Button
         color="secondary"
         variant="contained"
         size="large"
         className={classes.button}
         component="a"
+        onClick={() => handleClickOpen()}
       >
-        Register
+        Search
       </Button>
-      </Link>
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+        minWidth="500px"
+        // fullScreen={fullScreen}
+      >
+        <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            <HotelSearch />
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Close
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {/* </Link> */}
       <Typography variant="body2" color="inherit" className={classes.more}>
         Discover the experience
       </Typography>

@@ -1,5 +1,4 @@
 import withRoot from './modules/withRoot';
-// --- Post bootstrap -----
 import React from 'react';
 /*
 import { Field, Form, FormSpy } from 'react-final-form';

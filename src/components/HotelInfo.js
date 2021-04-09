@@ -12,7 +12,7 @@ import { useLocation } from "react-router-dom";
 
 //components
 import Footer from '../components/Footer';
-import Header from '../components/Header';
+import Header from './Header_old';
 import SingleHotel from './SingleHotel';
 
 const drawerWidth = 240;
@@ -154,8 +154,6 @@ export default function HotelInfo(props) {
             <main className={classes.content}>
                 <div className={classes.appBarSpacer} />
                 <Container maxWidth="lg" className={classes.container}>
-
-
                     <SingleHotel room={hotel} />
                     <Box pt={4}>
                         <Footer />
