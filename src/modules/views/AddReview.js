@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import AppBar from "@material-ui/core/AppBar";
@@ -13,6 +13,7 @@ import Typography from "@material-ui/core/Typography";
 import CheckHotelInformation from "./CheckHotelInformation";
 import SubmitHotelReview from "./SubmitHotelReview";
 import { useLocation, useHistory } from "react-router-dom";
+import axios from "axios";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -54,26 +55,33 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ["Check Hotel Information", "Submit Hotel Review"];
 
-function getStepContent(step, hotelInfo) {
+function getStepContent(step, hotelInfo, childRef) {
+
   switch (step) {
     case 0:
       return <CheckHotelInformation hotelInfo={hotelInfo} />;
     case 1:
-      return <SubmitHotelReview />;
+      return <SubmitHotelReview hotelInfo={hotelInfo} />;
     default:
       throw new Error("Unknown step");
   }
 }
 
 export default function AddReview(props) {
+
+  const childRef = useRef();
   const location = useLocation();
   const history = useHistory();
+
   // console.log('names' +.roomType);
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
+    if (activeStep === steps.length - 1) {
+      
+    }
   };
 
   const handleHomePage = () => {
@@ -127,21 +135,22 @@ export default function AddReview(props) {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep, location.state.hotel)}
+                {getStepContent(activeStep, location.state.hotel, childRef)}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>
                       Back
                     </Button>
                   )}
-                  <Button
+                  {activeStep == 0 && (
+                    <Button 
                     variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? "Submit Review" : "Next"}
-                  </Button>
+                    color="primary" 
+                    onClick={handleNext} 
+                    className={classes.button}>
+                      Next
+                    </Button>
+                  )}
                 </div>
               </React.Fragment>
             )}
