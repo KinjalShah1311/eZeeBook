@@ -42,7 +42,7 @@ function assignValues(names) {
   hotels1 = [];
   if (names.length > 0) {
     for (var i = 0; i < names.length; i++) {
-      //console.log("Price: ", names[i].hotel.ratePlan.price.exactCurrent)
+      //console.log("Pricesa: ", names[i].hotel.ratePlan.price.exactCurrent)
       hotels1.push({
         roomID: names[i].hotel.id,
         roomType: names[i].hotel.name,
@@ -64,7 +64,7 @@ function assignValues(names) {
         hasKitchen: true,
         hasAirConditioner: true,
         hasInternet: true,
-        price: 150,
+        price: 123,
         longitude: -80.512658,
         latitude: 43.413714,
         roomBanner: names[i].hotel.optimizedThumbUrls.srpDesktop,
@@ -85,7 +85,7 @@ function Hotels(props) {
       <div>
         <Grid container spacing={5} justify="center" className={classes.hotels}>
           {hotels1.map((hotel) => (
-            <Hotel {...hotel} key={hotel.roomID} room={hotel} />
+            <Hotel {...hotel} key={hotel.roomID} room={hotel} startDate={location.state.startDate} endDate={location.state.endDate} />
           ))}
         </Grid>
       </div>

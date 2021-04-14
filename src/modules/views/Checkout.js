@@ -14,6 +14,8 @@ import AddressForm from "./AddressForm";
 import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 import { useLocation, useHistory } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -61,13 +63,14 @@ function getStepContent(step, hotelInfo) {
     case 1:
       return <AddressForm />;
     case 2:
-      return <PaymentForm />;
+      return <PaymentForm hotelInfo={hotelInfo}/>;
     default:
       throw new Error("Unknown step");
   }
 }
 
 export default function Checkout(props) {
+  const { currentUser } = useAuth();
   const location = useLocation();
   const classes = useStyles();
   const history = useHistory();
@@ -86,6 +89,27 @@ export default function Checkout(props) {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+  const hotel = location.hotel;
+  const startDate= location.startDate;
+  const endDate= location.endDate;
+  console.log("nameeeee" +hotel +"dateeee "+startDate +"end"+endDate);
+  function pushReservationData() {
+    
+    const uid = currentUser.uid;
+    const reserveData = {
+      startDate: startDate,
+      endDate: endDate,
+      price: hotel.price,
+      total: hotel.price,
+      bookingDate: new Date(),
+    }
+    return axios
+      .post(`http://localhost:7000/api/reservations/${uid}/rooms/${hotel.roomID}/reservations`, reserveData)
+      .then(function (response) {
+        console.log(response);
+      })
+  }
+
 
   return (
     <React.Fragment>
@@ -102,6 +126,7 @@ export default function Checkout(props) {
         </Stepper>
         <React.Fragment>
           {activeStep === steps.length ? (
+            
             <React.Fragment>
               <Typography variant="h5" gutterBottom>
                 Thank you for your order.
@@ -110,6 +135,7 @@ export default function Checkout(props) {
                 Your booking number is #2001539. We have emailed your booking
                 confirmation, and will send you an update when your room is
                 ready.
+                {pushReservationData()}
               </Typography>
               <Button
                 variant="contained"
@@ -122,7 +148,7 @@ export default function Checkout(props) {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {getStepContent(activeStep, location.state.hotel)}
+              {getStepContent(activeStep, location.hotel)}
               <div className={classes.buttons}>
                 {activeStep !== 0 && (
                   <Button onClick={handleBack} className={classes.button}>
@@ -135,7 +161,7 @@ export default function Checkout(props) {
                   onClick={handleNext}
                   className={classes.button}
                 >
-                  {activeStep === steps.length - 1 ? "Place order" : "Next"}
+                  {activeStep === steps.length - 1 ? ("Reserve Hotel") : "Next"}
                 </Button>
               </div>
             </React.Fragment>

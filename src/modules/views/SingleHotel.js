@@ -117,9 +117,12 @@ export default function SingleHotel(props) {
   }, [props.room.roomID]);
 
   function reservation() {
+    console.log("roooom" +props.room.name);
     history.push({
       pathname: '/checkout',
-      state: { hotel: props.room }
+       hotel: props.room ,
+       startDate: props.startDate,
+       endDate: props.endDate,
     });
   }
 

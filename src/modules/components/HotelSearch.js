@@ -74,7 +74,20 @@ function Search(props) {
   function handleRoom(event) {
     setNumberOfRoooms(event.target.value);
   }
+  function formatDate(date) {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
 
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
+
+    return [year, month, day].join('-');
+  };
+  
   function getList() {
     DataService.retrieveLocation(cityName)
       .then(function (response) {
@@ -90,9 +103,12 @@ function Search(props) {
               hotelNames.push({ hotel: hotels[i] });
             }
             console.log(hotelNames);
+            
             history.push({
               pathname: "/hotels-list",
-              state: { name: hotelNames },
+              state: { name: hotelNames,
+              startDate: formatDate(startDate),
+              endDate: formatDate(endDate) },
             });
           }
         );
@@ -100,6 +116,8 @@ function Search(props) {
       .catch(function (error) {
         console.error(error);
       });
+
+    
   }
 
   return (
