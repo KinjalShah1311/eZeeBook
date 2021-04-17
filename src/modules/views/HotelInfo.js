@@ -139,12 +139,14 @@ const useStyles = makeStyles((theme) => ({
 export default function HotelInfo(props) {
   const location = useLocation();
   const hotel = location.hotel;
+  const startDate= location.startDate;
+  const endDate= location.endDate;
   const classes = useStyles();
 
   return (
     <Container className={classes.root} component="section" justify="center">
       <div justify="center">
-        <SingleHotel room={hotel} />
+        <SingleHotel room={hotel} startDate={startDate} endDate={endDate}/>
       </div>
     </Container>
   );
