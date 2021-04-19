@@ -77,6 +77,10 @@ export default function Checkout(props) {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {
+    if (activeStep==2){
+      pushReservationData()
+    }
+
     setActiveStep(activeStep + 1);
   };
 
@@ -92,7 +96,7 @@ export default function Checkout(props) {
   const hotel = location.hotel;
   const startDate= location.startDate;
   const endDate= location.endDate;
-  console.log("nameeeee" +hotel +"dateeee "+startDate +"end"+endDate);
+  //console.log("nameeeee" +hotel +"dateeee "+startDate, );
   function pushReservationData() {
     
     const uid = currentUser.uid;
@@ -135,7 +139,7 @@ export default function Checkout(props) {
                 Your booking number is #2001539. We have emailed your booking
                 confirmation, and will send you an update when your room is
                 ready.
-                {pushReservationData()}
+                {/* {pushReservationData()} */}
               </Typography>
               <Button
                 variant="contained"
