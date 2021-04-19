@@ -93,9 +93,9 @@ export default function Checkout(props) {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-  const hotel = location.hotel;
-  const startDate= location.startDate;
-  const endDate= location.endDate;
+  const hotel = location.state.hotel;
+  const startDate= location.state.startDate;
+  const endDate= location.state.endDate;
   //console.log("nameeeee" +hotel +"dateeee "+startDate, );
   function pushReservationData() {
     

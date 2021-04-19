@@ -39,7 +39,7 @@ export default function HotelSearch() {
       <div className="banner__search">
         <div>
           <SearchIcon />
-          {responseFailed && <div>Invalid location, try searching again</div> }
+          {responseFailed && <div className="err">Invalid location, try searching again</div> }
         </div>
         <InputBase
           placeholder="Search…"

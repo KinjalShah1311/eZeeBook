@@ -120,9 +120,9 @@ export default function SingleHotel(props) {
     console.log("roooom" +props.room.name);
     history.push({
       pathname: '/checkout',
-       hotel: props.room ,
+       state:{hotel: props.room ,
        startDate: props.startDate,
-       endDate: props.endDate,
+       endDate: props.endDate},
     });
   }
 
