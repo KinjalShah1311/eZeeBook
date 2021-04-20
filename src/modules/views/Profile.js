@@ -17,7 +17,7 @@ import { withStyles } from "@material-ui/core/styles";
 
 // Auth
 import { useAuth } from "../../contexts/AuthContext";
-import axios from "axios";
+import axiosInstance from "../../api/axiosInstance";
 
 const styles = (theme) => ({
   root: {
@@ -45,7 +45,6 @@ const styles = (theme) => ({
 function Profile(props) {
   const { classes } = props;
   const [isLoading, setIsLoading] = useState(false);
-  // const [newUser, setNewUser] = useState(null);
   const { signup, currentUser } = useAuth();
   const [country, setCountry] = useState("");
 
@@ -72,8 +71,8 @@ function Profile(props) {
 
   function updateProfile() {
     const uid = currentUser.uid;
-    return axios
-      .put(`http://localhost:7000/api/users/${uid}`, userData)
+    return axiosInstance
+      .put(`/api/users/${uid}`, userData)
       .then((response) => {
         setLoading(false);
         setOpen(true);
@@ -82,6 +81,7 @@ function Profile(props) {
         setError("Failed to update user details");
       });
   }
+
   function getUserData() {
     try {
       setError("");
@@ -89,8 +89,8 @@ function Profile(props) {
       const uid = currentUser.uid;
 
       setCountry("CA");
-      return axios
-        .get(`http://localhost:7000/api/users/${uid}`)
+      return axiosInstance
+        .get(`/api/users/${uid}`)
         .then((response) => {
           const userData = response.data;
           setUserData(userData);

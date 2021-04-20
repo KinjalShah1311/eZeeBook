@@ -15,7 +15,7 @@ import PaymentForm from "./PaymentForm";
 import Review from "./Review";
 import { useLocation, useHistory } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import axios from "axios";
+import axiosInstance from "../../api/axiosInstance";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -107,8 +107,8 @@ export default function Checkout(props) {
       total: hotel.price,
       bookingDate: new Date(),
     }
-    return axios
-      .post(`http://localhost:7000/api/reservations/${uid}/rooms/${hotel.roomID}/reservations`, reserveData)
+    return axiosInstance
+      .post(`/api/reservations/${uid}/rooms/${hotel.roomID}/reservations`, reserveData)
       .then(function (response) {
         console.log(response);
       })
@@ -152,7 +152,7 @@ export default function Checkout(props) {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {getStepContent(activeStep, location.hotel)}
+              {getStepContent(activeStep, location.state.hotel)}
               <div className={classes.buttons}>
                 {activeStep !== 0 && (
                   <Button onClick={handleBack} className={classes.button}>

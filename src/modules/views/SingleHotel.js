@@ -17,7 +17,7 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import DataService from "../../api/DataService";
 import ListReviews from "./ListReviews";
-import axios from "axios";
+import axiosInstance from "../../api/axiosInstance";
 
 const useStyles = makeStyles({
   root: {
@@ -88,16 +88,14 @@ export default function SingleHotel(props) {
       return response.data.hotelImages[0].baseUrl;
     }
 
-
     async function getReviews() {
-
-      let data = []
-      await axios
-        .get(
-          `http://localhost:3000/api/rooms/${props.room.roomID}/reviews`,
-        ).then(res => {
-          data = Object.values(res.data)
-        }).catch(err => console.log(err))
+      let data = [];
+      await axiosInstance
+        .get(`/api/rooms/${props.room.roomID}/reviews`)
+        .then((res) => {
+          data = Object.values(res.data);
+        })
+        .catch((err) => console.log(err));
 
       let response = await DataService.retrieveReviews(props.room.roomID);
       let responseArray =
@@ -107,7 +105,9 @@ export default function SingleHotel(props) {
         responseArray.length
       );
       const displayReviews = data.length === 0 ? array : array.concat(data);
-      console.log(displayReviews)
+      console.log(displayReviews);
+
+      //todo: desc by date
       return displayReviews;
     }
     const image = getImages().then((image) => {
@@ -131,12 +131,14 @@ export default function SingleHotel(props) {
   }, [props.room.roomID]);
 
   function reservation() {
-    console.log("roooom" +props.room.name);
+    console.log("roooom" + props.room.name);
     history.push({
-      pathname: '/checkout',
-       state:{hotel: props.room ,
-       startDate: props.startDate,
-       endDate: props.endDate},
+      pathname: "/checkout",
+      state: {
+        hotel: props.room,
+        startDate: props.startDate,
+        endDate: props.endDate,
+      },
     });
   }
 
@@ -234,10 +236,10 @@ export default function SingleHotel(props) {
         onClick={reservation}
         className={classes.button}
         variant="contained"
-        color="primary">
+        color="primary"
+      >
         Reserve
       </Button>
     </Card>
-
   );
 }

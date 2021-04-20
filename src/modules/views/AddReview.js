@@ -13,8 +13,6 @@ import Typography from "@material-ui/core/Typography";
 import CheckHotelInformation from "./CheckHotelInformation";
 import SubmitHotelReview from "./SubmitHotelReview";
 import { useLocation, useHistory } from "react-router-dom";
-import axios from "axios";
-
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
