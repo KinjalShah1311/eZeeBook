@@ -1,4 +1,5 @@
 import axios from "axios";
+const API_KEY = "aa3dfad0d3msh91e468cf37f9259p167861jsn51220deec226";
 
 class DataService {
   formatDate(date) {
@@ -23,7 +24,7 @@ class DataService {
         locale: "en_US",
       },
       headers: {
-        "x-rapidapi-key": "aa3dfad0d3msh91e468cf37f9259p167861jsn51220deec226",
+        "x-rapidapi-key": API_KEY,
         "x-rapidapi-host": "hotels4.p.rapidapi.com",
       },
     };
@@ -48,7 +49,7 @@ class DataService {
         pageNumber: "1",
       },
       headers: {
-        "x-rapidapi-key": "aa3dfad0d3msh91e468cf37f9259p167861jsn51220deec226",
+        "x-rapidapi-key": API_KEY,
         "x-rapidapi-host": "hotels-com-free.p.rapidapi.com",
       },
     };
@@ -62,7 +63,7 @@ class DataService {
         "https://hotels-com-free.p.rapidapi.com/nice/image-catalog/v2/hotels/" +
         hotelId,
       headers: {
-        "x-rapidapi-key": "8da85bbb97msh0128e881c45d7fep17aa01jsn5f09da9c3d05",
+        "x-rapidapi-key": API_KEY,
         "x-rapidapi-host": "hotels-com-free.p.rapidapi.com",
       },
     };
@@ -79,7 +80,7 @@ class DataService {
         "/reviews",
       params: { loc: "en_US", page: "1" },
       headers: {
-        "x-rapidapi-key": "8da85bbb97msh0128e881c45d7fep17aa01jsn5f09da9c3d05",
+        "x-rapidapi-key": API_KEY,
         "x-rapidapi-host": "hotels-com-free.p.rapidapi.com",
       },
     };
