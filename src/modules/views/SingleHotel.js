@@ -21,12 +21,13 @@ import axiosInstance from "../../api/axiosInstance";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 500,
+    minWidth: "500px",
     margin: "10px",
     padding: "5px",
   },
   media: {
-    minHeight: 300,
+    minWidth: "500px",
+    minHeight: "300px",
   },
   cardActions: {
     display: "flex",
@@ -75,6 +76,9 @@ export default function SingleHotel(props) {
   const [imageBanner, setImageBanner] = useState("");
   const [userReview, setUserReview] = useState([]);
 
+  const [dbReviews, setDbReviews] = useState([]);
+  const [apiReviews, setApiReviews] = useState([]);
+
   function review() {
     history.push({
       pathname: "/review",
@@ -82,52 +86,70 @@ export default function SingleHotel(props) {
     });
   }
 
+  async function getBothReviews() {
+    let data = [];
+    await axiosInstance
+      .get(`/api/rooms/${props.room.roomID}/reviews`)
+      .then((res) => {
+        data = Object.values(res.data);
+
+        //database
+
+        DataService.retrieveReviews(props.room.roomID)
+          .then((apiResponse) => {
+            let responseArray =
+              apiResponse.data.reviewData.guestReviewGroups.guestReviews[0]
+                .reviews;
+            const array = responseArray.slice(
+              responseArray.length - 10,
+              responseArray.length
+            );
+            setDbReviews(data);
+            setApiReviews(array);
+          })
+          .catch((err) => {
+            console.log(err);
+            setDbReviews(data);
+          });
+
+        // const displayReviews = data.length === 0 ? array : data.concat(array);
+        // console.log(displayReviews);
+        // return displayReviews;
+      })
+      .catch((err) => {
+        setDbReviews([]);
+        console.log(err);
+      });
+  }
   useEffect(() => {
     async function getImages() {
       let response = await DataService.retrieveImages(props.room.roomID);
       return response.data.hotelImages[0].baseUrl;
     }
 
-    async function getReviews() {
-      let data = [];
-      await axiosInstance
-        .get(`/api/rooms/${props.room.roomID}/reviews`)
-        .then((res) => {
-          data = Object.values(res.data);
-        })
-        .catch((err) => console.log(err));
-
-      let response = await DataService.retrieveReviews(props.room.roomID);
-      let responseArray =
-        response.data.reviewData.guestReviewGroups.guestReviews[0].reviews;
-      const array = responseArray.slice(
-        responseArray.length - 10,
-        responseArray.length
-      );
-      const displayReviews = data.length === 0 ? array : array.concat(data);
-      console.log(displayReviews);
-      return displayReviews;
-    }
     const image = getImages().then((image) => {
       return image;
     });
-
-    const userReviews = getReviews().then((usrReviews) => {
-      return usrReviews;
-    });
+    getBothReviews();
+    // const userReviews = getReviews().then((usrReviews) => {
+    //   return usrReviews;
+    // });
     image.then((image) => {
       var res = image.replace("{size}", "z");
       setImageBanner(res);
     });
-
-    userReviews.then((hotelUserReview) => {
-      let reviewArray = hotelUserReview;
-      // desc by date
-      setUserReview(
-        reviewArray.slice(reviewArray.length - 5, reviewArray.length).sort((a, b) => b.postedOn - a.postedOn)
-      );
-    });
   }, [props.room.roomID]);
+
+  useEffect(() => {
+    if (dbReviews.length > 0 || apiReviews.length > 0) {
+      const reviewArray = [...dbReviews, ...apiReviews];
+      // desc by date
+      const allReview = reviewArray
+        .slice(0, reviewArray.length)
+        .sort((a, b) => b.postedOn - a.postedOn);
+      setUserReview(allReview);
+    }
+  }, [dbReviews, apiReviews]);
 
   function reservation() {
     console.log("roooom" + props.room.name);
