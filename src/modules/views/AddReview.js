@@ -80,7 +80,7 @@ export default function AddReview(props) {
   const handleNext = () => {
     setActiveStep(activeStep + 1);
     if (activeStep === steps.length - 1) {
-      
+
     }
   };
 
@@ -143,11 +143,11 @@ export default function AddReview(props) {
                     </Button>
                   )}
                   {activeStep == 0 && (
-                    <Button 
-                    variant="contained"
-                    color="primary" 
-                    onClick={handleNext} 
-                    className={classes.button}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.button}>
                       Next
                     </Button>
                   )}

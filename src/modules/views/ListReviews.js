@@ -33,7 +33,7 @@ export default function ListReviews(props) {
     dateObject = mm + '/' + dd + '/' + yyyy;
     return (
         <Box className={classes.author} ml={2} padding="15px">
-            <Rating name="read-only" value={props.rating} readOnly />
+            <Rating name="read-only" value={props.rating} precision={0.5} readOnly />
             <Box ml={2} width="90%">
                 <Box className={classes.info}>
                     <Typography variant="subtitle2" component="p">
