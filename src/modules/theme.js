@@ -1,6 +1,5 @@
 import { createMuiTheme } from '@material-ui/core/styles';
 import { green, grey, red } from '@material-ui/core/colors';
-import { frFR } from '@material-ui/core/locale';
 
 const rawTheme = createMuiTheme({
   palette: {
@@ -37,7 +36,7 @@ const rawTheme = createMuiTheme({
     fontWeightMedium: 700, // Roboto Condensed
     fontFamilySecondary: "'Roboto Condensed', sans-serif",
   },
-}, frFR);
+});
 
 const fontHeader = {
   color: rawTheme.palette.text.primary,
