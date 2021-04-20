@@ -21,12 +21,11 @@ import axiosInstance from "../../api/axiosInstance";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: "500px",
     margin: "10px",
     padding: "5px",
   },
   media: {
-    minWidth: "500px",
+    minWidth: "600px",
     height: "350px",
   },
   cardActions: {
