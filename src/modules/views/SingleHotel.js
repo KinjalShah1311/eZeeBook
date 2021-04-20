@@ -17,6 +17,7 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import DataService from "../../api/DataService";
 import ListReviews from "./ListReviews";
+import axios from "axios";
 
 const useStyles = makeStyles({
   root: {
@@ -87,14 +88,27 @@ export default function SingleHotel(props) {
       return response.data.hotelImages[0].baseUrl;
     }
 
+
     async function getReviews() {
+
+      let data = []
+      await axios
+        .get(
+          `http://localhost:3000/api/rooms/${props.room.roomID}/reviews`,
+        ).then(res => {
+          data = Object.values(res.data)
+        }).catch(err => console.log(err))
+
       let response = await DataService.retrieveReviews(props.room.roomID);
       let responseArray =
         response.data.reviewData.guestReviewGroups.guestReviews[0].reviews;
-      return responseArray.slice(
+      const array = responseArray.slice(
         responseArray.length - 10,
         responseArray.length
       );
+      const displayReviews = data.length === 0 ? array : array.concat(data);
+      console.log(displayReviews)
+      return displayReviews;
     }
     const image = getImages().then((image) => {
       return image;

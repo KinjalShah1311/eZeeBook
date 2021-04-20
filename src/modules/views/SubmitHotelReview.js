@@ -5,44 +5,124 @@ import Box from "@material-ui/core/Box";
 import Rating from "@material-ui/lab/Rating";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import { useLocation, useHistory } from "react-router-dom";
-import axios from "axios";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
+import MuiDialogTitle from "@material-ui/core/DialogTitle";
+import MuiDialogContent from "@material-ui/core/DialogContent";
+import MuiDialogActions from "@material-ui/core/DialogActions";
+import IconButton from "@material-ui/core/IconButton";
+import CloseIcon from "@material-ui/icons/Close";
+import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
 
+import axios from "axios";
 const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
+  root: {
+    margin: 0,
+    padding: theme.spacing(2),
+  },
+  closeButton: {
+    position: "absolute",
+    right: theme.spacing(1),
+    top: theme.spacing(1),
+    color: theme.palette.grey[500],
+  },
+  dialog: {
+    minWidth: "400px",
+  },
 }));
 
+const DialogTitle = withStyles(useStyles)((props) => {
+  const { children, classes, onClose, ...other } = props;
+  return (
+    <MuiDialogTitle disableTypography className={classes.root} {...other}>
+      <Typography variant="h6" className={classes.dialog}>
+        {children}
+      </Typography>
+      {onClose ? (
+        <IconButton
+          aria-label="close"
+          className={classes.closeButton}
+          onClick={onClose}
+        >
+          <CloseIcon />
+        </IconButton>
+      ) : null}
+    </MuiDialogTitle>
+  );
+});
+
+const DialogContent = withStyles((theme) => ({
+  root: {
+    padding: theme.spacing(2),
+  },
+}))(MuiDialogContent);
+
+const DialogActions = withStyles((theme) => ({
+  root: {
+    margin: 0,
+    padding: theme.spacing(1),
+  },
+}))(MuiDialogActions);
 
 export default function SubmitHotelReview() {
-
   const classes = useStyles();
   const location = useLocation();
+  const history = useHistory();
+
+  const [open, setOpen] = React.useState(false);
+  const handleClose = () => {
+    setOpen(false);
+    pushReviewData();
+  };
+
   const handleTextFieldChange = (e) => {
-    setTextInput(e.target.value)
+    setTextInput(e.target.value);
   };
 
   const [value, setValue] = React.useState(2.5);
   const [textInput, setTextInput] = React.useState("");
 
   const hotel = location.state.hotel;
+
   const handleClick = () => {
-    console.log(textInput,value)
-    pushReviewData();
-  }
+    console.log(textInput, value);
+    setOpen(true);
+  };
+
   function pushReviewData() {
+    let badge = "";
+    if (value === 5) {
+      badge = "Exceptional";
+    } else if (value >= 4 && value < 5) {
+      badge = "Very Good";
+    } else if (value >= 3 && value < 4) {
+      badge = "Good";
+    } else if (value >= 2 && value < 3) {
+      badge = "Poor";
+    } else {
+      badge = "Very Poor";
+    }
     const reviewData = {
       rating: value,
-      comments: textInput
-    }
+      summary: textInput,
+      qualitativeBadgeText: badge,
+    };
     return axios
-      .post(`http://localhost:7000/api/rooms/${hotel.roomID}/reviews`, reviewData)
+      .post(
+        `http://localhost:3000/api/rooms/${hotel.roomID}/reviews`,
+        reviewData
+      )
       .then(function (response) {
-        console.log(response);
-      })
+        history.push({
+          pathname: "/",
+        });
+      });
   }
 
   return (
@@ -61,8 +141,7 @@ export default function SubmitHotelReview() {
           onChange={(event, newValue) => {
             setValue(newValue);
           }}
-          onClick={(event, newValue) => {
-          }}
+          onClick={(event, newValue) => {}}
           size="large"
           emptyIcon={<StarBorderIcon fontSize="inherit" />}
           style={{
@@ -86,15 +165,43 @@ export default function SubmitHotelReview() {
           />
         </Grid>
       </Grid>
-      
+
       <Button
         variant="contained"
         color="primary"
         className={classes.button}
-        onClick = {handleClick}
+        onClick={handleClick}
       >
         Submit Review
       </Button>
+      <Dialog
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        open={open}
+      >
+        <DialogTitle
+          id="customized-dialog-title"
+          className={classes.dialog}
+          onClose={handleClose}
+        >
+          Submit Review
+        </DialogTitle>
+        <DialogContent dividers>
+          <Typography gutterBottom>Comments: {textInput}</Typography>
+          <Typography gutterBottom>Rating: {value}</Typography>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            variant="contained"
+            color="primary"
+            className={classes.button}
+            autoFocus
+            onClick={handleClose}
+          >
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
     </React.Fragment>
   );
 }
