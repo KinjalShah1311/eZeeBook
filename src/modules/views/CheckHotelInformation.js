@@ -31,12 +31,6 @@ export default function CheckHotelInformation(props) {
           <ListItemText primary="Hotel Name" />
           <Typography variant="body2">{props.hotelInfo.roomType}</Typography>
         </ListItem>
-        <ListItem className={classes.listItem}>
-          <ListItemText primary="Your Booking ID" />
-          <Typography variant="subtitle1" className={classes.total}>
-            #12637490
-          </Typography>
-        </ListItem>
       </List>
     </React.Fragment>
   );

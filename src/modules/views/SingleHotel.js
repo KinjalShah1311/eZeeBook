@@ -106,8 +106,6 @@ export default function SingleHotel(props) {
       );
       const displayReviews = data.length === 0 ? array : array.concat(data);
       console.log(displayReviews);
-
-      //todo: desc by date
       return displayReviews;
     }
     const image = getImages().then((image) => {
@@ -124,8 +122,9 @@ export default function SingleHotel(props) {
 
     userReviews.then((hotelUserReview) => {
       let reviewArray = hotelUserReview;
+      // desc by date
       setUserReview(
-        reviewArray.slice(reviewArray.length - 5, reviewArray.length)
+        reviewArray.slice(reviewArray.length - 5, reviewArray.length).sort((a, b) => b.postedOn - a.postedOn)
       );
     });
   }, [props.room.roomID]);
