@@ -152,7 +152,7 @@ export default function Checkout(props) {
             </React.Fragment>
           ) : (
             <React.Fragment>
-              {getStepContent(activeStep, location.hotel)}
+              {getStepContent(activeStep, location.state.hotel)}
               <div className={classes.buttons}>
                 {activeStep !== 0 && (
                   <Button onClick={handleBack} className={classes.button}>
