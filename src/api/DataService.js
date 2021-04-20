@@ -1,5 +1,5 @@
 import axios from "axios";
-const API_KEY = "aa3dfad0d3msh91e468cf37f9259p167861jsn51220deec226";
+const API_KEY = "68f8ac9c53mshc6779e9c721879bp1fc5b9jsn44abeb5c188e";
 
 class DataService {
   formatDate(date) {
