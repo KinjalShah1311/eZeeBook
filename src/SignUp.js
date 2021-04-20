@@ -19,7 +19,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 // Auth
 import { useAuth } from "./contexts/AuthContext";
-import axios from "axios";
+import axiosInstance from "./api/axiosInstance";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -103,8 +103,9 @@ function SignUp() {
                   firstName: values.firstname,
                   lastName: values.lastName,
                 };
-                return axios
-                  .post("http://localhost:7000/api/users", signUpUser)
+                debugger;
+                return axiosInstance
+                  .post(`/api/users`, signUpUser)
                   .then((response) => {
                     history.push("/");
                     console.log(response);

@@ -13,8 +13,6 @@ import Typography from "@material-ui/core/Typography";
 import CheckHotelInformation from "./CheckHotelInformation";
 import SubmitHotelReview from "./SubmitHotelReview";
 import { useLocation, useHistory } from "react-router-dom";
-import axios from "axios";
-
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -97,13 +95,6 @@ export default function AddReview(props) {
   return (
     <React.Fragment>
       <CssBaseline />
-      <AppBar position="absolute" color="default" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Company name
-          </Typography>
-        </Toolbar>
-      </AppBar>
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">

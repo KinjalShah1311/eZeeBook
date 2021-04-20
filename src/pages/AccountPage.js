@@ -21,8 +21,7 @@ import Header from "../components/Header";
 import Footer from "../components/Footer";
 
 import { useAuth } from "../contexts/AuthContext";
-
-import axios from "axios";
+import axiosInstance from "../../api/axiosInstance";
 
 const drawerWidth = 240;
 
@@ -185,8 +184,8 @@ export default function AccountPage() {
     e.preventDefault();
     setLoading(true);
     const uid = currentUser.uid;
-    return axios
-      .put(`http://localhost:7000/api/users/${uid}`, userData)
+    return axiosInstance
+      .put(`/api/users/${uid}`, userData)
       .then((response) => {
         setLoading(false);
         setOpen(true);
@@ -202,8 +201,8 @@ export default function AccountPage() {
       const uid = currentUser.uid;
 
       setCountry("CA");
-      return axios
-        .get(`http://localhost:7000/api/users/${uid}`)
+      return axiosInstance
+        .get(`/api/users/${uid}`)
         .then((response) => {
           const userData = response.data;
           setUserData(userData);

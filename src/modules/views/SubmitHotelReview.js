@@ -15,8 +15,8 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import axiosInstance from "../../api/axiosInstance";
 
-import axios from "axios";
 const useStyles = makeStyles((theme) => ({
   button: {
     marginTop: theme.spacing(3),
@@ -104,23 +104,26 @@ export default function SubmitHotelReview() {
     } else if (value >= 3 && value < 4) {
       badge = "Good";
     } else if (value >= 2 && value < 3) {
-      badge = "Poor";
+      badge = "Fair";
     } else {
-      badge = "Very Poor";
+      badge = "Poor";
     }
     const reviewData = {
       rating: value,
       summary: textInput,
       qualitativeBadgeText: badge,
     };
-    return axios
+    return axiosInstance
       .post(
-        `http://localhost:3000/api/rooms/${hotel.roomID}/reviews`,
+        `/api/rooms/${hotel.roomID}/reviews`,
         reviewData
       )
       .then(function (response) {
         history.push({
-          pathname: "/",
+          pathname: "/hotel",
+          hotel: hotel.room,
+          startDate:hotel.startDate,
+          endDate:hotel.endDate,
         });
       });
   }
