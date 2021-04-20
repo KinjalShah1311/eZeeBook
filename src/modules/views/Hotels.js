@@ -42,7 +42,7 @@ function assignValues(names) {
   hotels1 = [];
   if (names.length > 0) {
     for (var i = 0; i < names.length; i++) {
-      //console.log("Pricesa: ", names[i].hotel.ratePlan.price.exactCurrent)
+      // console.log("Pricesa: ", names[i].hotel?.ratePlan)
       hotels1.push({
         roomID: names[i].hotel.id,
         roomType: names[i].hotel.name,
@@ -64,7 +64,7 @@ function assignValues(names) {
         hasKitchen: true,
         hasAirConditioner: true,
         hasInternet: true,
-        price: 123,
+        price: names[i].hotel.ratePlan ? names[i].hotel.ratePlan.price.exactCurrent : 34,
         longitude: -80.512658,
         latitude: 43.413714,
         roomBanner: names[i].hotel.optimizedThumbUrls.srpDesktop,

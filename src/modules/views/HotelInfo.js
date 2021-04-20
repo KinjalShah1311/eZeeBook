@@ -18,7 +18,8 @@ const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
+    minWidth: "600px",
+    //display: "flex",
   },
   toolbar: {
     paddingRight: 24, // keep right padding when drawer closed
@@ -139,15 +140,13 @@ const useStyles = makeStyles((theme) => ({
 export default function HotelInfo(props) {
   const location = useLocation();
   const hotel = location.hotel;
-  const startDate= location.startDate;
-  const endDate= location.endDate;
+  const startDate = location.startDate;
+  const endDate = location.endDate;
   const classes = useStyles();
 
   return (
     <Container className={classes.root} component="section" justify="center">
-      <div justify="center">
-        <SingleHotel room={hotel} startDate={startDate} endDate={endDate}/>
-      </div>
+      <SingleHotel room={hotel} startDate={startDate} endDate={endDate} />
     </Container>
   );
 }

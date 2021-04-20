@@ -44,7 +44,7 @@ Check-out: Mon, Apr 19
         <ListItem className={classes.listItem}>
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" className={classes.total}>
-            $34.06
+            ${props.hotelInfo.price}
           </Typography>
         </ListItem>
       </List>

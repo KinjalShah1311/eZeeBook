@@ -21,13 +21,12 @@ import axiosInstance from "../../api/axiosInstance";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: "500px",
     margin: "10px",
     padding: "5px",
   },
   media: {
-    minWidth: "500px",
-    minHeight: "300px",
+    minWidth: "600px",
+    height: "350px",
   },
   cardActions: {
     display: "flex",
@@ -134,7 +133,7 @@ export default function SingleHotel(props) {
     image.then((image) => {
       var res = image.replace("{size}", "z");
       setImageBanner(res);
-    });
+    }).catch(err => console.log(err));
   }, [props.room.roomID]);
 
   useEffect(() => {
@@ -164,6 +163,8 @@ export default function SingleHotel(props) {
     <Card className={classes.root}>
       <CardActionArea>
         <CardMedia
+          component="img"
+          alt={props.room.roomType}
           className={classes.media}
           image={imageBanner}
           title={props.room.roomType}
