@@ -66,10 +66,10 @@ const LANGUAGES = [
     code: 'en-US',
     name: 'English',
   },
-  {
-    code: 'fr-FR',
-    name: 'Français',
-  },
+  // {
+  //   code: 'fr-FR',
+  //   name: 'Français',
+  // },
 ];
 
 export default function AppFooter() {
