@@ -24,7 +24,7 @@ class DataService {
         locale: "en_US",
       },
       headers: {
-        "x-rapidapi-key": API_KEY,
+        "x-rapidapi-key": 'aa3dfad0d3msh91e468cf37f9259p167861jsn51220deec226',
         "x-rapidapi-host": "hotels4.p.rapidapi.com",
       },
     };
