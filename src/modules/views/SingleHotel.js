@@ -94,27 +94,24 @@ export default function SingleHotel(props) {
         data = Object.values(res.data);
 
         //database
+        setDbReviews(data);
 
-        DataService.retrieveReviews(props.room.roomID)
-          .then((apiResponse) => {
-            let responseArray =
-              apiResponse.data.reviewData.guestReviewGroups.guestReviews[0]
-                .reviews;
-            const array = responseArray.slice(
-              responseArray.length - 10,
-              responseArray.length
-            );
-            setDbReviews(data);
-            setApiReviews(array);
-          })
-          .catch((err) => {
-            console.log(err);
-            setDbReviews(data);
-          });
+        // DataService.retrieveReviews(props.room.roomID)
+        //   .then((apiResponse) => {
+        //     let responseArray =
+        //       apiResponse.data.reviewData.guestReviewGroups.guestReviews[0]
+        //         .reviews;
+        //     const array = responseArray.slice(
+        //       responseArray.length - 10,
+        //       responseArray.length
+        //     );
+        //     setApiReviews(array);
+        //   })
+        //   .catch((err) => {
+        //     console.log(err);
+        //     setDbReviews(data);
+        //   });
 
-        // const displayReviews = data.length === 0 ? array : data.concat(array);
-        // console.log(displayReviews);
-        // return displayReviews;
       })
       .catch((err) => {
         setDbReviews([]);
