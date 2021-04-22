@@ -15,6 +15,7 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import { withStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
+import Alert from '@material-ui/lab/Alert';
 import axiosInstance from "../../api/axiosInstance";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,6 +35,12 @@ const useStyles = makeStyles((theme) => ({
   },
   dialog: {
     minWidth: "400px",
+  },
+  alert: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
   },
 }));
 
@@ -87,12 +94,18 @@ export default function SubmitHotelReview() {
 
   const [value, setValue] = React.useState(2.5);
   const [textInput, setTextInput] = React.useState("");
+  const [error, setError] = React.useState("");
 
   const hotel = location.state.hotel;
 
   const handleClick = () => {
-    console.log(textInput, value);
-    setOpen(true);
+    if (textInput === "") {
+      setError('Comments are required.');
+    }
+    else {
+      setError("");
+      setOpen(true);
+    }
   };
 
   function pushReviewData() {
@@ -122,12 +135,11 @@ export default function SubmitHotelReview() {
         history.push({
           pathname: "/hotel",
           hotel: hotel.room,
-          startDate:hotel.startDate,
-          endDate:hotel.endDate,
+          startDate: hotel.startDate,
+          endDate: hotel.endDate,
         });
       });
   }
-
   return (
     <React.Fragment>
       <Box
@@ -144,7 +156,7 @@ export default function SubmitHotelReview() {
           onChange={(event, newValue) => {
             setValue(newValue);
           }}
-          onClick={(event, newValue) => {}}
+          onClick={(event, newValue) => { }}
           size="large"
           emptyIcon={<StarBorderIcon fontSize="inherit" />}
           style={{
@@ -166,6 +178,9 @@ export default function SubmitHotelReview() {
             style={{ width: "100%" }}
             onChange={handleTextFieldChange}
           />
+          {error !== "" && <div className={classes.alert}>
+            <Alert severity="error">{error}</Alert>
+          </div>}
         </Grid>
       </Grid>
 
