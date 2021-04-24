@@ -139,14 +139,29 @@ const useStyles = makeStyles((theme) => ({
 
 export default function HotelInfo(props) {
   const location = useLocation();
-  const hotel = location.hotel;
-  const startDate = location.startDate;
-  const endDate = location.endDate;
   const classes = useStyles();
+
+  let hotel = null;
+  let startDate = null;
+  let endDate = null;
+
+  if (localStorage.getItem("selectedHotel") != null) {
+    hotel = JSON.parse(localStorage.getItem("selectedHotel"));
+  } else if (location["hotel"]) hotel = location.hotel;
+
+  if (localStorage.getItem("startDate") != null) {
+    startDate = localStorage.getItem("startDate");
+  } else if (location["startDate"]) startDate = location.startDate;
+
+  if (localStorage.getItem("endDate") != null) {
+    endDate = localStorage.getItem("endDate");
+  } else if (location["endDate"]) endDate = location.endDate;
 
   return (
     <Container className={classes.root} component="section" justify="center">
-      <SingleHotel room={hotel} startDate={startDate} endDate={endDate} />
+      {hotel && startDate && endDate ?  (
+        <SingleHotel room={hotel} startDate={startDate} endDate={endDate} />
+      ) : <><div><p>Something went wrong, Please search again!</p></div></>}
     </Container>
   );
 }

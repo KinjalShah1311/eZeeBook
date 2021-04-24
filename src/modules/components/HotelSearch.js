@@ -1,32 +1,27 @@
-import React, { useState } from "react";
-import "./css/HotelSearch.css";
-import { Link } from "react-router-dom";
-import { Button } from "@material-ui/core";
-// import Hotels from './Hotels'
-import InputBase from "@material-ui/core/InputBase";
-import { fade, makeStyles } from "@material-ui/core/styles";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import DataService from "../../api/DataService";
 
-import "react-date-range/dist/styles.css"; // main style file
-import "react-date-range/dist/theme/default.css"; // theme css file
-import { DateRangePicker } from "react-date-range";
+import { Button } from "@material-ui/core";
+import InputBase from "@material-ui/core/InputBase";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import RoomIcon from "@material-ui/icons/Room";
 import SearchIcon from "@material-ui/icons/Search";
 
+import "react-date-range/dist/styles.css"; // main style file
+import "react-date-range/dist/theme/default.css"; // theme css file
+import { DateRangePicker } from "react-date-range";
+
+import "./css/HotelSearch.css";
+import DataService from "../../api/DataService";
+
 export default function HotelSearch() {
-  const history = useHistory();
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      display: "flex",
-    },
-  }));
-  const classes = useStyles();
   const [showSearch, setShowSearch] = useState(false);
-  const [cityName, setCityName] = useState("new york");
+  const [cityName, setCityName] = useState(null);
+ 
   const handleChange = (event) => {
-    if (event.target.value != null) setCityName(event.target.value);
+    if (event.target.value != null) {
+      setCityName(event.target.value);
+    }
   };
   const [responseFailed, setResponseFailed] = useState(false);
 
@@ -61,12 +56,16 @@ export default function HotelSearch() {
 }
 
 function Search(props) {
-  const cityName = props.city;
   const history = useHistory();
+
+  const selectedCity = props.city;
+  const localStorageCity = localStorage.getItem("selectedCity");
+  
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [rooms, setNumberOfRoooms] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [latlon, setLatLon] = useState({ lat: null, lon: null });
 
   const selectionRange = {
     startDate: startDate,
@@ -77,11 +76,17 @@ function Search(props) {
   function handleSelect(ranges) {
     setStartDate(ranges.selection.startDate);
     setEndDate(ranges.selection.endDate);
+
+    localStorage.setItem("startDate", ranges.selection.startDate);
+    localStorage.setItem("endDate", ranges.selection.endDate);
   }
 
   function handleRoom(event) {
     setNumberOfRoooms(event.target.value);
+
+    localStorage.setItem("rooms", event.target.value);
   }
+
   function formatDate(date) {
     var d = new Date(date),
       month = "" + (d.getMonth() + 1),
@@ -94,44 +99,83 @@ function Search(props) {
     return [year, month, day].join("-");
   }
 
-  function getList() {
-    setLoading(true);
-    DataService.retrieveLocation(cityName)
-      .then(function (response) {
-        console.log(response.data);
-        if (response.data.suggestions[0].entities[0] == null) {
-          props.response(true);
-          console.log("Incorrect data");
-        }
-        var lat = response.data.suggestions[0].entities[0].latitude;
-        var lon = response.data.suggestions[0].entities[0].longitude;
-        DataService.retriveHotelNames(lat, lon, startDate, endDate, rooms).then(
-          function (response) {
-            const hotels = response.data.data.body.searchResults.results;
-            console.log(hotels);
-            var hotelNames = [];
-            for (var i = 0; i < hotels.length; i++) {
-              hotelNames.push({ hotel: hotels[i] });
-            }
-            console.log(hotelNames);
-
-            history.push({
-              pathname: "/hotels-list",
-              state: {
-                name: hotelNames,
-                startDate: formatDate(startDate),
-                endDate: formatDate(endDate),
-              },
-            });
-            setLoading(false);
-          }
-        );
-      })
-      .catch(function (error) {
-        console.error(error);
-        setLoading(false);
+  function getLocation() {
+    if(selectedCity === localStorageCity) {
+      var hotelNames = JSON.parse(localStorage.getItem('hotelList'));
+      history.push({
+        pathname: "/hotels-list",
+        state: {
+          name: hotelNames,
+          startDate: formatDate(startDate),
+          endDate: formatDate(endDate),
+        },
       });
+      return;
+    }
+    if (selectedCity != null && selectedCity != undefined) {
+      setLoading(true);
+      
+      DataService.retrieveLocation(selectedCity)
+        .then(function (response) {
+          console.log(response.data);
+          if (response.data.suggestions[0].entities[0] == null) {
+            props.response(true);
+            console.log("Incorrect data");
+          }
+          var lat = response.data.suggestions[0].entities[0].latitude;
+          var lon = response.data.suggestions[0].entities[0].longitude;
+
+          setLatLon({
+            lat: lat,
+            lon: lon,
+          });
+        })
+        .catch(function (error) {
+          console.error("Error while geting a location", error);
+          setLoading(false);
+        });
+    } else{
+      alert("No City found");
+    }
   }
+
+  function getHotelList(lat, lon) {
+    setLoading(true);
+
+    // ToDo: Cache response here based on following params
+    DataService.retriveHotelNames(lat, lon, startDate, endDate, rooms).then(
+      function (response) {
+        const hotels = response.data.data.body.searchResults.results;
+        console.log(hotels);
+        var hotelNames = [];
+        for (var i = 0; i < hotels.length; i++) {
+          hotelNames.push({ hotel: hotels[i] });
+        }
+        console.log(hotelNames);
+        localStorage.setItem("selectedCity", props.city);
+        localStorage.setItem("hotelList", JSON.stringify(hotelNames));
+
+        history.push({
+          pathname: "/hotels-list",
+          state: {
+            name: hotelNames,
+            startDate: formatDate(startDate),
+            endDate: formatDate(endDate),
+          },
+        });
+        setLoading(false);
+      }
+    );
+  }
+
+  useEffect(() => {
+    if (latlon.lat != null && latlon.lon != null) {
+      localStorage.setItem("lat", latlon.lat);
+      localStorage.setItem("lon", latlon.lon);
+
+      getHotelList(latlon.lat, latlon.lon);
+    }
+  }, [latlon]);
 
   return (
     <div className="search">
@@ -147,8 +191,8 @@ function Search(props) {
         min="1"
         onChange={handleRoom}
       />
-      <Button onClick={getList}>Search</Button>
-      {loading && <CircularProgress size={68} />}
+      <Button onClick={getLocation} disabled = {selectedCity == null || selectedCity == undefined}>Search</Button>
+      {loading && <CircularProgress size={68} color="primary" />}
     </div>
   );
 }

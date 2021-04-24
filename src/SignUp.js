@@ -103,7 +103,6 @@ function SignUp() {
                   firstName: values.firstname,
                   lastName: values.lastName,
                 };
-                debugger;
                 return axiosInstance
                   .post(`/api/users`, signUpUser)
                   .then((response) => {

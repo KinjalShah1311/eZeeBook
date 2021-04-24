@@ -1,5 +1,9 @@
 import axios from "axios";
-const API_KEY = "68f8ac9c53mshc6779e9c721879bp1fc5b9jsn44abeb5c188e";
+
+import * as dotenv from "dotenv";
+dotenv.config();
+const API_KEY_HOTEL = process.env.REACT_APP_HOTEL_API_KEY;
+const API_KEY_LOCATION = process.env.REACT_APP_LOCATION_KEY;
 
 class DataService {
   formatDate(date) {
@@ -16,6 +20,7 @@ class DataService {
 
   retrieveLocation(name) {
     console.log(name);
+    console.log("API_KEY_LOCATION", API_KEY_LOCATION);
     const options = {
       method: "GET",
       url: "https://hotels4.p.rapidapi.com/locations/search",
@@ -24,7 +29,7 @@ class DataService {
         locale: "en_US",
       },
       headers: {
-        "x-rapidapi-key": 'aa3dfad0d3msh91e468cf37f9259p167861jsn51220deec226',
+        "x-rapidapi-key": API_KEY_LOCATION,
         "x-rapidapi-host": "hotels4.p.rapidapi.com",
       },
     };
@@ -49,7 +54,7 @@ class DataService {
         pageNumber: "1",
       },
       headers: {
-        "x-rapidapi-key": API_KEY,
+        "x-rapidapi-key": API_KEY_HOTEL,
         "x-rapidapi-host": "hotels-com-free.p.rapidapi.com",
       },
     };
@@ -63,7 +68,7 @@ class DataService {
         "https://hotels-com-free.p.rapidapi.com/nice/image-catalog/v2/hotels/" +
         hotelId,
       headers: {
-        "x-rapidapi-key": API_KEY,
+        "x-rapidapi-key": API_KEY_HOTEL,
         "x-rapidapi-host": "hotels-com-free.p.rapidapi.com",
       },
     };
@@ -80,7 +85,7 @@ class DataService {
         "/reviews",
       params: { loc: "en_US", page: "1" },
       headers: {
-        "x-rapidapi-key": API_KEY,
+        "x-rapidapi-key": API_KEY_HOTEL,
         "x-rapidapi-host": "hotels-com-free.p.rapidapi.com",
       },
     };
