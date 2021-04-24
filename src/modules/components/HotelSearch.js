@@ -17,7 +17,7 @@ import DataService from "../../api/DataService";
 export default function HotelSearch() {
   const [showSearch, setShowSearch] = useState(false);
   const [cityName, setCityName] = useState(null);
- 
+
   const handleChange = (event) => {
     if (event.target.value != null) {
       setCityName(event.target.value);
@@ -60,7 +60,7 @@ function Search(props) {
 
   const selectedCity = props.city;
   const localStorageCity = localStorage.getItem("selectedCity");
-  
+
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [rooms, setNumberOfRoooms] = useState(1);
@@ -100,8 +100,8 @@ function Search(props) {
   }
 
   function getLocation() {
-    if(selectedCity === localStorageCity) {
-      var hotelNames = JSON.parse(localStorage.getItem('hotelList'));
+    if (selectedCity === localStorageCity) {
+      var hotelNames = JSON.parse(localStorage.getItem("hotelList"));
       history.push({
         pathname: "/hotels-list",
         state: {
@@ -114,7 +114,7 @@ function Search(props) {
     }
     if (selectedCity != null && selectedCity != undefined) {
       setLoading(true);
-      
+
       DataService.retrieveLocation(selectedCity)
         .then(function (response) {
           console.log(response.data);
@@ -134,8 +134,8 @@ function Search(props) {
           console.error("Error while geting a location", error);
           setLoading(false);
         });
-    } else{
-      alert("No City found");
+    } else {
+      console.error("No City found");
     }
   }
 
@@ -191,7 +191,12 @@ function Search(props) {
         min="1"
         onChange={handleRoom}
       />
-      <Button onClick={getLocation} disabled = {selectedCity == null || selectedCity == undefined}>Search</Button>
+      <Button
+        onClick={getLocation}
+        disabled={selectedCity == null || selectedCity == undefined}
+      >
+        Search
+      </Button>
       {loading && <CircularProgress size={68} color="primary" />}
     </div>
   );

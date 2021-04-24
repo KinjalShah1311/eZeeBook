@@ -1,15 +1,8 @@
 import React from "react";
-import clsx from "clsx";
 import { fade, makeStyles } from "@material-ui/core/styles";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Box from "@material-ui/core/Box";
 import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import { useLocation } from "react-router-dom";
-import Typography from "../components/Typography";
-
-//context
+import Button from "@material-ui/core/Button";
+import { useLocation, useHistory } from "react-router-dom";
 
 //components
 import SingleHotel from "./SingleHotel";
@@ -140,6 +133,7 @@ const useStyles = makeStyles((theme) => ({
 export default function HotelInfo(props) {
   const location = useLocation();
   const classes = useStyles();
+  const history = useHistory();
 
   let hotel = null;
   let startDate = null;
@@ -157,11 +151,31 @@ export default function HotelInfo(props) {
     endDate = localStorage.getItem("endDate");
   } else if (location["endDate"]) endDate = location.endDate;
 
+  const handleHomePage = () => {
+    history.push({
+      pathname: "/",
+    });
+  };
+
   return (
     <Container className={classes.root} component="section" justify="center">
-      {hotel && startDate && endDate ?  (
-        <SingleHotel room={hotel} startDate={startDate} endDate={endDate} />
-      ) : <><div><p>Something went wrong, Please search again!</p></div></>}
+      {hotel && startDate && endDate ? (
+        <SingleHotel key={hotel.roomID}  room={hotel} startDate={startDate} endDate={endDate} />
+      ) : (
+        <>
+          <div>
+            <h2>Something went wrong, Please search again!</h2>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleHomePage}
+              className={classes.button}
+            >
+              Go Back to HomePage
+            </Button>
+          </div>
+        </>
+      )}
     </Container>
   );
 }

@@ -14,13 +14,13 @@ import { useHistory } from "react-router";
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 400,
-    margin: 10,
-    minWidth: 300,
+    maxWidth: "400px",
+    margin: "10px",
+    minWidth: "300px",
   },
   media: {
-    width: 400,
-    minHeight: 300,
+    width: "400px",
+    minHeight: "300px",
   },
   cardActions: {
     display: "flex",
