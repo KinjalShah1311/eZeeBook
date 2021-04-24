@@ -46,6 +46,10 @@ export default function HotelCard(props) {
   const history = useHistory();
 
   const handleClick = (hotel, startDate, endDate) => {
+    localStorage.setItem("selectedHotel", JSON.stringify(hotel));
+    localStorage.setItem("startDate", startDate);
+    localStorage.setItem("endDate", endDate);
+
     history.push({
       pathname: "/hotel",
       hotel: hotel,

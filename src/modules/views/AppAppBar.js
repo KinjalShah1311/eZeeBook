@@ -44,7 +44,7 @@ function AppAppBar(props) {
   const { classes } = props;
   const { currentUser, logout } = useAuth();
   const history = useHistory();
-  console.log("currentUser:", currentUser);
+  //console.log("currentUser:", currentUser);
 
   const handleLogout = async () => {
     //setError("");
