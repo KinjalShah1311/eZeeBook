@@ -3,16 +3,13 @@ import PropTypes from "prop-types";
 import {
   Box,
   Button,
-  Checkbox,
-  FormHelperText,
   TextField,
 } from "@material-ui/core";
 import Typography from "../components/Typography";
 import AppForm from "./AppForm";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import { withStyles } from "@material-ui/core/styles";
 
 // Auth
@@ -45,20 +42,13 @@ const styles = (theme) => ({
 function Profile(props) {
   const { classes } = props;
   const [isLoading, setIsLoading] = useState(false);
-  const { signup, currentUser } = useAuth();
+  const { currentUser } = useAuth();
   const [country, setCountry] = useState("");
 
   const [error, setError] = useState("");
   const [showSuccess, setShowSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = React.useState(false);
-
-  const history = useHistory();
-  const countries = [
-    { country: "Canada", value: "CA" },
-    { country: "USA", value: "USA" },
-    { country: "India", value: "IN" },
-  ];
 
   const [userData, setUserData] = useState({
     firstName: "",
@@ -73,11 +63,11 @@ function Profile(props) {
     const uid = currentUser.uid;
     return axiosInstance
       .put(`/api/users/${uid}`, userData)
-      .then((response) => {
+      .then(() => {
         setLoading(false);
         setOpen(true);
       })
-      .catch((err) => {
+      .catch(() => {
         setError("Failed to update user details");
       });
   }
@@ -96,7 +86,7 @@ function Profile(props) {
           setUserData(userData);
           setLoading(false);
         })
-        .catch((err) => {
+        .catch(() => {
           setError("Failed to get user details");
         });
     } catch {
@@ -104,20 +94,7 @@ function Profile(props) {
     }
   }
 
-  const handleChange = (event) => {
-    setUserData({
-      ...userData,
-      [event.target.name]: event.target.value,
-    });
-  };
 
-  const handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
-
-    setOpen(false);
-  };
 
   useEffect(() => {
     getUserData();

@@ -25,7 +25,7 @@ const styles = (theme) => ({
     backgroundPosition: "center",
   },
   button: {
-    minWidth: 200,
+    minWidth: "200px",
   },
   h5: {
     marginBottom: theme.spacing(4),
@@ -72,7 +72,6 @@ function Banner(props) {
       >
         Vacation rentals, Hotel booking -30% off the best luxury hotels.
       </Typography>
-      {/* <Link to={"/search-hotel"}> */}
       <Button
         color="secondary"
         variant="contained"
@@ -87,21 +86,12 @@ function Banner(props) {
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
-        minWidth="1000px"
         fullScreen={fullScreen}
       >
         <DialogTitle id="form-dialog-title">Search hotel by location, Date, No. of days to stay etc..</DialogTitle>
         <DialogContent>
           <DialogContentText>
             <HotelSearch />
-            {/* <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Email Address"
-              type="email"
-              fullWidth
-            /> */}
           </DialogContentText>
         </DialogContent>
         <DialogActions>

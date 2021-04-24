@@ -10,7 +10,7 @@ function Copyright() {
   return (
     <React.Fragment>
       {'© '}
-      <Link color="inherit" href="https://ezeebook.herokuapp.com/">
+      <Link color="inherit" to="https://ezeebook.herokuapp.com/">
         eZeeBook
       </Link>{' '}
       {new Date().getFullYear()}
