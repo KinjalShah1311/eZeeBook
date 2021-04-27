@@ -14,6 +14,7 @@ import TvIcon from "@material-ui/icons/Tv";
 import AcUnitIcon from "@material-ui/icons/AcUnit";
 import { Button } from "@material-ui/core";
 import { useHistory, useLocation } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 import DataService from "../../api/DataService";
 import ListReviews from "./ListReviews";
@@ -69,6 +70,8 @@ const useStyles = makeStyles({
 });
 
 export default function SingleHotel(props) {
+
+  const { currentUser } = useAuth();
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();
@@ -149,14 +152,21 @@ export default function SingleHotel(props) {
 
   function reservation() {
     console.log("roooom" + props.room.name);
-    history.push({
-      pathname: "/checkout",
-      state: {
-        hotel: props.room,
-        startDate: props.startDate,
-        endDate: props.endDate,
-      },
-    });
+    if (currentUser != null) {
+      history.push({
+        pathname: "/checkout",
+        state: {
+          hotel: props.room,
+          startDate: props.startDate,
+          endDate: props.endDate,
+        },
+      });
+    }
+    else {
+      history.push({
+        pathname: "/signin",
+      });
+    }
   }
 
   return (
