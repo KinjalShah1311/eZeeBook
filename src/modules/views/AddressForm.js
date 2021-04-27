@@ -1,11 +1,51 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
+import { makeStyles } from "@material-ui/core/styles";
+import Alert from '@material-ui/lab/Alert';
 
-export default function AddressForm() {
+
+const useStyles = makeStyles((theme) => ({
+  alert: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
+}));
+
+export default function AddressForm(props) {
+
+  const classes = useStyles();
+  const checkInput = (value) => {
+    if (value === "") {
+      setError(true);
+    }
+
+    if (firstName !== "" && lastName !== "" && email !== "" && address !== "" && city !== "" && state !== "" && zipcode !== "" && country !== "") {
+      setError(false);
+    }
+  }
+
+
+  const [error, setError] = useState(true);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [zipcode, setZipCode] = useState("");
+  const [country, setCountry] = useState("");
+
+
+  useEffect(() => {
+    props.isError(error);
+  }, [props, error]);
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -18,8 +58,11 @@ export default function AddressForm() {
             id="firstName"
             name="firstName"
             label="First name"
+            value={firstName}
             fullWidth
             autoComplete="given-name"
+            onBlur={(e) => checkInput(e.target.value)}
+            onChange={e => setFirstName(e.target.value)}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -28,6 +71,9 @@ export default function AddressForm() {
             id="lastName"
             name="lastName"
             label="Last name"
+            value={lastName}
+            onBlur={(e) => checkInput(e.target.value)}
+            onChange={e => setLastName(e.target.value)}
             fullWidth
             autoComplete="family-name"
           />
@@ -38,6 +84,9 @@ export default function AddressForm() {
             id="email"
             name="email"
             label="Email"
+            value={email}
+            onBlur={(e) => checkInput(e.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             fullWidth
             autoComplete="shipping email"
           />
@@ -48,6 +97,9 @@ export default function AddressForm() {
             id="address1"
             name="address1"
             label="Address line 1"
+            value={address}
+            onBlur={(e) => checkInput(e.target.value)}
+            onChange={(e) => setAddress(e.target.value)}
             fullWidth
             autoComplete="shipping address-line1"
           />
@@ -67,12 +119,18 @@ export default function AddressForm() {
             id="city"
             name="city"
             label="City"
+            value={city}
+            onBlur={(e) => checkInput(e.target.value)}
+            onChange={(e) => setCity(e.target.value)}
             fullWidth
-            autoComplete="shipping address-level2"
+            autoComplete="city"
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField id="state" name="state" label="State/Province/Region" fullWidth />
+          <TextField id="state" name="state" label="State/Province/Region"
+            value={state}
+            onBlur={(e) => checkInput(e.target.value)}
+            onChange={(e) => setState(e.target.value)} fullWidth />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -80,6 +138,9 @@ export default function AddressForm() {
             id="zip"
             name="zip"
             label="Zip / Postal code"
+            value={zipcode}
+            onBlur={(e) => checkInput(e.target.value)}
+            onChange={(e) => setZipCode(e.target.value)}
             fullWidth
             autoComplete="shipping postal-code"
           />
@@ -90,6 +151,9 @@ export default function AddressForm() {
             id="country"
             name="country"
             label="Country"
+            value={country}
+            onBlur={(e) => checkInput(e.target.value)}
+            onChange={(e) => setCountry(e.target.value)}
             fullWidth
             autoComplete="shipping country"
           />
@@ -99,6 +163,9 @@ export default function AddressForm() {
             control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
             label="Use this address for payment details"
           />
+          {error && <div className={classes.alert}>
+            <Alert severity="error">Please fill out the form</Alert>
+          </div>}
         </Grid>
       </Grid>
     </React.Fragment>

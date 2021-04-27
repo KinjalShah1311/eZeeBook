@@ -56,18 +56,8 @@ const useStyles = makeStyles((theme) => ({
 
 const steps = ["Review booking", "Customer Information", "Payment details"];
 
-function getStepContent(step, hotelInfo) {
-  switch (step) {
-    case 0:
-      return <Review hotelInfo={hotelInfo} />;
-    case 1:
-      return <AddressForm />;
-    case 2:
-      return <PaymentForm hotelInfo={hotelInfo}/>;
-    default:
-      throw new Error("Unknown step");
-  }
-}
+
+
 
 export default function Checkout(props) {
   const { currentUser } = useAuth();
@@ -75,9 +65,26 @@ export default function Checkout(props) {
   const classes = useStyles();
   const history = useHistory();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [error, setError] = React.useState(false);
+  const checkError = (isError) => {
+    setError(isError);
+  }
+
+  function getStepContent(step, hotelInfo) {
+    switch (step) {
+      case 0:
+        return <Review hotelInfo={hotelInfo} />;
+      case 1:
+        return <AddressForm isError={checkError} />;
+      case 2:
+        return <PaymentForm hotelInfo={hotelInfo} isError={checkError} />;
+      default:
+        throw new Error("Unknown step");
+    }
+  }
 
   const handleNext = () => {
-    if (activeStep==2){
+    if (activeStep === 2) {
       pushReservationData()
     }
 
@@ -90,15 +97,16 @@ export default function Checkout(props) {
     });
   };
 
+
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
   const hotel = location.state.hotel;
-  const startDate= location.state.startDate;
-  const endDate= location.state.endDate;
+  const startDate = location.state.startDate;
+  const endDate = location.state.endDate;
   //console.log("nameeeee" +hotel +"dateeee "+startDate, );
   function pushReservationData() {
-    
+
     const uid = currentUser.uid;
     const reserveData = {
       startDate: startDate,
@@ -130,7 +138,7 @@ export default function Checkout(props) {
         </Stepper>
         <React.Fragment>
           {activeStep === steps.length ? (
-            
+
             <React.Fragment>
               <Typography variant="h5" gutterBottom>
                 Thank you for your order.
@@ -164,7 +172,9 @@ export default function Checkout(props) {
                   color="primary"
                   onClick={handleNext}
                   className={classes.button}
+                  disabled={activeStep !== 0 && error === true ? true : false}
                 >
+
                   {activeStep === steps.length - 1 ? ("Reserve Hotel") : "Next"}
                 </Button>
               </div>
