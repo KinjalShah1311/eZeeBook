@@ -61,7 +61,7 @@ function Banner(props) {
         src={backgroundImage}
         alt="increase priority"
       />
-      <Typography color="inherit" align="center" variant="h2" marked="center">
+      <Typography color="inherit" align="center" variant="h2" marked="center" className={classes.h2}>
         Book your stay
       </Typography>
       <Typography
@@ -74,13 +74,14 @@ function Banner(props) {
       </Typography>
       <Button
         color="secondary"
+        // backgroundColor=""
         variant="contained"
         size="large"
         className={classes.button}
         component="a"
         onClick={() => handleClickOpen()}
       >
-        Search
+        Search Hotels
       </Button>
       <Dialog
         open={open}
