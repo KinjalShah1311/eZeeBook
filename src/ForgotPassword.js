@@ -1,16 +1,17 @@
-import withRoot from './modules/withRoot';
-import React from 'react';
-/*
-import { Field, Form, FormSpy } from 'react-final-form';
-import { makeStyles } from '@material-ui/core/styles';
-import Typography from './modules/components/Typography';
-import AppFooter from './modules/views/AppFooter';
-import AppAppBar from './modules/views/AppAppBar';
-import AppForm from './modules/views/AppForm';
-import { email, required } from './modules/form/validation';
-import RFTextField from './modules/form/RFTextField';
-import FormButton from './modules/form/FormButton';
-import FormFeedback from './modules/form/FormFeedback';
+import withRoot from "./modules/withRoot";
+import React, { useState } from "react";
+import Alert from "@material-ui/lab/Alert";
+
+import { Box, Button, TextField, makeStyles } from "@material-ui/core";
+import Typography from "./modules/components/Typography";
+import AppFooter from "./modules/views/AppFooter";
+import AppAppBar from "./modules/views/AppAppBar";
+import AppForm from "./modules/views/AppForm";
+import * as Yup from "yup";
+import { Formik } from "formik";
+import { Link } from "react-router-dom";
+
+import { useAuth } from "./contexts/AuthContext";
 
 const useStyles = makeStyles((theme) => ({
   form: {
@@ -27,24 +28,11 @@ const useStyles = makeStyles((theme) => ({
 
 function ForgotPassword() {
   const classes = useStyles();
-  const [sent, setSent] = React.useState(false);
+  const { resetPassword } = useAuth();
 
-  const validate = (values) => {
-    const errors = required(['email', 'password'], values);
-
-    if (!errors.email) {
-      const emailError = email(values.email, values);
-      if (emailError) {
-        errors.email = email(values.email, values);
-      }
-    }
-
-    return errors;
-  };
-
-  const handleSubmit = () => {
-    setSent(true);
-  };
+  const [error, setError] = useState("");
+  const [isLoading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
   return (
     <React.Fragment>
@@ -56,50 +44,94 @@ function ForgotPassword() {
           </Typography>
           <Typography variant="body2" align="center">
             {"Enter your email address below and we'll " +
-              'send you a link to reset your password.'}
+              "send you a link to reset your password."}
           </Typography>
         </React.Fragment>
-        <Form onSubmit={handleSubmit} subscription={{ submitting: true }} validate={validate}>
-          {({ handleSubmit2, submitting }) => (
-            <form onSubmit={handleSubmit2} className={classes.form} noValidate>
-              <Field
-                autoFocus
-                autoComplete="email"
-                component={RFTextField}
-                disabled={submitting || sent}
+
+        <Formik
+          initialValues={{
+            email: "",
+          }}
+          validationSchema={Yup.object().shape({
+            email: Yup.string()
+              .email("Must be a valid email")
+              .max(255)
+              .required("Email is required"),
+          })}
+          onSubmit={(values) => {
+            try {
+              const userData = {
+                email: values.email,
+              };
+              setMessage("");
+              setError("");
+              setLoading(true);
+              resetPassword(userData.email).then(() => {
+                // isSubmitting(false);
+                setMessage("Check your inbox for further instruction");
+              });
+              //
+            } catch (e) {
+              alert(e.message);
+            }
+          }}
+        >
+          {({
+            errors,
+            handleBlur,
+            handleSubmit,
+            handleChange,
+            isSubmitting,
+            touched,
+            values,
+          }) => (
+            <form onSubmit={handleSubmit}>
+              <TextField
+                error={Boolean(touched.email && errors.email)}
                 fullWidth
-                label="Email"
+                helperText={touched.email && errors.email}
+                label="Email Address"
                 margin="normal"
                 name="email"
-                required
-                size="large"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                type="email"
+                value={values.email}
+                variant="outlined"
               />
-              <FormSpy subscription={{ submitError: true }}>
-                {({ submitError }) =>
-                  submitError ? (
-                    <FormFeedback className={classes.feedback} error>
-                      {submitError}
-                    </FormFeedback>
-                  ) : null
-                }
-              </FormSpy>
-              <FormButton
-                className={classes.button}
-                disabled={submitting || sent}
-                size="large"
-                color="secondary"
-                fullWidth
-              >
-                {submitting || sent ? 'In progress…' : 'Send reset link'}
-              </FormButton>
+              <Box my={2}>
+                <Button
+                  color="primary"
+                  disabled={isSubmitting}
+                  fullWidth
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                >
+                  SEND RESET Link
+                </Button>
+              </Box>
+              <Typography color="textSecondary" variant="body1">
+                Don&apos;t have an account?{" "}
+                <Link to={"signup"} variant="h6">
+                  Sign up
+                </Link>
+              </Typography>
+              <Typography color="textSecondary" variant="body1">
+                <Link to={"signin"} variant="h6">
+                  Log In
+                </Link>
+              </Typography>
             </form>
           )}
-        </Form>
+        </Formik>
       </AppForm>
+
+      {error && <Alert severity="error">{error}</Alert>}
+      {message && <Alert severity="success">{message}</Alert>}
       <AppFooter />
     </React.Fragment>
   );
 }
 
 export default withRoot(ForgotPassword);
-*/

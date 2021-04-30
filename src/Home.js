@@ -15,6 +15,7 @@ import PrivateRoute from "./modules/PrivateRoute";
 // Pages
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import ForgotPassword from "./ForgotPassword";
 import UpdateProfile from "./UpdateProfile";
 import HotelList from "./HotelList";
 import HotelDetailInfo from "./HotelDetailInfo";
@@ -33,6 +34,9 @@ function App() {
         </Route>
         <Route path="/signup">
           <SignUp />
+        </Route>
+        <Route path="/forgot-password">
+          <ForgotPassword />
         </Route>
         <Route path="/hotels-list">
           <HotelList />

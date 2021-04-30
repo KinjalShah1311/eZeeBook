@@ -125,13 +125,19 @@ function SignIn() {
                   type="submit"
                   variant="contained"
                 >
-                  Sign in now
+                  Log In
                 </Button>
               </Box>
               <Typography color="textSecondary" variant="body1">
                 Don&apos;t have an account?{" "}
                 <Link to={"signup"} variant="h6">
                   Sign up
+                </Link>
+              </Typography>
+              <Typography color="textSecondary" variant="body1">
+                  Forgot Password?{" "}
+                <Link to={"forgot-password"} variant="h6">
+                  Click here
                 </Link>
               </Typography>
             </form>
