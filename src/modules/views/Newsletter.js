@@ -1,26 +1,27 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid';
-import Hidden from '@material-ui/core/Hidden';
-import Container from '@material-ui/core/Container';
-import Typography from '../components/Typography';
-import TextField from '../components/TextField';
-import Snackbar from '../components/Snackbar';
-import Button from '../components/Button';
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+import Hidden from "@material-ui/core/Hidden";
+import Container from "@material-ui/core/Container";
+import Typography from "../components/Typography";
+import TextField from "../components/TextField";
+import Snackbar from "../components/Snackbar";
+import Button from "../components/Button";
+import * as emailjs from "emailjs-com";
 
 const styles = (theme) => ({
   root: {
     marginTop: theme.spacing(10),
     marginBottom: 0,
-    display: 'flex',
+    display: "flex",
   },
   cardWrapper: {
     zIndex: 1,
   },
   card: {
-    display: 'flex',
-    justifyContent: 'center',
+    display: "flex",
+    justifyContent: "center",
     backgroundColor: theme.palette.warning.main,
     padding: theme.spacing(8, 3),
   },
@@ -28,32 +29,32 @@ const styles = (theme) => ({
     maxWidth: 400,
   },
   textField: {
-    width: '100%',
+    width: "100%",
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(2),
   },
   button: {
-    width: '100%',
+    width: "100%",
   },
   imagesWrapper: {
-    position: 'relative',
+    position: "relative",
   },
   imageDots: {
-    position: 'absolute',
+    position: "absolute",
     top: -67,
     left: -67,
     right: 0,
     bottom: 0,
-    width: '100%',
-    background: 'url(/static/onepirate/productCTAImageDots.png)',
+    width: "100%",
+    background: "url(/static/onepirate/productCTAImageDots.png)",
   },
   image: {
-    position: 'absolute',
+    position: "absolute",
     top: -28,
     left: -28,
     right: 0,
     bottom: 0,
-    width: '100%',
+    width: "100%",
     maxWidth: 600,
   },
 });
@@ -64,6 +65,22 @@ function Newsletter(props) {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    // emailjs.send(
+    //   'service_xmytuhn',
+    //   'template_5gwvsa6',
+    //    templateParams,
+    //   'user_OjK8XVOop5sxo0yO7EWvB'
+    //  )
+    const customerEmail = event.target.email.value;
+    let templateParams = {
+      customer_email: customerEmail,
+    };
+    emailjs.send(
+      "service_xmytuhn",
+      "template_kupbzea",
+      templateParams,
+      "user_OjK8XVOop5sxo0yO7EWvB"
+    );
     setOpen(true);
   };
 
@@ -83,8 +100,21 @@ function Newsletter(props) {
               <Typography variant="h5">
                 Taste the holidays of the everyday close to home.
               </Typography>
-              <TextField noBorder className={classes.textField} label="Your email" variant="outlined" type="email" />
-              <Button type="submit" color="primary" variant="contained" className={classes.button}>
+              <TextField
+                noBorder
+                className={classes.textField}
+                label="Your email"
+                variant="outlined"
+                type="email"
+                name="email"
+                required
+              />
+              <Button
+                type="submit"
+                color="primary"
+                variant="contained"
+                className={classes.button}
+              >
                 Keep me updated
               </Button>
             </form>
