@@ -62,7 +62,7 @@ function SignUp() {
           </Typography>
         </React.Fragment>
 
-        {error && <Alert severity="error" onClose={() => setError("")}>{error}</Alert>}
+        {error && <Alert severity="error">{error}</Alert>}
 
         <Formik
           initialValues={{
