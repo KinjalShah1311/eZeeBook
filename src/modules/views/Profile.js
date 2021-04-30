@@ -1,16 +1,12 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import {
-  Box,
-  Button,
-  TextField,
-} from "@material-ui/core";
+import { Box, Button, TextField } from "@material-ui/core";
 import Typography from "../components/Typography";
 import AppForm from "./AppForm";
-import { useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
 import { withStyles } from "@material-ui/core/styles";
+import Alert from "@material-ui/lab/Alert";
 
 // Auth
 import { useAuth } from "../../contexts/AuthContext";
@@ -43,12 +39,9 @@ function Profile(props) {
   const { classes } = props;
   const [isLoading, setIsLoading] = useState(false);
   const { currentUser } = useAuth();
-  const [country, setCountry] = useState("");
 
   const [error, setError] = useState("");
-  const [showSuccess, setShowSuccess] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [open, setOpen] = React.useState(false);
+  const [message, setMessage] = useState("");
 
   const [userData, setUserData] = useState({
     firstName: "",
@@ -59,15 +52,17 @@ function Profile(props) {
     country: "",
   });
 
-  function updateProfile() {
+  function updateProfile(updatedValues) {
     const uid = currentUser.uid;
     return axiosInstance
-      .put(`/api/users/${uid}`, userData)
+      .put(`/api/users/${uid}`, updatedValues)
       .then(() => {
-        setLoading(false);
-        setOpen(true);
+        setIsLoading(false);
+        setMessage("Your profile is updated successfully!");
+        getUserData();
       })
       .catch(() => {
+        setIsLoading(false);
         setError("Failed to update user details");
       });
   }
@@ -75,23 +70,28 @@ function Profile(props) {
   function getUserData() {
     try {
       setError("");
-      setLoading(true);
+      setIsLoading(true);
       const uid = currentUser.uid;
 
-      setCountry("CA");
       return axiosInstance
         .get(`/api/users/${uid}`)
         .then((response) => {
           const userData = response.data;
           setUserData(userData);
-          setLoading(false);
+          setIsLoading(false);
         })
         .catch(() => {
+          setIsLoading(false);
           setError("Failed to get user details");
         });
     } catch {
+      setIsLoading(false);
       setError("Failed to get an account");
     }
+  }
+
+  function cancelProfile(){
+    getUserData();
   }
 
   useEffect(() => {
@@ -105,26 +105,31 @@ function Profile(props) {
           Update Your Profile
         </Typography>
       </React.Fragment>
-      {!loading && (
+
+      {error && <Alert severity="error" onClose={() => setError("")}>{error}</Alert>}
+      {message && <Alert severity="success" onClose={() => setMessage("")}>{message}</Alert>}
+
+      {!isLoading && (
         <Formik
           initialValues={{
             firstName: userData.firstName,
-            email: userData.emailAddress,
-            lastName: userData.lastName
+            emailAddress: userData.emailAddress,
+            lastName: userData.lastName,
+            phoneNumber: userData.phoneNumber,
+            address: userData.address,
           }}
           validationSchema={Yup.object().shape({
-            email: Yup.string()
+            emailAddress: Yup.string()
               .email("Must be a valid email")
               .max(255)
               .required("Email is required"),
+            firstName: Yup.string().max(255).required("First Name is required"),
+            lastName: Yup.string().max(255).required("Last Name is required"),
+            phoneNumber: Yup.number(),
           })}
           onSubmit={async (values) => {
             setIsLoading(true);
             try {
-              /*const newUser = await Auth.signUp({
-                    username: values.email,
-                    password: values.password,
-                  });*/
               setError("");
               updateProfile(values);
               setIsLoading(false);
@@ -138,13 +143,26 @@ function Profile(props) {
             handleBlur,
             handleChange,
             handleSubmit,
-            isSubmitting,
             touched,
             values,
           }) => (
             <form onSubmit={handleSubmit}>
               <Box mb={3}></Box>
 
+              <TextField
+                error={Boolean(touched.emailAddress && errors.emailAddress)}
+                fullWidth
+                helperText={touched.emailAddress && errors.emailAddress}
+                label="Email Address"
+                margin="normal"
+                name="emailAddress"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                type="emailAddress"
+                value={values.emailAddress}
+                variant="outlined"
+                disabled
+              />
               <TextField
                 error={Boolean(touched.firstName && errors.firstName)}
                 fullWidth
@@ -171,23 +189,38 @@ function Profile(props) {
                 value={values.lastName}
                 variant="outlined"
               />
+
               <TextField
-                error={Boolean(touched.email && errors.email)}
+                error={Boolean(touched.phoneNumber && errors.phoneNumber)}
                 fullWidth
-                helperText={touched.email && errors.email}
-                label="Email Address"
+                helperText={touched.phoneNumber && errors.phoneNumber}
+                label="Phone Number"
                 margin="normal"
-                name="email"
+                name="phoneNumber"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                type="email"
-                value={values.email}
+                type="number"
+                value={values.phoneNumber}
+                variant="outlined"
+              />
+
+              <TextField
+                error={Boolean(touched.address && errors.address)}
+                fullWidth
+                helperText={touched.address && errors.address}
+                label="Address"
+                margin="normal"
+                name="address"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                type="text"
+                value={values.address}
                 variant="outlined"
               />
               <Box my={2}>
                 <Button
                   color="primary"
-                  disabled={isSubmitting}
+                  disabled={isLoading}
                   fullWidth
                   size="large"
                   type="submit"
@@ -199,10 +232,11 @@ function Profile(props) {
               <Box my={2}>
                 <Button
                   color="primary"
-                  disabled={isSubmitting}
+                  disabled={isLoading}
                   fullWidth
                   size="large"
                   variant="contained"
+                  onClick={cancelProfile}
                 >
                   Cancel
                 </Button>

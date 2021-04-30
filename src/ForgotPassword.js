@@ -127,8 +127,8 @@ function ForgotPassword() {
         </Formik>
       </AppForm>
 
-      {error && <Alert severity="error">{error}</Alert>}
-      {message && <Alert severity="success">{message}</Alert>}
+      {error && <Alert severity="error" onClose={() => setError("")}>{error}</Alert>}
+      {message && <Alert severity="success" onClose={() => setMessage("")}>{message}</Alert>}
       <AppFooter />
     </React.Fragment>
   );
