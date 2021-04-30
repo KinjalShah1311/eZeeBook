@@ -83,7 +83,7 @@ function Newsletter(props) {
               <Typography variant="h5">
                 Taste the holidays of the everyday close to home.
               </Typography>
-              <TextField noBorder className={classes.textField} placeholder="Your email" />
+              <TextField noBorder className={classes.textField} label="Your email" variant="outlined" type="email" />
               <Button type="submit" color="primary" variant="contained" className={classes.button}>
                 Keep me updated
               </Button>

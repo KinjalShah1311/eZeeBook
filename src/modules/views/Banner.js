@@ -61,14 +61,14 @@ function Banner(props) {
         src={backgroundImage}
         alt="increase priority"
       />
-      <Typography
+      {/* <Typography
         color="inherit"
         align="center"
         variant="h2"
-        className={classes.markedH2Center}
+        // className={classes.markedH2Center}
       >
-        Book your stay
-      </Typography>
+        Book your stay */}
+      {/* </Typography> */}
       <Typography
         color="inherit"
         align="center"
@@ -79,7 +79,6 @@ function Banner(props) {
       </Typography>
       <Button
         color="secondary"
-        // backgroundColor=""
         variant="contained"
         size="large"
         className={classes.button}
