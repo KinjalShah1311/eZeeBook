@@ -111,7 +111,7 @@ function AppAppBar(props) {
                   <Typography
                     variant="h6"
                     underline="none"
-                    className={clsx(classes.rightLink, classes.linkSecondary)}
+                    className={clsx(classes.rightLink)}
                   >
                     {"Sign Up"}
                   </Typography>
