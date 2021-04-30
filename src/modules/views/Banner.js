@@ -61,7 +61,12 @@ function Banner(props) {
         src={backgroundImage}
         alt="increase priority"
       />
-      <Typography color="inherit" align="center" variant="h2" marked="center" className={classes.h2}>
+      <Typography
+        color="inherit"
+        align="center"
+        variant="h2"
+        className={classes.markedH2Center}
+      >
         Book your stay
       </Typography>
       <Typography
@@ -78,7 +83,7 @@ function Banner(props) {
         variant="contained"
         size="large"
         className={classes.button}
-        component="a"
+        // component="a"
         onClick={() => handleClickOpen()}
       >
         Search Hotels
@@ -89,7 +94,9 @@ function Banner(props) {
         aria-labelledby="form-dialog-title"
         fullScreen={fullScreen}
       >
-        <DialogTitle id="form-dialog-title">Search hotel by location, Date, No. of days to stay etc..</DialogTitle>
+        <DialogTitle id="form-dialog-title">
+          Search hotel by location, Date, No. of days to stay etc..
+        </DialogTitle>
         <DialogContent>
           <DialogContentText>
             <HotelSearch />
