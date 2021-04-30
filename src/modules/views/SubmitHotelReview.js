@@ -179,7 +179,7 @@ export default function SubmitHotelReview() {
             onChange={handleTextFieldChange}
           />
           {error !== "" && <div className={classes.alert}>
-            <Alert severity="error" onClose={() => setError("")}>{error}</Alert>
+            <Alert severity="error">{error}</Alert>
           </div>}
         </Grid>
       </Grid>
