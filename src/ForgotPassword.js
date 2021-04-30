@@ -31,7 +31,7 @@ function ForgotPassword() {
   const { resetPassword } = useAuth();
 
   const [error, setError] = useState("");
-  const [isLoading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [message, setMessage] = useState("");
 
   return (
@@ -59,19 +59,20 @@ function ForgotPassword() {
               .required("Email is required"),
           })}
           onSubmit={(values) => {
+            setIsLoading(true);
             try {
               const userData = {
                 email: values.email,
               };
               setMessage("");
               setError("");
-              setLoading(true);
               resetPassword(userData.email).then(() => {
-                // isSubmitting(false);
                 setMessage("Check your inbox for further instruction");
+                setIsLoading(false);
               });
               //
             } catch (e) {
+              setIsLoading(false);
               alert(e.message);
             }
           }}
@@ -81,7 +82,6 @@ function ForgotPassword() {
             handleBlur,
             handleSubmit,
             handleChange,
-            isSubmitting,
             touched,
             values,
           }) => (
@@ -102,7 +102,7 @@ function ForgotPassword() {
               <Box my={2}>
                 <Button
                   color="primary"
-                  disabled={isSubmitting}
+                  disabled={isLoading}
                   fullWidth
                   size="large"
                   type="submit"

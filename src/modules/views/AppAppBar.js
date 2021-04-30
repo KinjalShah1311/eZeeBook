@@ -47,12 +47,12 @@ function AppAppBar(props) {
   //console.log("currentUser:", currentUser);
 
   const handleLogout = async () => {
-    //setError("");
+    // setError("");
     history.push("/signin");
     try {
       await logout();
     } catch {
-      //setError("Failed to logout");
+      // setError("Failed to logout");
     }
   };
 

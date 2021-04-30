@@ -74,9 +74,11 @@ function SignIn() {
                 })
                 .catch((ex) => {
                   setError("Incorrect Email or Password. Please try again!");
+                  setLoading(false);
                 });
             } catch (e) {
-              alert(e.message);
+              setError(e.message);
+              setLoading(false);
             }
           }}
         >
@@ -85,7 +87,6 @@ function SignIn() {
             handleBlur,
             handleSubmit,
             handleChange,
-            isSubmitting,
             touched,
             values,
           }) => (
@@ -119,7 +120,7 @@ function SignIn() {
               <Box my={2}>
                 <Button
                   color="primary"
-                  disabled={isSubmitting}
+                  disabled={loading}
                   fullWidth
                   size="large"
                   type="submit"

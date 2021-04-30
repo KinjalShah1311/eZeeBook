@@ -8,6 +8,7 @@ import {
   TextField,
   makeStyles,
 } from "@material-ui/core";
+import Alert from "@material-ui/lab/Alert";
 import Typography from "./modules/components/Typography";
 import AppFooter from "./modules/views/AppFooter";
 import AppAppBar from "./modules/views/AppAppBar";
@@ -15,7 +16,7 @@ import AppForm from "./modules/views/AppForm";
 import { Link, useHistory } from "react-router-dom";
 import * as Yup from "yup";
 import { Formik } from "formik";
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import Autocomplete from "@material-ui/lab/Autocomplete";
 
 // Auth
 import { useAuth } from "./contexts/AuthContext";
@@ -35,12 +36,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SignUp() {
-  const classes = useStyles();
   const [isLoading, setIsLoading] = useState(false);
-  // const [newUser, setNewUser] = useState(null);
   const { signup, currentUser } = useAuth();
   const [error, setError] = useState("");
-  const [country, SetCountry] = useState('');
+  const [country, SetCountry] = useState("");
 
   const history = useHistory();
   const countries = [
@@ -62,6 +61,9 @@ function SignUp() {
             </Link>
           </Typography>
         </React.Fragment>
+
+        {error && <Alert severity="error">{error}</Alert>}
+
         <Formik
           initialValues={{
             email: "",
@@ -86,14 +88,9 @@ function SignUp() {
             ),
             policy: Yup.boolean().oneOf([true], "This field must be checked"),
           })}
-          onSubmit={async (values) => {
+          onSubmit={(values) => {
             setIsLoading(true);
             try {
-              /*const newUser = await Auth.signUp({
-                    username: values.email,
-                    password: values.password,
-                  });*/
-
               setError("");
               signup(values.email, values.password).then((userRes) => {
                 const signUpUser = {
@@ -114,9 +111,9 @@ function SignUp() {
                   });
               });
               setIsLoading(false);
-              //setNewUser(newUser);
             } catch (e) {
               setIsLoading(false);
+              setError("Failed to sign up");
             }
           }}
         >
@@ -125,7 +122,6 @@ function SignUp() {
             handleBlur,
             handleChange,
             handleSubmit,
-            isSubmitting,
             touched,
             values,
           }) => (
@@ -230,7 +226,7 @@ function SignUp() {
               <Box my={2}>
                 <Button
                   color="primary"
-                  disabled={isSubmitting}
+                  disabled={isLoading}
                   fullWidth
                   size="large"
                   type="submit"
