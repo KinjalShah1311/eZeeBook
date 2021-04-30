@@ -28,14 +28,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SignIn() {
-  const classes = useStyles();
-
-  // const emailRef = useRef();
-  // const passwordRef = useRef();
   const { login } = useAuth();
   const history = useHistory();
 
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
   return (
@@ -47,7 +44,8 @@ function SignIn() {
             Sign In
           </Typography>
         </React.Fragment>
-
+        {error && <Alert severity="error" onClose={() => setError("")}>{error}</Alert>}
+        {message && <Alert severity="success" onClose={() => setMessage("")}>{message}</Alert>}
         <Formik
           initialValues={{
             email: "",
@@ -74,9 +72,11 @@ function SignIn() {
                 })
                 .catch((ex) => {
                   setError("Incorrect Email or Password. Please try again!");
+                  setLoading(false);
                 });
             } catch (e) {
-              alert(e.message);
+              setError(e.message);
+              setLoading(false);
             }
           }}
         >
@@ -85,7 +85,6 @@ function SignIn() {
             handleBlur,
             handleSubmit,
             handleChange,
-            isSubmitting,
             touched,
             values,
           }) => (
@@ -119,13 +118,13 @@ function SignIn() {
               <Box my={2}>
                 <Button
                   color="primary"
-                  disabled={isSubmitting}
+                  disabled={loading}
                   fullWidth
                   size="large"
                   type="submit"
                   variant="contained"
                 >
-                  Sign in now
+                  Log In
                 </Button>
               </Box>
               <Typography color="textSecondary" variant="body1">
@@ -134,11 +133,16 @@ function SignIn() {
                   Sign up
                 </Link>
               </Typography>
+              <Typography color="textSecondary" variant="body1">
+                Forgot Password?{" "}
+                <Link to={"forgot-password"} variant="h6">
+                  Click here
+                </Link>
+              </Typography>
             </form>
           )}
         </Formik>
       </AppForm>
-      {error && <Alert severity="error">{error}</Alert>}
       <AppFooter />
     </React.Fragment>
   );
