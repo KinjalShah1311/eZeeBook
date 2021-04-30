@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 
 function SignUp() {
   const [isLoading, setIsLoading] = useState(false);
-  const { signup, currentUser } = useAuth();
+  const { signup, updateDisplayName } = useAuth();
   const [error, setError] = useState("");
   const [country, SetCountry] = useState("");
 
@@ -97,9 +97,13 @@ function SignUp() {
                   uid: userRes.user.uid,
                   emailAddress: userRes.user.email,
                   country: country.value,
-                  firstName: values.firstname,
+                  firstName: values.firstName,
                   lastName: values.lastName,
                 };
+
+                const fullname = `${values.firstName} ${values.lastName}`;
+
+                updateDisplayName(fullname);
                 return axiosInstance
                   .post(`/api/users`, signUpUser)
                   .then((response) => {

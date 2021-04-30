@@ -94,8 +94,6 @@ function Profile(props) {
     }
   }
 
-
-
   useEffect(() => {
     getUserData();
   }, []);

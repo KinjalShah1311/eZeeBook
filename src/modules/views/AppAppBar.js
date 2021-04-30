@@ -44,7 +44,7 @@ function AppAppBar(props) {
   const { classes } = props;
   const { currentUser, logout } = useAuth();
   const history = useHistory();
-  //console.log("currentUser:", currentUser);
+  console.log("currentUser:", currentUser);
 
   const handleLogout = async () => {
     // setError("");
@@ -74,6 +74,11 @@ function AppAppBar(props) {
           {currentUser && currentUser.email ? (
             <>
               <div className={classes.right}>
+                {currentUser.displayName && (
+                  <Typography variant="h6" underline="none" color="inherit">
+                    {`Welcome, ${currentUser.displayName}`}
+                  </Typography>
+                )}
                 <Link to={"/update-profile"}>
                   <Typography
                     color="inherit"
